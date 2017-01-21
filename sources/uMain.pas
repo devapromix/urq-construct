@@ -151,11 +151,16 @@ var
     Result := fMain.GetIndexByName(AName) - 1;
   end;
 
+  function GetCaption(AName: string): string;
+  begin
+    Result := Format('%s: %s', [uRoom.RoomDefaultCaption, AName]);
+  end;
+
 begin
   for I := 0 to MDIChildCount - 1 do
   with MDIChildren[I] do
   begin
-    if (AName = Caption) then
+    if (GetCaption(AName) = Caption) then
     begin
       Tag := GetTag;
       Show;
@@ -164,7 +169,7 @@ begin
   end;
   Room := TfRoom.Create(Application);
   Room.Tag := GetTag;
-  Room.Caption := Format('%s: %s', [uRoom.RoomDefaultCaption, AName]);
+  Room.Caption := GetCaption(AName);
 end;
 
 procedure TfMain.FileExit1Execute(Sender: TObject);

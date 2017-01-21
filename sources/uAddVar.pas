@@ -57,7 +57,7 @@ begin
       Exit;
     end;
   AddVar(NewVarName);
-  S.Free;
+  S.Free;                      
   Self.ModalResult := mrOk;
 end;
 

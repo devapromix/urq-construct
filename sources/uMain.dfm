@@ -126,7 +126,7 @@ object fMain: TfMain
     Top = 30
     Width = 200
     Height = 522
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alLeft
     Images = TabsImages
     MultiLine = True
