@@ -58,7 +58,7 @@ const
 
 implementation
 
-uses SysUtils, uMain, uSelRoom, uSelText, uSelVar, uEditItem;
+uses SysUtils, uMain, uSelRoom, uSelText, uSelVar, uSelItem;
 
 {$R *.dfm}
 
@@ -163,11 +163,11 @@ var
 begin
   // Добавить или забрать предмет
   SAmount := '';
-  fEditItem.GetItem(ItemName, Amount);
+  fSelItem.GetItem(ItemName, Amount);
   if (ItemName = '') then Exit;
   if (Amount <= 0) then Amount := 1;
   if (Amount > 1) then SAmount := Format('%d, ', [Amount]);
-  if (fEditItem.Switch.ItemIndex = 0) then
+  if (fSelItem.Switch.ItemIndex = 0) then
     I := CLB.Items.Add(Format('inv+ %s%s', [SAmount, ItemName]))
       else I := CLB.Items.Add(Format('inv- %s%s', [SAmount, ItemName]));
   CLB.Checked[I] := True;

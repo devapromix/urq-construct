@@ -126,7 +126,7 @@ object fMain: TfMain
     Top = 30
     Width = 200
     Height = 522
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alLeft
     Images = TabsImages
     MultiLine = True
@@ -181,7 +181,6 @@ object fMain: TfMain
         Indent = 19
         ReadOnly = True
         TabOrder = 0
-        OnDblClick = TVRDblClick
         Items.Data = {
           010000001E0000000000000000000000FFFFFFFFFFFFFFFF0000000000000000
           054974656D73}
@@ -203,6 +202,7 @@ object fMain: TfMain
           Top = 2
           Caption = 'ToolButton3'
           ImageIndex = 0
+          OnClick = ToolButton4Click
         end
       end
     end
@@ -218,7 +218,6 @@ object fMain: TfMain
         Indent = 19
         ReadOnly = True
         TabOrder = 0
-        OnDblClick = TVRDblClick
         Items.Data = {
           01000000220000000000000000000000FFFFFFFFFFFFFFFF0000000000000000
           095661726961626C6573}
@@ -240,6 +239,7 @@ object fMain: TfMain
           Top = 2
           Caption = 'ToolButton3'
           ImageIndex = 0
+          OnClick = ToolButton3Click
         end
       end
     end

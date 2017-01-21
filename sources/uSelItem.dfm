@@ -1,9 +1,10 @@
-object fEditItem: TfEditItem
+object fSelItem: TfSelItem
   Left = 190
   Top = 107
-  Width = 487
-  Height = 480
+  BorderStyle = bsDialog
   Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1087#1088#1077#1076#1084#1077#1090#1086#1074
+  ClientHeight = 299
+  ClientWidth = 357
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +12,7 @@ object fEditItem: TfEditItem
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -25,8 +27,8 @@ object fEditItem: TfEditItem
     TabOrder = 0
   end
   object edAmount: TEdit
-    Left = 32
-    Top = 136
+    Left = 208
+    Top = 144
     Width = 57
     Height = 21
     TabOrder = 1
@@ -66,8 +68,8 @@ object fEditItem: TfEditItem
     TabOrder = 4
   end
   object UpDown1: TUpDown
-    Left = 89
-    Top = 136
+    Left = 265
+    Top = 144
     Width = 15
     Height = 21
     Associate = edAmount

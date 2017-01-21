@@ -8,7 +8,9 @@ uses
   uSelRoom in 'uSelRoom.pas' {fSelRoom},
   uSelText in 'uSelText.pas' {fSelText},
   uSelVar in 'uSelVar.pas' {fSelVar},
-  uEditItem in 'uEditItem.pas' {fEditItem};
+  uSelItem in 'uSelItem.pas' {fSelItem},
+  uAddVar in 'uAddVar.pas' {fAddVar},
+  uAddItem in 'uAddItem.pas' {fAddItem};
 
 {$R *.RES}
 
@@ -20,6 +22,8 @@ begin
   Application.CreateForm(TfSelRoom, fSelRoom);
   Application.CreateForm(TfSelText, fSelText);
   Application.CreateForm(TfSelVar, fSelVar);
-  Application.CreateForm(TfEditItem, fEditItem);
+  Application.CreateForm(TfSelItem, fSelItem);
+  Application.CreateForm(TfAddVar, fAddVar);
+  Application.CreateForm(TfAddItem, fAddItem);
   Application.Run;
 end.

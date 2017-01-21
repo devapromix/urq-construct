@@ -72,13 +72,18 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
+    procedure ToolButton3Click(Sender: TObject);
+    procedure ToolButton4Click(Sender: TObject);
   private
     { Private declarations }
+    SL: TStringList;
     procedure CreateRoom(const AName: string);
   public
     { Public declarations }
-    QL, VL, IL: TStringList;
+    QL: TStringList;
     function GetRooms(const CurrentRoom: string): TStringList;
+    function GetVars(const CurrentVar: string): TStringList;
+    function GetItems(const CurrentItem: string): TStringList;
     function GetIndexByName(const AName: string): Integer;
   end;
 
@@ -89,20 +94,48 @@ implementation
 
 {$R *.dfm}  
 
-uses uRoom, uAddRoom, uEditItem, uSelVar;
+uses uRoom, uAddRoom, uSelItem, uSelVar, uAddVar, uAddItem;
 
 function TfMain.GetRooms(const CurrentRoom: string): TStringList;
 var
   S: string;
   I: Integer;
-  SL: TStringList;
 begin
-  SL := TStringList.Create;
   SL.Clear;
   for I := 0 to TVR.Items.Count - 1 do
   begin
     S := LowerCase(TVR.Items[I].Text);
     if (S <> RoomsCategoryName) and (S <> CurrentRoom) then
+        SL.Append(S);
+  end;
+  Result := SL;
+end;
+
+function TfMain.GetVars(const CurrentVar: string): TStringList;
+var
+  S: string;
+  I: Integer;
+begin
+  SL.Clear;
+  for I := 0 to TVV.Items.Count - 1 do
+  begin
+    S := LowerCase(TVV.Items[I].Text);
+    if (S <> VarsCategoryName) and (S <> CurrentVar) then
+        SL.Append(S);
+  end;
+  Result := SL;
+end;
+
+function TfMain.GetItems(const CurrentItem: string): TStringList;
+var
+  S: string;
+  I: Integer;
+begin
+  SL.Clear;
+  for I := 0 to TVI.Items.Count - 1 do
+  begin
+    S := LowerCase(TVI.Items[I].Text);
+    if (S <> ItemsCategoryName) and (S <> CurrentItem) then
         SL.Append(S);
   end;
   Result := SL;
@@ -148,9 +181,6 @@ begin
   F := TVR.Selected;
   S := Trim(F.Text);
   if (S = '') or (S = RoomsCategoryName) then Exit;
-  //  for I := 0 to TV.Items.Count - 1 do
-//    S := S + TV.Items[I].Text;
-//  ShowMessage(S);
   CreateRoom(S);
 end;
 
@@ -204,12 +234,9 @@ end;
 procedure TfMain.FormCreate(Sender: TObject);
 begin
   QL := TStringList.Create;
-  VL := TStringList.Create;
-  VL.Sorted := True;
-  VL.Duplicates := dupIgnore;
-  IL := TStringList.Create;
-  IL.Sorted := True;
-  IL.Duplicates := dupIgnore;
+  SL := TStringList.Create;
+  SL.Sorted := True;
+  SL.Duplicates := dupIgnore;
   TVR.Items.Clear;
   TVR.Items.AddFirst(nil, RoomsCategoryName);
   TVI.Items.Clear;
@@ -220,8 +247,7 @@ end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
 begin
-  IL.Free;
-  VL.Free;
+  SL.Free;
   QL.Free;
 end;
 
@@ -251,7 +277,17 @@ end;
 
 procedure TfMain.ToolButton5Click(Sender: TObject);
 begin
-  fAddRoom.NewRoom; // Add Room
+  fAddRoom.NewRoom; // Добавить новую комнату
+end;
+
+procedure TfMain.ToolButton3Click(Sender: TObject);
+begin
+  fAddVar.NewVar; // Добавить новую переменную
+end;
+
+procedure TfMain.ToolButton4Click(Sender: TObject);
+begin
+  fAddItem.NewItem; // Добавить новый предмет
 end;
 
 end.

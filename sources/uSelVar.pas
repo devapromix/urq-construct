@@ -31,7 +31,7 @@ var
 
 implementation
 
-uses uMain;
+uses uMain, uAddVar;
 
 {$R *.dfm}
 
@@ -44,12 +44,12 @@ begin
   if (Self.ShowModal = mrCancel) then Exit;
   VarName := Trim(edVar.Text);
   Value := Trim(edValue.Text);
-  fMain.VL.Append(VarName);
+  fAddVar.AddVar(VarName);
 end;
 
 procedure TfSelVar.FormShow(Sender: TObject);
 begin
-  edVar.Items.Assign(fMain.VL);
+  edVar.Items.Assign(fMain.GetVars(''));
   edVar.SetFocus;
 end;
 

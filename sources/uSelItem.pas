@@ -1,4 +1,4 @@
-unit uEditItem;
+unit uSelItem;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons;
 
 type
-  TfEditItem = class(TForm)
+  TfSelItem = class(TForm)
     edItem: TComboBox;
     edAmount: TEdit;
     BitBtn1: TBitBtn;
@@ -27,27 +27,27 @@ const
   ItemsCategoryName = 'Все предметы';
 
 var
-  fEditItem: TfEditItem;
+  fSelItem: TfSelItem;
 
 implementation
 
-uses uMain;
+uses uMain, uAddItem;
 
 {$R *.dfm}
 
 { TfEditItem }
 
-procedure TfEditItem.GetItem(var ItemName: string; var Amount: Integer);
+procedure TfSelItem.GetItem(var ItemName: string; var Amount: Integer);
 begin
   ItemName := '';
   Amount := 1;
   if (Self.ShowModal = mrCancel) then Exit;
   ItemName := Trim(edItem.Text);
   Amount := StrToIntDef(edAmount.Text, 1);
-  fMain.IL.Append(ItemName);
+  fAddItem.AddItem(ItemName);
 end;
 
-procedure TfEditItem.BitBtn1Click(Sender: TObject);
+procedure TfSelItem.BitBtn1Click(Sender: TObject);
 var
   S: string;
 begin
@@ -60,9 +60,9 @@ begin
   Self.ModalResult := mrOk;
 end;
 
-procedure TfEditItem.FormShow(Sender: TObject);
+procedure TfSelItem.FormShow(Sender: TObject);
 begin
-  edItem.Items.Assign(fMain.IL);
+  edItem.Items.Assign(fMain.GetItems(''));
   edItem.SetFocus;
 end;
 
