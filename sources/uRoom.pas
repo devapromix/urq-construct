@@ -43,7 +43,7 @@ type
     { Private declarations }
     procedure AddSimpleOperator(const AOperator: string);
     procedure AddLocationOperator(const AOperator: string);
-    procedure AddLinkOperator(const AOperator: string);
+    procedure AddButtonOperator(const AOperator: string);
     procedure AddTextOperator(const AOperator: string);
     procedure AddVar;
     procedure AddItem;
@@ -116,7 +116,7 @@ begin
   CLB.Checked[I] := True;
 end;
 
-procedure TfRoom.AddLinkOperator(const AOperator: string);
+procedure TfRoom.AddButtonOperator(const AOperator: string);
 var
   S, T: string;
   I: Integer;
@@ -210,7 +210,7 @@ end;
 
 procedure TfRoom.ToolButton10Click(Sender: TObject);
 begin
-  AddLinkOperator('btn');
+  AddButtonOperator('btn');
 end;
 
 procedure TfRoom.ToolButton12Click(Sender: TObject);

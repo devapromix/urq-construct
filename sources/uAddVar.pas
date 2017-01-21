@@ -33,6 +33,7 @@ uses uMain;
 procedure TfAddVar.NewVar;
 begin
   // Добавить новую переменную
+  Position := poOwnerFormCenter;
   ShowModal;
 end;
 

@@ -74,6 +74,7 @@ type
     procedure ToolButton5Click(Sender: TObject);
     procedure ToolButton3Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
+    procedure ToolButton13Click(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -85,6 +86,8 @@ type
     function GetVars(const CurrentVar: string): TStringList;
     function GetItems(const CurrentItem: string): TStringList;
     function GetIndexByName(const AName: string): Integer;
+    function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
+      Buttons: TMsgDlgButtons; HelpCtx: Integer): Integer;
   end;
 
 var
@@ -293,6 +296,23 @@ end;
 procedure TfMain.ToolButton4Click(Sender: TObject);
 begin
   fAddItem.NewItem; // Добавить новый предмет
+end;
+
+function TfMain.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; HelpCtx: Integer): Integer;
+begin
+  with CreateMessageDialog(Msg, DlgType, Buttons) do
+    try
+      Position := poOwnerFormCenter;
+      Result := ShowModal;
+    finally
+      Free;
+    end;
+end;
+
+procedure TfMain.ToolButton13Click(Sender: TObject);
+begin
+  MsgDlg('+++', mtCustom, [mbOk], 0);
 end;
 
 end.

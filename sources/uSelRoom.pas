@@ -11,7 +11,10 @@ type
     RoomList: TListBox;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    Label1: TLabel;
+    BitBtn3: TBitBtn;
     procedure FormShow(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -24,7 +27,7 @@ var
 
 implementation
 
-uses uMain;
+uses uMain, uAddRoom;
 
 {$R *.dfm}
 
@@ -46,6 +49,11 @@ procedure TfSelRoom.FormShow(Sender: TObject);
 begin
   Self.RoomList.SetFocus;
   Self.RoomList.ItemIndex := 0;
+end;
+
+procedure TfSelRoom.BitBtn3Click(Sender: TObject);
+begin
+  fAddRoom.NewRoom; // Добавить новую комнату
 end;
 
 end.

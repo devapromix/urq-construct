@@ -54,6 +54,7 @@ object fMain: TfMain
       Hint = 'New'
       Caption = '+'
       ImageIndex = 6
+      OnClick = ToolButton13Click
     end
     object ToolButton6: TToolButton
       Left = 23

@@ -1,6 +1,6 @@
 object fSelText: TfSelText
-  Left = 190
-  Top = 107
+  Left = 254
+  Top = 197
   BorderStyle = bsDialog
   Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1090#1077#1082#1089#1090#1072
   ClientHeight = 453
@@ -12,6 +12,7 @@ object fSelText: TfSelText
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
