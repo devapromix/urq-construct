@@ -13,8 +13,9 @@ type
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     VarType: TRadioGroup;
+    Label1: TLabel;
+    Label2: TLabel;
     procedure FormShow(Sender: TObject);
-    procedure VarTypeClick(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
@@ -23,15 +24,12 @@ type
     procedure GetVar(var VarName, Value: string);
   end;
 
-const
-  VarsCategoryName = 'Все переменные';
-
 var
   fSelVar: TfSelVar;
 
 implementation
 
-uses uMain, uAddVar;
+uses uMain, uAddVar, uCommon;
 
 {$R *.dfm}
 
@@ -41,7 +39,7 @@ procedure TfSelVar.GetVar(var VarName, Value: string);
 begin
   VarName := '';
   Value := '';
-  if (Self.ShowModal = mrCancel) then Exit;
+  if (FormShowModal(Self) = mrCancel) then Exit;
   VarName := Trim(edVar.Text);
   Value := Trim(edValue.Text);
   fAddVar.AddVar(VarName);
@@ -49,13 +47,8 @@ end;
 
 procedure TfSelVar.FormShow(Sender: TObject);
 begin
-  edVar.Items.Assign(fMain.GetVars(''));
+  edVar.Items.Assign(GetResource(rtVar, ''));
   edVar.SetFocus;
-end;
-
-procedure TfSelVar.VarTypeClick(Sender: TObject);
-begin
-  if (VarType.ItemIndex = 0) then edValue.Text := '0' else edValue.Text := '';
 end;
 
 procedure TfSelVar.BitBtn1Click(Sender: TObject);

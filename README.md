@@ -1,1 +1,1 @@
-# URQConstruct
+# URQConstruct - конструктор текстовых игр

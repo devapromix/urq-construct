@@ -9,17 +9,18 @@ uses
 type
   TfSelRoom = class(TForm)
     RoomList: TListBox;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
+    btOK: TBitBtn;
+    btCancel: TBitBtn;
     Label1: TLabel;
-    BitBtn3: TBitBtn;
+    btNew: TBitBtn;
     procedure FormShow(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
+    procedure btNewClick(Sender: TObject);
   private
     { Private declarations }
+    FIndex: Integer;
   public
     { Public declarations }
-    function GetRoom(const CurrentRoom: string): string;
+    function GetRoom(const CurrentRoom: string; SelRoom: string = ''): string;
   end;
 
 var
@@ -27,33 +28,39 @@ var
 
 implementation
 
-uses uMain, uAddRoom;
+uses uMain, uAddRoom, uCommon;
 
 {$R *.dfm}
 
 { TfSelRoom }
 
-function TfSelRoom.GetRoom(const CurrentRoom: string): string;
+function TfSelRoom.GetRoom(const CurrentRoom: string; SelRoom: string = ''): string;
 var
   I: Integer;
 begin
+  FIndex := 0;
   Result := '';
-  RoomList.Items.Assign(fMain.GetRooms(CurrentRoom));
+  RoomList.Items.Assign(GetResource(rtRoom, CurrentRoom));
   I := RoomList.Items.IndexOf('common');
   if (I >= 0) then RoomList.Items.Delete(I);
-  if (Self.ShowModal = mrCancel) or (RoomList.ItemIndex < 0) then Exit;
+  SelRoom := Trim(SelRoom);
+  if (SelRoom <> '') then FIndex := RoomList.Items.IndexOf(SelRoom);
+  if (FIndex < 0) then FIndex := 0;
+  if (FormShowModal(Self) = mrCancel) or (RoomList.ItemIndex < 0) then Exit;
   Result := Trim(RoomList.Items.Strings[RoomList.ItemIndex]);
 end;
 
 procedure TfSelRoom.FormShow(Sender: TObject);
 begin
+  Self.RoomList.ItemIndex := FIndex;
   Self.RoomList.SetFocus;
-  Self.RoomList.ItemIndex := 0;
 end;
 
-procedure TfSelRoom.BitBtn3Click(Sender: TObject);
+procedure TfSelRoom.btNewClick(Sender: TObject);
 begin
-  fAddRoom.NewRoom; // Добавить новую комнату
+  // Добавить новую комнату
+  Self.RoomList.ItemIndex := Self.RoomList.Items.Add(fAddRoom.NewRoom);
+  Self.btOK.SetFocus();
 end;
 
 end.

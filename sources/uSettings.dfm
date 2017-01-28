@@ -1,0 +1,40 @@
+object fSettings: TfSettings
+  Left = 360
+  Top = 207
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  BorderWidth = 8
+  Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+  ClientHeight = 344
+  ClientWidth = 423
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btOK: TBitBtn
+    Left = 102
+    Top = 312
+    Width = 107
+    Height = 30
+    Caption = 'OK'
+    Default = True
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object btCancel: TBitBtn
+    Left = 214
+    Top = 312
+    Width = 107
+    Height = 30
+    Cancel = True
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 1
+  end
+end

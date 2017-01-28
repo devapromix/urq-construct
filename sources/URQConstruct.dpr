@@ -10,7 +10,10 @@ uses
   uSelVar in 'uSelVar.pas' {fSelVar},
   uSelItem in 'uSelItem.pas' {fSelItem},
   uAddVar in 'uAddVar.pas' {fAddVar},
-  uAddItem in 'uAddItem.pas' {fAddItem};
+  uAddItem in 'uAddItem.pas' {fAddItem},
+  uCommon in 'uCommon.pas',
+  uAbout in 'uAbout.pas' {fAbout},
+  uSettings in 'uSettings.pas' {fSettings};
 
 {$R *.RES}
 
@@ -25,5 +28,7 @@ begin
   Application.CreateForm(TfSelItem, fSelItem);
   Application.CreateForm(TfAddVar, fAddVar);
   Application.CreateForm(TfAddItem, fAddItem);
+  Application.CreateForm(TfAbout, fAbout);
+  Application.CreateForm(TfSettings, fSettings);
   Application.Run;
 end.

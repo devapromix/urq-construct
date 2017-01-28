@@ -1,10 +1,11 @@
 object fSelItem: TfSelItem
-  Left = 190
-  Top = 107
+  Left = 479
+  Top = 159
   BorderStyle = bsDialog
+  BorderWidth = 8
   Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1087#1088#1077#1076#1084#1077#1090#1086#1074
-  ClientHeight = 299
-  ClientWidth = 357
+  ClientHeight = 174
+  ClientWidth = 219
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,10 +17,27 @@ object fSelItem: TfSelItem
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 0
+    Top = 112
+    Width = 137
+    Height = 13
+    Alignment = taRightJustify
+    AutoSize = False
+    Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086
+  end
+  object Label2: TLabel
+    Left = 0
+    Top = 0
+    Width = 217
+    Height = 13
+    AutoSize = False
+    Caption = #1053#1072#1079#1074#1072#1085#1080#1077' '#1087#1088#1077#1076#1084#1077#1090#1072
+  end
   object edItem: TComboBox
-    Left = 32
-    Top = 24
-    Width = 289
+    Left = 0
+    Top = 16
+    Width = 217
     Height = 21
     DropDownCount = 25
     ItemHeight = 13
@@ -27,37 +45,37 @@ object fSelItem: TfSelItem
     TabOrder = 0
   end
   object edAmount: TEdit
-    Left = 208
-    Top = 144
+    Left = 144
+    Top = 112
     Width = 57
     Height = 21
     TabOrder = 1
     Text = '1'
   end
-  object BitBtn1: TBitBtn
-    Left = 48
-    Top = 216
-    Width = 113
-    Height = 57
+  object btOK: TBitBtn
+    Left = 0
+    Top = 144
+    Width = 107
+    Height = 30
     Caption = 'OK'
     Default = True
     TabOrder = 2
-    OnClick = BitBtn1Click
+    OnClick = btOKClick
   end
-  object BitBtn2: TBitBtn
-    Left = 256
-    Top = 216
-    Width = 75
-    Height = 25
+  object btCancel: TBitBtn
+    Left = 112
+    Top = 144
+    Width = 107
+    Height = 30
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 3
   end
   object Switch: TRadioGroup
-    Left = 32
-    Top = 64
-    Width = 289
+    Left = 0
+    Top = 48
+    Width = 217
     Height = 49
     Caption = #1044#1077#1081#1089#1090#1074#1080#1077
     Columns = 2
@@ -67,9 +85,9 @@ object fSelItem: TfSelItem
       #1059#1076#1072#1083#1080#1090#1100)
     TabOrder = 4
   end
-  object UpDown1: TUpDown
-    Left = 265
-    Top = 144
+  object UpDn: TUpDown
+    Left = 201
+    Top = 112
     Width = 15
     Height = 21
     Associate = edAmount

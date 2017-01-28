@@ -11,10 +11,14 @@ type
     cbItemName: TComboBox;
     btOK: TBitBtn;
     btCancel: TBitBtn;
+    Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btOKClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
+    SL: TStringList;
   public
     { Public declarations }
     procedure NewItem;
@@ -26,22 +30,25 @@ var
 
 implementation
 
-uses uMain;
+uses uMain, uCommon;
 
 {$R *.dfm}
+
+procedure TfAddItem.FormCreate(Sender: TObject);
+begin
+  SL := TStringList.Create;
+end;
 
 procedure TfAddItem.AddItem(ItemName: string);
 var
   I: Integer;
-  F: TTreeNode;
-  S: TStringList;
 begin
-  S := TStringList.Create;
-  S.Assign(fMain.GetItems(''));
-  for I := 0 to S.Count - 1 do
-    if (S[I] = ItemName) then Exit;
-  F := fMain.TVI.Items.Item[0];
-  fMain.TVI.Items.AddChild(F, ItemName);
+  // Добавить предмет
+  SL.Assign(GetResource(rtItem, ''));
+  for I := 0 to SL.Count - 1 do
+    if (SL[I] = ItemName) then Exit;
+  AddTVItem(fMain.TVI, ItemName, 1, 1);
+  fMain.Modified := True;
 end;
 
 procedure TfAddItem.FormShow(Sender: TObject);
@@ -51,27 +58,35 @@ end;
 
 procedure TfAddItem.NewItem;
 begin
-  ShowModal;
+  cbItemName.Items.Assign(GetResource(rtItem, ''));
+  FormShowModal(Self);
 end;
 
 procedure TfAddItem.btOKClick(Sender: TObject);
 var
-  NewItemName: string;
+  S: string;
   I: Integer;
-  S: TStringList;
 begin
-  NewItemName := LowerCase(Trim(cbItemName.Text));
-  S := TStringList.Create;
-  S.Assign(fMain.GetItems(''));
-  for I := 0 to S.Count - 1 do
-    if (NewItemName = '') or (NewItemName = S.Strings[I]) then
+  SL.Assign(GetResource(rtItem, ''));
+  S := LowerCase(Trim(cbItemName.Text));
+  if (S = '') then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
+  for I := 0 to SL.Count - 1 do
+    if (S = SL.Strings[I]) then
     begin
       ShowMessage('!!!');
       Exit;
     end;
-  AddItem(NewItemName);
-  S.Free;
+  AddItem(S);
   Self.ModalResult := mrOk;
+end;
+
+procedure TfAddItem.FormDestroy(Sender: TObject);
+begin
+  SL.Free;
 end;
 
 end.

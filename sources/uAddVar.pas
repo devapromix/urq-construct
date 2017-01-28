@@ -11,10 +11,14 @@ type
     cbVarName: TComboBox;
     btOK: TBitBtn;
     btCancel: TBitBtn;
+    Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btOKClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
+    SL: TStringList;
   public
     { Public declarations }
     procedure NewVar;
@@ -26,15 +30,20 @@ var
 
 implementation
 
-uses uMain;
+uses uMain, uCommon;
 
 {$R *.dfm}
+
+procedure TfAddVar.FormCreate(Sender: TObject);
+begin
+  SL := TStringList.Create;
+end;
 
 procedure TfAddVar.NewVar;
 begin
   // Добавить новую переменную
-  Position := poOwnerFormCenter;
-  ShowModal;
+  cbVarName.Items.Assign(GetResource(rtVar, ''));
+  FormShowModal(Self);
 end;
 
 procedure TfAddVar.FormShow(Sender: TObject);
@@ -44,36 +53,42 @@ end;
 
 procedure TfAddVar.btOKClick(Sender: TObject);
 var
-  NewVarName: string;
+  S: string;
   I: Integer;
-  S: TStringList;
 begin
-  NewVarName := LowerCase(Trim(cbVarName.Text));
-  S := TStringList.Create;
-  S.Assign(fMain.GetVars(''));
-  for I := 0 to S.Count - 1 do
-    if (NewVarName = '') or (NewVarName = S.Strings[I]) then
+  // OK
+  SL.Assign(GetResource(rtVar, ''));
+  S := LowerCase(Trim(cbVarName.Text));
+  if (S = '') then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
+  for I := 0 to SL.Count - 1 do
+    if (S = SL.Strings[I]) then
     begin
       ShowMessage('!!!');
       Exit;
     end;
-  AddVar(NewVarName);
-  S.Free;                      
+  AddVar(S);
   Self.ModalResult := mrOk;
 end;
 
 procedure TfAddVar.AddVar(VarName: string);
 var
   I: Integer;
-  F: TTreeNode;
-  S: TStringList;
 begin
-  S := TStringList.Create;
-  S.Assign(fMain.GetVars(''));
-  for I := 0 to S.Count - 1 do
-    if (S[I] = VarName) then Exit;
-  F := fMain.TVV.Items.Item[0];
-  fMain.TVV.Items.AddChild(F, VarName);
+  // Добавить переменную
+  SL.Assign(GetResource(rtVar, ''));
+  for I := 0 to SL.Count - 1 do
+    if (SL[I] = VarName) then Exit;
+  AddTVItem(fMain.TVV, VarName, 2, 2);
+  fMain.Modified := True;
+end;
+
+procedure TfAddVar.FormDestroy(Sender: TObject);
+begin
+  SL.Free;
 end;
 
 end.

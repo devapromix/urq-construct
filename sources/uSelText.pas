@@ -8,15 +8,18 @@ uses
 
 type
   TfSelText = class(TForm)
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
+    btOK: TBitBtn;
+    btCancel: TBitBtn;
     edText: TEdit;
+    btClear: TBitBtn;
+    Label1: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure btClearClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    function GetText(): string;
+    function GetText(S: string = ''): string;
   end;
 
 var
@@ -24,19 +27,30 @@ var
 
 implementation
 
+uses uCommon;
+
 {$R *.dfm}
 
 { TfSelText }
 
-function TfSelText.GetText: string;
+function TfSelText.GetText(S: string = ''): string;
 begin
   Result := '';
-  if (Self.ShowModal = mrCancel) then Exit;
+  S := Trim(S);
+  if (S <> '') then Self.edText.Text := S;
+  if (FormShowModal(Self) = mrCancel) then Exit;
   Result := Self.edText.Text;
 end;
 
 procedure TfSelText.FormShow(Sender: TObject);
 begin
+  Self.edText.SelectAll;
+  Self.edText.SetFocus;
+end;
+
+procedure TfSelText.btClearClick(Sender: TObject);
+begin
+  Self.edText.Text := '';
   Self.edText.SetFocus;
 end;
 

@@ -1,18 +1,48 @@
 object fRoom: TfRoom
   Left = 468
   Top = 154
-  Width = 396
+  Width = 475
   Height = 236
-  Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1083#1086#1082#1072#1094#1080#1081
+  Caption = #1050#1086#1084#1085#1072#1090#1072
   Color = clBtnFace
   ParentFont = True
   FormStyle = fsMDIChild
+  Icon.Data = {
+    0000010001001010000001001800680300001600000028000000100000002000
+    000001001800000000000000000000000000000000000000000000000000FF00
+    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+    FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+    FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFD6A684E78242E78242E78242E78242E78242E78242D6
+    A684FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE78242BDB6B5
+    B5AEADA5A2A59C96948C86847B7573E78242FF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFE78242BDB6B5FFFFFFFFFFFFFFFFFFFFFFFF7B797BE7
+    8242FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE78242BDB6B5
+    FFFFFFFFFFFFF7F7F7EFEBEF7B797BE78242FF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFE78242BDB6B5FFFBFFEFEFEFEFEFEFEFEFEF7B797BE7
+    8242FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE78242BDB6B5
+    E7E7E7E7E7E7EFEFEFF7F3F77B797BE78242FF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFE78242BDBABDB5AEADA5A2A59C96948C86847B7573E7
+    8242FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6A684E78242
+    E78242E78242E78242E78242E78242D6A684FF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+    FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+    FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000000000000000000000000000000000000000000000000000}
   OldCreateOrder = False
   Position = poDefault
   ShowHint = True
   Visible = True
   OnClose = FormClose
-  OnShow = FormShow
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Memo1: TMemo
@@ -27,16 +57,19 @@ object fRoom: TfRoom
   object CLB: TCheckListBox
     Left = 0
     Top = 25
-    Width = 388
-    Height = 183
-    Align = alTop
+    Width = 467
+    Height = 184
+    OnClickCheck = CLBClickCheck
+    Align = alClient
     ItemHeight = 13
+    PopupMenu = PM
     TabOrder = 1
+    OnDblClick = CLBDblClick
   end
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 388
+    Width = 467
     Height = 25
     AutoSize = True
     ButtonHeight = 23
@@ -62,21 +95,15 @@ object fRoom: TfRoom
       ImageIndex = 3
       Style = tbsSeparator
     end
-    object ToolButton7: TToolButton
+    object btPrintLine: TToolButton
       Left = 31
       Top = 2
-      Hint = 'p'
-      Caption = 'ToolButton7'
-      ImageIndex = 4
-      OnClick = ToolButton7Click
+      Action = acPrintLn
     end
-    object ToolButton8: TToolButton
+    object btPrint: TToolButton
       Left = 54
       Top = 2
-      Hint = 'pln'
-      Caption = 'ToolButton8'
-      ImageIndex = 5
-      OnClick = ToolButton8Click
+      Action = acPrint
     end
     object ToolButton1: TToolButton
       Left = 77
@@ -86,13 +113,10 @@ object fRoom: TfRoom
       ImageIndex = 4
       Style = tbsSeparator
     end
-    object ToolButton10: TToolButton
+    object btButton: TToolButton
       Left = 85
       Top = 2
-      Hint = 'btn'
-      Caption = 'ToolButton10'
-      ImageIndex = 4
-      OnClick = ToolButton10Click
+      Action = acBtn
     end
     object ToolButton9: TToolButton
       Left = 108
@@ -102,19 +126,16 @@ object fRoom: TfRoom
       ImageIndex = 4
       Style = tbsSeparator
     end
-    object btAddGoTo: TToolButton
+    object btGoto: TToolButton
       Left = 116
       Top = 2
-      Hint = 'goto'
-      ImageIndex = 0
-      OnClick = btAddGoToClick
+      Action = acGoto
     end
-    object ToolButton2: TToolButton
+    object btProc: TToolButton
+      Tag = 1
       Left = 139
       Top = 2
-      Hint = 'proc'
-      ImageIndex = 1
-      OnClick = ToolButton2Click
+      Action = acProc
     end
     object ToolButton6: TToolButton
       Left = 162
@@ -124,32 +145,67 @@ object fRoom: TfRoom
       ImageIndex = 5
       Style = tbsSeparator
     end
-    object ToolButton3: TToolButton
+    object btCLS: TToolButton
       Left = 170
       Top = 2
-      Hint = 'cls'
-      Caption = 'ToolButton3'
-      ImageIndex = 2
-      OnClick = ToolButton3Click
+      Action = acCLS
     end
-    object ToolButton5: TToolButton
+    object btCLSB: TToolButton
       Left = 193
       Top = 2
-      Hint = 'clsb'
-      Caption = 'ToolButton5'
-      ImageIndex = 3
-      OnClick = ToolButton5Click
+      Action = acCLSB
+    end
+    object btInvKill: TToolButton
+      Left = 216
+      Top = 2
+      Action = acInvKill
+    end
+    object btPerKill: TToolButton
+      Left = 239
+      Top = 2
+      Action = acPerKill
     end
     object ToolButton11: TToolButton
-      Left = 216
+      Left = 262
       Top = 2
       Width = 8
       Caption = 'ToolButton11'
       ImageIndex = 4
       Style = tbsSeparator
     end
+    object ToolButton3: TToolButton
+      Left = 270
+      Top = 2
+      Action = acExpression
+    end
+    object ToolButton8: TToolButton
+      Left = 293
+      Top = 2
+      Width = 8
+      Caption = 'ToolButton8'
+      ImageIndex = 6
+      Style = tbsSeparator
+    end
+    object ToolButton7: TToolButton
+      Left = 301
+      Top = 2
+      Action = acStartBlock
+    end
+    object ToolButton5: TToolButton
+      Left = 324
+      Top = 2
+      Action = acFinishBlock
+    end
+    object ToolButton2: TToolButton
+      Left = 347
+      Top = 2
+      Width = 8
+      Caption = 'ToolButton2'
+      ImageIndex = 6
+      Style = tbsSeparator
+    end
     object ToolButton12: TToolButton
-      Left = 224
+      Left = 355
       Top = 2
       Hint = 'var'
       Caption = 'ToolButton12'
@@ -157,7 +213,7 @@ object fRoom: TfRoom
       OnClick = ToolButton12Click
     end
     object ToolButton13: TToolButton
-      Left = 247
+      Left = 378
       Top = 2
       Width = 8
       Caption = 'ToolButton13'
@@ -165,7 +221,7 @@ object fRoom: TfRoom
       Style = tbsSeparator
     end
     object ToolButton14: TToolButton
-      Left = 255
+      Left = 386
       Top = 2
       Hint = 'Item'
       Caption = 'ToolButton14'
@@ -176,5 +232,115 @@ object fRoom: TfRoom
   object ButsImages: TImageList
     Left = 16
     Top = 40
+  end
+  object PM: TPopupMenu
+    Images = ButsImages
+    Left = 48
+    Top = 40
+    object N1: TMenuItem
+      Action = acDelete
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object N3: TMenuItem
+      Action = acClear
+    end
+  end
+  object ActionList1: TActionList
+    Images = ButsImages
+    Left = 80
+    Top = 40
+    object acDelete: TAction
+      Category = 'PopupMenu'
+      Caption = #1059#1076#1072#1083#1080#1090#1100
+      OnExecute = acDeleteExecute
+      OnUpdate = acDeleteUpdate
+    end
+    object acGoto: TAction
+      Category = 'OperatorsGroupB'
+      Caption = 'acGoto'
+      Hint = 'goto'
+      OnExecute = acOpGrBExecute
+    end
+    object acProc: TAction
+      Tag = 1
+      Category = 'OperatorsGroupB'
+      Caption = 'acProc'
+      Hint = 'proc'
+      OnExecute = acOpGrBExecute
+    end
+    object acStartBlock: TAction
+      Tag = 4
+      Category = 'OperatorsGroupA'
+      Caption = 'acPerKill'
+      Hint = 'startblock'
+      OnExecute = acOpGrAExecute
+    end
+    object acFinishBlock: TAction
+      Tag = 5
+      Category = 'OperatorsGroupA'
+      Caption = 'acPerKill'
+      Hint = 'finishblock'
+      OnExecute = acOpGrAExecute
+    end
+    object acCLS: TAction
+      Category = 'OperatorsGroupA'
+      Caption = 'acCLS'
+      Hint = 'cls'
+      OnExecute = acOpGrAExecute
+    end
+    object acCLSB: TAction
+      Tag = 1
+      Category = 'OperatorsGroupA'
+      Caption = 'acCLSB'
+      Hint = 'clsb'
+      OnExecute = acOpGrAExecute
+    end
+    object acInvKill: TAction
+      Tag = 2
+      Category = 'OperatorsGroupA'
+      Caption = 'acInvKill'
+      Hint = 'invkill'
+      OnExecute = acOpGrAExecute
+    end
+    object acPerKill: TAction
+      Tag = 3
+      Category = 'OperatorsGroupA'
+      Caption = 'acPerKill'
+      Hint = 'perkill'
+      OnExecute = acOpGrAExecute
+    end
+    object acBtn: TAction
+      Category = 'OperatorsGroupC'
+      Caption = 'acBtn'
+      Hint = 'Btn'
+      OnExecute = acOpGrCExecute
+    end
+    object acPrint: TAction
+      Tag = 1
+      Category = 'OperatorsGroupD'
+      Caption = 'acPrint'
+      Hint = 'print'
+      OnExecute = acOpGrDExecute
+    end
+    object acPrintLn: TAction
+      Category = 'OperatorsGroupD'
+      Caption = 'acPrintLn'
+      Hint = 'println'
+      OnExecute = acOpGrDExecute
+    end
+    object acClear: TAction
+      Category = 'PopupMenu'
+      Caption = #1054#1095#1080#1089#1090#1080#1090#1100
+      OnExecute = acClearExecute
+      OnUpdate = acClearUpdate
+    end
+    object acExpression: TAction
+      Category = 'OperatorsGroupE'
+      Caption = 'acExpression'
+      Hint = 'Expression'
+      OnExecute = acOpGrEExecute
+    end
   end
 end
