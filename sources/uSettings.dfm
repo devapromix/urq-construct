@@ -1,6 +1,6 @@
 object fSettings: TfSettings
-  Left = 360
-  Top = 207
+  Left = 380
+  Top = 326
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   BorderWidth = 8

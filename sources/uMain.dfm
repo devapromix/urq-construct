@@ -449,6 +449,7 @@ object fMain: TfMain
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1082#1086#1084#1085#1072#1090#1091
       Hint = #1044#1086#1073#1072#1074#1080#1090#1100' '#1085#1086#1074#1091#1102' '#1082#1086#1084#1085#1072#1090#1091
       ImageIndex = 3
+      ShortCut = 32850
       OnExecute = acAddRoomExecute
     end
     object acAddItem: TAction
@@ -456,6 +457,7 @@ object fMain: TfMain
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1088#1077#1076#1084#1077#1090
       Hint = #1044#1086#1073#1072#1074#1080#1090#1100' '#1085#1086#1074#1099#1081' '#1087#1088#1077#1076#1084#1077#1090
       ImageIndex = 19
+      ShortCut = 32841
       OnExecute = acAddItemExecute
     end
     object acAddVar: TAction
@@ -463,6 +465,7 @@ object fMain: TfMain
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1077#1088#1077#1084#1077#1085#1085#1091#1102
       Hint = #1044#1086#1073#1072#1074#1080#1090#1100' '#1085#1086#1074#1091#1102' '#1087#1077#1088#1077#1084#1077#1085#1085#1091#1102
       ImageIndex = 20
+      ShortCut = 32854
       OnExecute = acAddVarExecute
     end
     object acExitProgram: TAction
