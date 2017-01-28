@@ -21,7 +21,6 @@ type
     MenuImages: TImageList;
     ToolButton12: TToolButton;
     ToolButton13: TToolButton;
-    mmExport: TMemo;
     ToolButton1: TToolButton;
     PC: TPageControl;
     tsRooms: TTabSheet;
@@ -83,6 +82,11 @@ type
     ToolButton11: TToolButton;
     ToolButton15: TToolButton;
     N19: TMenuItem;
+    mmExport: TPanel;
+    ToolBar5: TToolBar;
+    ToolButton16: TToolButton;
+    mmExportMemo: TMemo;
+    acSaveQST: TAction;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -110,6 +114,7 @@ type
     procedure acTileUpdate(Sender: TObject);
     procedure acAboutExecute(Sender: TObject);
     procedure acSettingsExecute(Sender: TObject);
+    procedure acSaveQSTExecute(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -190,7 +195,7 @@ procedure TfMain.TVRDblClick(Sender: TObject);
 var
   S: string;
 begin
- mmExport.Visible := False;
+  mmExport.Visible := False;
   S := Trim(TVR.Selected.Text);
   if (S = '') or (S = RoomsName) then Exit;
   CreateRoom(S);
@@ -208,6 +213,7 @@ begin
   for I := MDIChildCount - 1 downto 0 do
     with MDIChildren[I] do Close;
   PC.ActivePageIndex := 0;
+  mmExport.Visible := False;
   FFileName := '';
   Modified := False;
 end;
@@ -217,7 +223,6 @@ begin
   QCProjFilters := Format(stProjFilters, [Application.Title, QCProjExt]);
   QL := TStringList.Create;
   SL := TStringList.Create;
-  SL.Sorted := True;
   SL.Duplicates := dupIgnore;
   GetDir(0, Path);
   Path := Path + '\';
@@ -406,16 +411,16 @@ var
 
   procedure Add(S: string);
   begin
-    V := mmExport.Lines.Add(S);
+    V := mmExportMemo.Lines.Add(S);
   end;
 
 begin
   // Ёкспорт
-  with mmExport do
+  with mmExportMemo do
   begin
-    if Visible  then
+    if mmExport.Visible  then
     begin
-      Visible := False;
+      mmExport.Visible := False;
       Exit;
     end;
     Clear;
@@ -476,7 +481,7 @@ begin
           Add('');
       end;
     end;
-    Visible := True;
+    mmExport.Visible := True;
   end;
 end;
 
@@ -545,6 +550,12 @@ end;
 procedure TfMain.acSettingsExecute(Sender: TObject);
 begin
   FormShowModal(fSettings);
+end;
+
+procedure TfMain.acSaveQSTExecute(Sender: TObject);
+begin
+  Self.mmExportMemo.Lines.SaveToFile(Path + 'quests\' + ChangeFileExt(ExtractFileName(FFileName), '.qst'));
+  MsgDlg(' вест сохранен в папке "Quests"!', mtInformation, [mbOk]);
 end;
 
 end.

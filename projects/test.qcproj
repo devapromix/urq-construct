@@ -1,9 +1,7 @@
 [settings]
 value=
 [room0]
-value=1btn room0, df
-[room1]
-value=
+value=1proc room0
 [items]
 value=
 [variables]

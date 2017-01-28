@@ -116,19 +116,6 @@ object fMain: TfMain
       Action = acAbout
     end
   end
-  object mmExport: TMemo
-    Left = 203
-    Top = 28
-    Width = 610
-    Height = 518
-    Align = alClient
-    Lines.Strings = (
-      '')
-    ScrollBars = ssBoth
-    TabOrder = 1
-    Visible = False
-    WordWrap = False
-  end
   object PC: TPageControl
     Left = 0
     Top = 28
@@ -138,7 +125,7 @@ object fMain: TfMain
     Align = alLeft
     Images = TabsImages
     MultiLine = True
-    TabOrder = 2
+    TabOrder = 1
     TabPosition = tpLeft
     object tsRooms: TTabSheet
       Caption = 'Rooms'
@@ -268,6 +255,50 @@ object fMain: TfMain
     Height = 19
     AutoHint = True
     Panels = <>
+  end
+  object mmExport: TPanel
+    Left = 203
+    Top = 28
+    Width = 610
+    Height = 518
+    Align = alClient
+    BevelOuter = bvNone
+    TabOrder = 3
+    Visible = False
+    object ToolBar5: TToolBar
+      Left = 0
+      Top = 0
+      Width = 610
+      Height = 23
+      AutoSize = True
+      ButtonHeight = 23
+      Caption = 'ToolBar1'
+      EdgeBorders = []
+      EdgeInner = esNone
+      EdgeOuter = esNone
+      Flat = True
+      Images = MenuImages
+      TabOrder = 0
+      object ToolButton16: TToolButton
+        Left = 0
+        Top = 0
+        Action = acSaveQST
+        ParentShowHint = False
+        ShowHint = True
+      end
+    end
+    object mmExportMemo: TMemo
+      Left = 0
+      Top = 23
+      Width = 610
+      Height = 495
+      Align = alClient
+      Lines.Strings = (
+        '')
+      ScrollBars = ssBoth
+      TabOrder = 1
+      WordWrap = False
+    end
   end
   object MM: TMainMenu
     Images = MenuImages
@@ -468,6 +499,13 @@ object fMain: TfMain
       Hint = #1053#1072#1089#1090#1088#1086#1081#1082#1080' '#1087#1088#1086#1077#1082#1090#1072
       ImageIndex = 10
       OnExecute = acSettingsExecute
+    end
+    object acSaveQST: TAction
+      Category = #1069#1082#1089#1087#1086#1088#1090
+      Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
+      Hint = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1082#1074#1077#1089#1090
+      ImageIndex = 8
+      OnExecute = acSaveQSTExecute
     end
   end
   object MenuImages: TImageList
