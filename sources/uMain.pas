@@ -188,8 +188,9 @@ end;
 
 procedure TfMain.TVRDblClick(Sender: TObject);
 var
-  S: string; 
+  S: string;
 begin
+ mmExport.Visible := False;
   S := Trim(TVR.Selected.Text);
   if (S = '') or (S = RoomsName) then Exit;
   CreateRoom(S);
@@ -282,12 +283,12 @@ begin
       // Настройки
       Ini.WriteString('settings', 'value', '');
       // Комнаты
-      GetResource(rtRoom, '');
+      SL := GetResource(rtRoom, '');
       for I := 0 to SL.Count - 1 do Ini.WriteString(SL[I], 'value', QL[I]);
       // Предметы
-      GetResource(rtItem, ''); Ini.WriteString('items', 'value', AddItems());
+      SL := GetResource(rtItem, ''); Ini.WriteString('items', 'value', AddItems());
       // Переменные
-      GetResource(rtVar, ''); Ini.WriteString('variables', 'value', AddItems());
+      SL := GetResource(rtVar, ''); Ini.WriteString('variables', 'value', AddItems());
     finally
       Ini.Free;
     end;

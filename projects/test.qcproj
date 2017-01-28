@@ -1,8 +1,10 @@
 [settings]
 value=
 [room0]
+value=1btn room0, df
+[room1]
+value=
+[items]
 value=
 [variables]
-value=fdsd
-[items]
-value=df
+value=
