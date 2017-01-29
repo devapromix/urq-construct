@@ -13,7 +13,8 @@ uses
   uAddItem in 'uAddItem.pas' {fAddItem},
   uCommon in 'uCommon.pas',
   uAbout in 'uAbout.pas' {fAbout},
-  uSettings in 'uSettings.pas' {fSettings};
+  uSettings in 'uSettings.pas' {fSettings},
+  uEditText in 'uEditText.pas' {fEditText};
 
 {$R *.RES}
 
@@ -30,5 +31,6 @@ begin
   Application.CreateForm(TfAddItem, fAddItem);
   Application.CreateForm(TfAbout, fAbout);
   Application.CreateForm(TfSettings, fSettings);
+  Application.CreateForm(TfEditText, fEditText);
   Application.Run;
 end.

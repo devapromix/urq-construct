@@ -131,9 +131,7 @@ begin
   for I := 0 to CLB.Count - 1 do
   begin
     D := IfThen((I <> CLB.Count - 1), '|', '');
-//    if (I <> CLB.Count - 1) then D := '|' else D := '';
     C := IfThen(CLB.Checked[I], '1', '0');
-    //C := '0'; if CLB.Checked[I] then C := '1';
     S := S + C + CLB.Items.Strings[I] + D;
   end;
   with fMain do
@@ -345,9 +343,6 @@ begin
     SL.Clear;
     SL := ExplodeString('=', S);
     fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
-    {if (Pos('"', S) > 0) then
-      fSelVar.VarType.ItemIndex := 1
-        else fSelVar.VarType.ItemIndex := 0;}
     S := '';
     if (SL.Count > 1) then
       S := StringReplace(Trim(SL[1]), '"', '', [rfReplaceAll]);
