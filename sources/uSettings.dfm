@@ -112,7 +112,7 @@ object fSettings: TfSettings
     Top = 8
     Width = 289
     Height = 233
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'

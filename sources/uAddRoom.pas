@@ -4,14 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, Mask;
+  Dialogs, StdCtrls, ComCtrls, Mask, Buttons;
 
 type
   TfAddRoom = class(TForm)
-    btOK: TButton;
+    btOK: TBitBtn;
     cbRoomName: TComboBox;
-    btCancel: TButton;
-    Label1: TLabel;
+    btCancel: TBitBtn;
+    lbDescr: TLabel;
     procedure btOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);

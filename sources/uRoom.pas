@@ -16,7 +16,6 @@ type
     btClose: TToolButton;
     ToolButton4: TToolButton;
     btCLSB: TToolButton;
-    ToolButton1: TToolButton;
     ToolButton6: TToolButton;
     btPrint: TToolButton;
     btPrintLine: TToolButton;
@@ -24,7 +23,6 @@ type
     btButton: TToolButton;
     ToolButton11: TToolButton;
     ToolButton12: TToolButton;
-    ToolButton13: TToolButton;
     ToolButton14: TToolButton;
     ButsImages: TImageList;
     PM: TPopupMenu;
@@ -40,8 +38,8 @@ type
     acInvKill: TAction;
     acPerKill: TAction;
     acBtn: TAction;
-    acPrint: TAction;
-    acPrintLn: TAction;
+    acText: TAction;
+    acTextLine: TAction;
     acClear: TAction;
     N2: TMenuItem;
     N3: TMenuItem;
@@ -52,11 +50,22 @@ type
     acFinishBlock: TAction;
     ToolButton5: TToolButton;
     ToolButton7: TToolButton;
-    ToolButton8: TToolButton;
+    acEditVar: TAction;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    acPrintLn1: TMenuItem;
+    acPrint1: TMenuItem;
+    acEditItem: TAction;
+    acClose: TAction;
+    N6: TMenuItem;
+    N7: TMenuItem;
+    N8: TMenuItem;
+    N9: TMenuItem;
+    acExpression1: TMenuItem;
+    N10: TMenuItem;
+    N11: TMenuItem;
+    N12: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btCloseClick(Sender: TObject);
-    procedure ToolButton12Click(Sender: TObject);
-    procedure ToolButton14Click(Sender: TObject);
     procedure acDeleteUpdate(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);
     procedure CLBDblClick(Sender: TObject);
@@ -70,6 +79,9 @@ type
     procedure acClearExecute(Sender: TObject);
     procedure acClearUpdate(Sender: TObject);
     procedure acOpGrEExecute(Sender: TObject);
+    procedure acEditVarExecute(Sender: TObject);
+    procedure acEditItemExecute(Sender: TObject);
+    procedure acCloseExecute(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -404,24 +416,24 @@ begin
   AddOpGrE((Sender as TAction).Tag);
 end;
 
-procedure TfRoom.btCloseClick(Sender: TObject);
+procedure TfRoom.acClearUpdate(Sender: TObject);
 begin
-  Close;
+  acClear.Enabled := (CLB.Count > 0);
 end;
 
-procedure TfRoom.ToolButton12Click(Sender: TObject);
+procedure TfRoom.acEditVarExecute(Sender: TObject);
 begin
   AddVar();
 end;
 
-procedure TfRoom.ToolButton14Click(Sender: TObject);
+procedure TfRoom.acEditItemExecute(Sender: TObject);
 begin
   AddItem();
 end;
 
-procedure TfRoom.acClearUpdate(Sender: TObject);
+procedure TfRoom.acCloseExecute(Sender: TObject);
 begin
-  acClear.Enabled := (CLB.Count > 0);
+  Close;
 end;
 
 end.
