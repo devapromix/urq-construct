@@ -19,6 +19,12 @@ uses
 {$R *.RES}
 
 begin
+{$IFNDEF FPC}
+{$IF COMPILERVERSION >= 18}
+//  ReportMemoryLeaksOnShutdown := True;
+{$IFEND}
+{$ENDIF}
+  Randomize;
   Application.Initialize;
   Application.Title := 'URQConstruct';
   Application.CreateForm(TfMain, fMain);

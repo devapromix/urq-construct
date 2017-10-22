@@ -80,6 +80,12 @@ begin
       ShowMessage('!!!');
       Exit;
     end;
+  for I := 0 to High(ErNames) do
+    if (S = ErNames[I]) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
   AddItem(S);
   Self.ModalResult := mrOk;
 end;

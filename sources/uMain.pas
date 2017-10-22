@@ -120,12 +120,12 @@ type
     SL: TStringList;
     FFileName: string;
     FModified: Boolean;
-    procedure CreateRoom(const AName: string);
     procedure NewProject;
     procedure SetModified(const Value: Boolean);
   public
     { Public declarations }
     QL: TStringList;
+    procedure CreateRoom(const AName: string);
     function CheckModified: Boolean;
     procedure UpdateProject();
     property Modified: Boolean read FModified write SetModified;
@@ -167,6 +167,7 @@ begin
       Exit;
     end;
   end;
+  if (GetRoomIndexByName(AName) < 0) then Exit;
   Room := TfRoom.Create(Application);
   Room.Current := GetCurrent(AName);
   Room.Caption := GetCaption(AName);
@@ -334,7 +335,8 @@ begin
       Ini.ReadSections(SL);
       for I := 0 to SL.Count - 1 do
       begin
-        if (SL[I] = 'settings') or (SL[I] = 'variables') or (SL[I] = 'items') then Continue;
+        if (SL[I] = 'settings') or (SL[I] = 'variables')
+          or (SL[I] = 'items') then Continue;
         AddTVItem(TVR, SL[I], 3, 4);
         QL.Append(Ini.ReadString(SL[I], 'value', ''));
       end;
@@ -464,7 +466,7 @@ begin
           end;
           if H then
           begin
-            if (Copy(D, 1, 2) = 'if') then M := '';
+            if (Copy(D, 1, 3) = 'if ') then M := '';
             Lines[V] := Lines[V] + D + M;
             M := OpDiv;
           end else begin

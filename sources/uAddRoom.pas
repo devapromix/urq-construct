@@ -89,6 +89,7 @@ begin
   Self.cbRoomName.Text := FNewRoomName;
   FormShowModal(Self);
   Result := FNewRoomName;
+  fMain.CreateRoom(FNewRoomName);
 end;
 
 procedure TfAddRoom.FormShow(Sender: TObject);

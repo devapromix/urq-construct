@@ -1,7 +1,7 @@
 [settings]
 value=
 [room0]
-value=1proc room0
+value=0proc room0|1if gh gh gh|1startblock|1finishblock|0btn room0, ddd|0invkill
 [items]
 value=
 [variables]

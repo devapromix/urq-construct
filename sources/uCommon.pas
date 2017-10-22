@@ -26,6 +26,10 @@ type
   // Типы ресурсов
   TResType = (rtRoom, rtItem, rtVar);
 
+const
+  // Запрещенные имена для комнат, предметов и переменных
+  ErNames: array [0..2] of string = ('settings', 'items', 'variables');
+
 var
   // Путь
   Path: string = '';
