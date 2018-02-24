@@ -3,7 +3,7 @@ unit uRoom;
 interface
 
 uses Windows, Classes, Dialogs, Graphics, Forms, Controls, StdCtrls, CheckLst,
-  ComCtrls, ToolWin, ImgList, Menus, ActnList;
+  ComCtrls, ToolWin, ImgList, Menus, ActnList, System.Actions;
 
 type
   TfRoom = class(TForm)
