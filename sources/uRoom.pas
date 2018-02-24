@@ -102,17 +102,20 @@ type
 
 const
   // Операторы по группам
-  OpGrA: array [0..5] of string = ('cls', 'clsb', 'invkill', 'perkill', 'startblock', 'finishblock');
-  OpGrB: array [0..1] of string = ('goto', 'proc');
-  OpGrC: array [0..0] of string = ('btn');
-  OpGrD: array [0..1] of string = ('pln', 'p');
-  OpGrE: array [0..0] of string = ('if');
+  OpGrA: array [0 .. 5] of string = ('cls', 'clsb', 'invkill', 'perkill', 'startblock', 'finishblock');
+  OpGrB: array [0 .. 1] of string = ('goto', 'proc');
+  OpGrC: array [0 .. 0] of string = ('btn');
+  OpGrD: array [0 .. 1] of string = ('pln', 'p');
+  OpGrE: array [0 .. 0] of string = ('if');
 
 implementation
 
 uses SysUtils, Math, uMain, uSelRoom, uSelText, uSelVar, uSelItem, uCommon;
 
-{$R *.dfm}  
+{$R *.dfm}
+
+var
+  V: (T1, T2, T3);
 
 procedure TfRoom.LoadCLB(const Index: Integer);
 var
@@ -150,13 +153,13 @@ begin
   begin
     QL[Index] := S;
     Modified := True;
-  end;  
+  end;
 end;
 
 procedure TfRoom.AddOpGrA(const N: Integer);
 begin
   // Операторы без параметров
-  CLB.Checked[CLB.Items.Add(OpGrA[N])] := True; 
+  CLB.Checked[CLB.Items.Add(OpGrA[N])] := True;
   SaveCLB(Current);
 end;
 
@@ -167,10 +170,13 @@ begin
   // Операторы, у которых параметр - метка комнаты
   Op := OpGrB[N];
   S := fSelRoom.GetRoom(Self.Caption, P);
-  if (S = '') then Exit;
+  if (S = '') then
+    Exit;
   S := Format('%s %s', [Op, S]);
-  if (I >= 0) then CLB.Items[I] := S
-    else I := CLB.Items.Add(S);
+  if (I >= 0) then
+    CLB.Items[I] := S
+  else
+    I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
 end;
@@ -182,12 +188,16 @@ begin
   // Операторы, осуществляющие переход в комнаты по кнопкам
   Op := OpGrC[N];
   S := fSelRoom.GetRoom(Self.Caption, P);
-  if (S = '') then Exit;
+  if (S = '') then
+    Exit;
   T := fSelText.GetText(E);
-  if (T = '') then Exit;
+  if (T = '') then
+    Exit;
   S := Format('%s %s, %s', [Op, S, T]);
-  if (I >= 0) then CLB.Items[I] := S
-    else I := CLB.Items.Add(S);
+  if (I >= 0) then
+    CLB.Items[I] := S
+  else
+    I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
 end;
@@ -199,10 +209,13 @@ begin
   // Операторы вывода текста
   Op := OpGrD[N];
   S := fSelText.GetText(P);
-  if (S = '') then Exit;
+  if (S = '') then
+    Exit;
   S := Format('%s %s', [Op, S]);
-  if (I >= 0) then CLB.Items[I] := S
-    else I := CLB.Items.Add(S);
+  if (I >= 0) then
+    CLB.Items[I] := S
+  else
+    I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
 end;
@@ -213,14 +226,18 @@ var
 begin
   Op := OpGrE[N];
   S := fSelText.GetText(P);
-  if (S = '') then Exit;
+  if (S = '') then
+    Exit;
   S := Format('%s %s', [Op, S]);
-  if (I >= 0) then CLB.Items[I] := S
-    else I := CLB.Items.Add(S);
+  if (I >= 0) then
+    CLB.Items[I] := S
+  else
+    I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
   // Автомат. вставить начало блока
-  if (Op = 'if') then AddOpGrA(4);
+  if (Op = 'if') then
+    AddOpGrA(4);
 end;
 
 procedure TfRoom.AddVar(I: Integer = -1);
@@ -229,12 +246,16 @@ var
 begin
   // Добавить переменную
   fSelVar.GetVar(VarName, Value);
-  if (VarName = '') then Exit;
+  if (VarName = '') then
+    Exit;
   if (fSelVar.VarType.ItemIndex = 0) then
     S := Format('%s = %s', [VarName, Value])
-      else S := Format('%s = "%s"', [VarName, Value]);
-  if (I >= 0) then CLB.Items[I] := S
-    else I := CLB.Items.Add(S);
+  else
+    S := Format('%s = "%s"', [VarName, Value]);
+  if (I >= 0) then
+    CLB.Items[I] := S
+  else
+    I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
 end;
@@ -247,14 +268,20 @@ begin
   // Добавить или забрать предмет
   SAmount := '';
   fSelItem.GetItem(ItemName, Amount);
-  if (ItemName = '') then Exit;
-  if (Amount <= 0) then Amount := 1;
-  if (Amount > 1) then SAmount := Format('%d, ', [Amount]);
+  if (ItemName = '') then
+    Exit;
+  if (Amount <= 0) then
+    Amount := 1;
+  if (Amount > 1) then
+    SAmount := Format('%d, ', [Amount]);
   if (fSelItem.Switch.ItemIndex = 0) then
     S := Format('inv+ %s%s', [SAmount, ItemName])
-      else S := Format('inv- %s%s', [SAmount, ItemName]);
-  if (I >= 0) then CLB.Items[I] := S
-    else I := CLB.Items.Add(S);
+  else
+    S := Format('inv- %s%s', [SAmount, ItemName]);
+  if (I >= 0) then
+    CLB.Items[I] := S
+  else
+    I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
 end;
@@ -262,12 +289,11 @@ end;
 procedure TfRoom.acDeleteExecute(Sender: TObject);
 begin
   // Попытка удалить команду из списка
-  if (CLB.ItemIndex >= 0)
-    and (MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
-    begin
-      CLB.Items.Delete(CLB.ItemIndex);
-      SaveCLB(Current);
-    end;
+  if (CLB.ItemIndex >= 0) and (MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  begin
+    CLB.Items.Delete(CLB.ItemIndex);
+    SaveCLB(Current);
+  end;
 end;
 
 procedure TfRoom.acClearExecute(Sender: TObject);
@@ -291,7 +317,8 @@ var
   S, T: string;
 begin
   Index := CLB.ItemIndex;
-  if (Index < 0) then Exit;
+  if (Index < 0) then
+    Exit;
   S := Trim(CLB.Items[Index]);
   // Группа B
   for I := 0 to High(OpGrB) do
@@ -307,9 +334,7 @@ begin
     begin
       J := Length(OpGrC[I]) + 1;
       K := Pos(',', S);
-      AddOpGrC(I, Index,
-      Trim(Copy(S, J, K - J)),
-      Trim(Copy(S, K + 1, Length(S))));
+      AddOpGrC(I, Index, Trim(Copy(S, J, K - J)), Trim(Copy(S, K + 1, Length(S))));
       Exit;
     end;
   // Группа D
@@ -333,8 +358,10 @@ begin
   if (T = 'inv+') or (T = 'inv-') then
   begin
     case T[4] of
-      '+': fSelItem.Switch.ItemIndex := 0;
-      '-': fSelItem.Switch.ItemIndex := 1;
+      '+':
+        fSelItem.Switch.ItemIndex := 0;
+      '-':
+        fSelItem.Switch.ItemIndex := 1;
     end;
     K := 1;
     if (Pos(',', S) > 0) then
@@ -343,7 +370,9 @@ begin
       SL := ExplodeString(',', Trim(Copy(S, 5, Length(S))));
       T := Trim(SL[1]);
       K := StrToIntDef(SL[0], 1);
-    end else T := Trim(Copy(S, 5, Length(S)));
+    end
+    else
+      T := Trim(Copy(S, 5, Length(S)));
     //
     fSelItem.edItem.Text := T;
     fSelItem.UpDn.Position := K;
