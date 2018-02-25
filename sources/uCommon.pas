@@ -7,9 +7,11 @@ uses Forms, Dialogs, Classes, ComCtrls;
 const
   // Версия конструктора
   Version = '0.1.0';
+
+const
   // Расширение ini-файла проекта (QCPROJ = QuestConstructPROJect)
   QCProjExt = 'qcproj';
-  
+
 var
   stProjectExists: string = 'Проект %s существует! Перезаписать?';
   stCheckModified: string = 'Проект изменен! Отбросить изменения и продолжить?';
@@ -28,7 +30,7 @@ type
 
 const
   // Запрещенные имена для комнат, предметов и переменных
-  ErNames: array [0..2] of string = ('settings', 'items', 'variables');
+  ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
 
 var
   // Путь
@@ -38,14 +40,13 @@ var
   // Разделитель операторов в URQL
   OpDiv: string = '&';
 
-function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+function MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 function ExplodeString(const Separator, Source: string): TStringList;
 procedure SetTVImages(const TreeNode: TTreeNode; const ImgIndex, SelIndex: Integer);
 procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
 function AddTVItem(const TV: TTreeView; const Title: string; const ImageIndex, SelectedIndex: Integer): TTreeNode;
 function GetResource(const RT: TResType; Current: string = ''): TStringList;
-//procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
+// procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
 function FormShowModal(Form: TForm): Integer;
 function GetRoomIndexByName(const AName: string): Integer;
 function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string; overload;
@@ -55,8 +56,7 @@ implementation
 
 uses SysUtils, uMain;
 
-function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+function MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
   Result := FormShowModal(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
@@ -99,29 +99,29 @@ begin
   case RT of
     // Комната
     rtRoom:
-    begin
-      TV := fMain.TVR;
-      Name := RoomsName;
-    end;
+      begin
+        TV := fMain.TVR;
+        Name := RoomsName;
+      end;
     // Предмет
     rtItem:
-    begin
-      TV := fMain.TVI;
-      Name := ItemsName;
-    end;
+      begin
+        TV := fMain.TVI;
+        Name := ItemsName;
+      end;
     // Переменная
     rtVar:
-    begin
-      TV := fMain.TVV;
-      Name := VarsName;
-    end;
+      begin
+        TV := fMain.TVV;
+        Name := VarsName;
+      end;
   end;
   L := TStringList.Create;
   for I := 0 to TV.Items.Count - 1 do
   begin
     S := LowerCase(TV.Items[I].Text);
     if (S <> Name) and (S <> Current) then
-        L.Append(S);
+      L.Append(S);
   end;
   Result := L;
 end;
