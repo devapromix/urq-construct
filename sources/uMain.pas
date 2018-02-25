@@ -4,7 +4,7 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, Menus,
   StdCtrls, Dialogs, Buttons, Messages, ExtCtrls, ComCtrls, StdActns,
-  ActnList, ToolWin, ImgList, IniFiles, Math, uCommon;
+  ActnList, ToolWin, ImgList, IniFiles, Math, uCommon, System.Actions;
 
 type
   TfMain = class(TForm)
@@ -140,7 +140,7 @@ implementation
 {$R *.dfm}  
 
 uses uRoom, uAddRoom, uSelItem, uSelVar, uAddVar, uAddItem,
-  uAbout, uSettings;
+  uAbout, uSettings, uUtils;
 
 procedure TfMain.CreateRoom(const AName: string);
 var
@@ -546,7 +546,8 @@ end;
 
 procedure TfMain.acAboutExecute(Sender: TObject);
 begin
-  FormShowModal(fAbout);
+  //FormShowModal(fAbout);
+  Utils.ShowCenterForm(fAbout)
 end;
 
 procedure TfMain.acSettingsExecute(Sender: TObject);
