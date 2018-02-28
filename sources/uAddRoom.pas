@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon;
+uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
@@ -87,7 +87,7 @@ begin
   until F;
   Self.cbRoomName.Items.Assign(SL);
   Self.cbRoomName.Text := FNewRoomName;
-  FormShowModal(Self);
+  Utils.ShowCenterForm(Self);
   Result := FNewRoomName;
   fMain.CreateRoom(FNewRoomName);
 end;
