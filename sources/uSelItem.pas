@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uAddItem, uCommon;
+uses uMain, uAddItem, uCommon, uUtils;
 
 {$R *.dfm}
 
@@ -40,7 +40,7 @@ procedure TfSelItem.GetItem(var ItemName: string; var Amount: Integer);
 begin
   ItemName := '';
   Amount := 1;
-  if (FormShowModal(Self) = mrCancel) then Exit;
+  if (Utils.ShowForm(Self) = mrCancel) then Exit;
   ItemName := Trim(edItem.Text);
   Amount := StrToIntDef(edAmount.Text, 1);
   fAddItem.AddItem(ItemName);

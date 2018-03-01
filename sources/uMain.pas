@@ -546,13 +546,12 @@ end;
 
 procedure TfMain.acAboutExecute(Sender: TObject);
 begin
-  //FormShowModal(fAbout);
-  Utils.ShowCenterForm(fAbout)
+  Utils.ShowForm(fAbout)
 end;
 
 procedure TfMain.acSettingsExecute(Sender: TObject);
 begin
-  FormShowModal(fSettings);
+  Utils.ShowForm(fSettings)
 end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);

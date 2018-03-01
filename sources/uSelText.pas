@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses uCommon, uEditText;
+uses uCommon, uEditText, uUtils;
 
 {$R *.dfm}
 
@@ -40,7 +40,7 @@ begin
   Result := '';
   S := Trim(S);
   if (S <> '') then Self.edText.Text := S;
-  if (FormShowModal(Self) = mrCancel) then Exit;
+  if (Utils.ShowForm(Self) = mrCancel) then Exit;
   Result := Self.edText.Text;
 end;
 
@@ -59,7 +59,7 @@ end;
 procedure TfSelText.BitBtn2Click(Sender: TObject);
 begin
   fEditText.RE.Text := Trim(edText.Text);
-  FormShowModal(fEditText);
+  Utils.ShowForm(fEditText);
 end;
 
 end.

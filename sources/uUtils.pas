@@ -9,7 +9,7 @@ type
   Utils = class(TObject)
   public
     class function GetPath(SubDir: string): string;
-    class function ShowCenterForm(const Form: TForm; Show: Boolean = True): Integer;
+    class function ShowForm(const Form: TForm): Integer;
   end;
 
 implementation
@@ -22,14 +22,14 @@ begin
   Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
-class function Utils.ShowCenterForm(const Form: TForm; Show: Boolean = True): Integer;
+class function Utils.ShowForm(const Form: TForm): Integer;
 begin
-  Result := -1;
-  Form.BorderStyle := bsDialog;
-  Form.Left := Application.MainForm.Left + ((Application.MainForm.Width div 2) - (Form.Width div 2));
-  Form.Top := Application.MainForm.Top + ((Application.MainForm.Height div 2) - (Form.Height div 2));
-  if Show then
-    Result := Form.ShowModal;
+  with Form do
+  begin
+    BorderStyle := bsDialog;
+    Position := poOwnerFormCenter;
+    Result := ShowModal;
+  end;
 end;
 
 end.

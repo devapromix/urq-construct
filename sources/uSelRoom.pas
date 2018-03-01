@@ -28,7 +28,7 @@ var
 
 implementation
 
-uses uMain, uAddRoom, uCommon;
+uses uMain, uAddRoom, uCommon, uUtils;
 
 {$R *.dfm}
 
@@ -46,7 +46,7 @@ begin
   SelRoom := Trim(SelRoom);
   if (SelRoom <> '') then FIndex := RoomList.Items.IndexOf(SelRoom);
   if (FIndex < 0) then FIndex := 0;
-  if (FormShowModal(Self) = mrCancel) or (RoomList.ItemIndex < 0) then Exit;
+  if (Utils.ShowForm(Self) = mrCancel) or (RoomList.ItemIndex < 0) then Exit;
   Result := Trim(RoomList.Items.Strings[RoomList.ItemIndex]);
 end;
 
