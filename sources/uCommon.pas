@@ -47,18 +47,17 @@ procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
 function AddTVItem(const TV: TTreeView; const Title: string; const ImageIndex, SelectedIndex: Integer): TTreeNode;
 function GetResource(const RT: TResType; Current: string = ''): TStringList;
 // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
-function FormShowModal(Form: TForm): Integer;
 function GetRoomIndexByName(const AName: string): Integer;
 function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string; overload;
 function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char; overload;
 
 implementation
 
-uses SysUtils, uMain;
+uses SysUtils, uMain, uUtils;
 
 function MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
-  Result := FormShowModal(CreateMessageDialog(Msg, DlgType, Buttons));
+  Result := Utils.ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
 
 function ExplodeString(const Separator, Source: string): TStringList;
@@ -124,15 +123,6 @@ begin
       L.Append(S);
   end;
   Result := L;
-end;
-
-function FormShowModal(Form: TForm): Integer;
-begin
-  with Form do
-  begin
-    Position := poOwnerFormCenter;
-    Result := ShowModal;
-  end;
 end;
 
 function GetRoomIndexByName(const AName: string): Integer;

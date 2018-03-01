@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon;
+uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
@@ -43,7 +43,7 @@ procedure TfAddVar.NewVar;
 begin
   // Добавить новую переменную
   cbVarName.Items.Assign(GetResource(rtVar, ''));
-  FormShowModal(Self);
+  Utils.ShowForm(Self);
 end;
 
 procedure TfAddVar.FormShow(Sender: TObject);
@@ -87,7 +87,8 @@ begin
   // Добавить переменную
   SL.Assign(GetResource(rtVar, ''));
   for I := 0 to SL.Count - 1 do
-    if (SL[I] = VarName) then Exit;
+    if (SL[I] = VarName) then
+      Exit;
   AddTVItem(fMain.TVV, VarName, 2, 2);
   fMain.Modified := True;
 end;

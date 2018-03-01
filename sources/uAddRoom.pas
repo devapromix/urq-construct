@@ -87,7 +87,7 @@ begin
   until F;
   Self.cbRoomName.Items.Assign(SL);
   Self.cbRoomName.Text := FNewRoomName;
-  Utils.ShowCenterForm(Self);
+  Utils.ShowForm(Self);
   Result := FNewRoomName;
   fMain.CreateRoom(FNewRoomName);
 end;
