@@ -347,8 +347,7 @@ begin
       Ini.ReadSections(SL);
       for I := 0 to SL.Count - 1 do
       begin
-        if (SL[I] = 'settings') or (SL[I] = 'variables') or (SL[I] = 'items')
-        then
+        if IsErName(SL[I]) then
           Continue;
         AddTVItem(TVR, SL[I], 3, 4);
         QL.Append(Ini.ReadString(SL[I], 'value', ''));

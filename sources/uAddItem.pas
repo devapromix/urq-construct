@@ -80,8 +80,7 @@ begin
       ShowMessage('!!!');
       Exit;
     end;
-  for I := 0 to High(ErNames) do
-    if (S = ErNames[I]) then
+  if IsErName(S) then
     begin
       ShowMessage('!!!');
       Exit;

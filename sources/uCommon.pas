@@ -57,6 +57,7 @@ function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string)
   : string; overload;
 function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char)
   : Char; overload;
+function IsErName(AValue: Boolean): Boolean;
 
 implementation
 
@@ -168,6 +169,19 @@ begin
     Result := ATrue
   else
     Result := AFalse;
+end;
+
+function IsErName(AValue: Boolean): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+  for I := 0 to High(ErNames) do
+    if (AValue = ErNames[I]) then
+    begin
+      Result := True;
+      Exit;
+    end;
 end;
 
 end.
