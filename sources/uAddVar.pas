@@ -70,12 +70,16 @@ begin
       ShowMessage('!!!');
       Exit;
     end;
-  for I := 0 to High(ErNames) do
-    if (S = ErNames[I]) then
-    begin
-      ShowMessage('!!!');
-      Exit;
-    end;
+  if IsErName(S) then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
+  if IsErChar(S) then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
   AddVar(S);
   Self.ModalResult := mrOk;
 end;

@@ -32,7 +32,7 @@ const
   // Запрещенные имена для комнат, предметов и переменных
   ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
   // Запрещенные символы для комнат, предметов и переменных
-  ErChars: array [0 .. 0] of string = ('|');
+  ErChars: array [0 .. 1] of Char = ('|','&');
 
 var
   // Путь
@@ -57,7 +57,8 @@ function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string)
   : string; overload;
 function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char)
   : Char; overload;
-function IsErName(AValue: Boolean): Boolean;
+function IsErName(const S: string): Boolean;
+function IsErChar(const S: string): Boolean;
 
 implementation
 
@@ -171,13 +172,26 @@ begin
     Result := AFalse;
 end;
 
-function IsErName(AValue: Boolean): Boolean;
+function IsErName(const S: string): Boolean;
 var
   I: Integer;
 begin
   Result := False;
   for I := 0 to High(ErNames) do
-    if (AValue = ErNames[I]) then
+    if (S = ErNames[I]) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+function IsErChar(const S: string): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+  for I := 0 to High(ErChars) do
+    if (S.CountChar(ErChars[I]) > 0) then
     begin
       Result := True;
       Exit;

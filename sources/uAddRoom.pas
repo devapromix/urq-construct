@@ -45,8 +45,13 @@ var
 begin
   SL.Assign(GetResource(rtRoom, ''));
   FNewRoomName := LowerCase(Trim(cbRoomName.Text));
+  if (FNewRoomName = '') then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
   for I := 0 to SL.Count - 1 do
-    if (FNewRoomName = '') or (FNewRoomName = SL.Strings[I]) then
+    if (FNewRoomName = SL.Strings[I]) then
     begin
       ShowMessage('!!!');
       Exit;
@@ -56,12 +61,16 @@ begin
     ShowMessage('!!!');
     Exit;
   end;
-  for I := 0 to High(ErNames) do
-    if (FNewRoomName = ErNames[I]) then
-    begin
-      ShowMessage('!!!');
-      Exit;
-    end;
+  if IsErName(FNewRoomName) then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
+  if IsErChar(FNewRoomName) then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
   AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
   fMain.QL.Append('');
   fMain.Modified := True;

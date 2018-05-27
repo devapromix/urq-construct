@@ -46,7 +46,8 @@ begin
   // Добавить предмет
   SL.Assign(GetResource(rtItem, ''));
   for I := 0 to SL.Count - 1 do
-    if (SL[I] = ItemName) then Exit;
+    if (SL[I] = ItemName) then
+      Exit;
   AddTVItem(fMain.TVI, ItemName, 1, 1);
   fMain.Modified := True;
 end;
@@ -81,10 +82,15 @@ begin
       Exit;
     end;
   if IsErName(S) then
-    begin
-      ShowMessage('!!!');
-      Exit;
-    end;
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
+  if IsErChar(S) then
+  begin
+    ShowMessage('!!!');
+    Exit;
+  end;
   AddItem(S);
   Self.ModalResult := mrOk;
 end;
