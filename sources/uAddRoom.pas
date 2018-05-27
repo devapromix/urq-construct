@@ -56,6 +56,12 @@ begin
     ShowMessage('!!!');
     Exit;
   end;
+  for I := 0 to High(ErNames) do
+    if (FNewRoomName = ErNames[I]) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
   AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
   fMain.QL.Append('');
   fMain.Modified := True;

@@ -4,7 +4,8 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, Menus,
   StdCtrls, Dialogs, Buttons, Messages, ExtCtrls, ComCtrls, StdActns,
-  ActnList, ToolWin, ImgList, IniFiles, Math, uCommon, System.Actions;
+  ActnList, ToolWin, ImgList, IniFiles, Math, uCommon, System.Actions,
+  System.ImageList;
 
 type
   TfMain = class(TForm)
@@ -137,7 +138,7 @@ var
 
 implementation
 
-{$R *.dfm}  
+{$R *.dfm}
 
 uses uRoom, uAddRoom, uSelItem, uSelVar, uAddVar, uAddItem,
   uAbout, uSettings, uUtils;
@@ -154,20 +155,22 @@ var
 
   function GetCaption(const AName: string): string;
   begin
-    Result := Format('%s: %s [%d]', [RoomDefaultCaption, AName, GetCurrent(AName)]);
+    Result := Format('%s: %s [%d]', [RoomDefaultCaption, AName,
+      GetCurrent(AName)]);
   end;
 
 begin
   for I := 0 to MDIChildCount - 1 do
-  with MDIChildren[I] do
-  begin
-    if (GetCaption(AName) = Caption) then
+    with MDIChildren[I] do
     begin
-      Show();
-      Exit;
+      if (GetCaption(AName) = Caption) then
+      begin
+        Show();
+        Exit;
+      end;
     end;
-  end;
-  if (GetRoomIndexByName(AName) < 0) then Exit;
+  if (GetRoomIndexByName(AName) < 0) then
+    Exit;
   Room := TfRoom.Create(Application);
   Room.Current := GetCurrent(AName);
   Room.Caption := GetCaption(AName);
@@ -178,18 +181,19 @@ procedure TfMain.UpdateProject;
 var
   S, Modif: string;
 const
-  F = '%s (%d)'; 
+  F = '%s (%d)';
 begin
   // Caption
-  S := IfThen((FFileName <> ''), Format(' - %s', [ExtractFileName(FFileName)]), '');
+  S := IfThen((FFileName <> ''),
+    Format(' - %s', [ExtractFileName(FFileName)]), '');
   Modif := IfThen(Modified, '*', '');
-//  if (FFileName <> '') then S := Format(' - %s', [ExtractFileName(FFileName)]) else S := '';
-//  if Modified then Modif := '*' else Modif := '';
+  // if (FFileName <> '') then S := Format(' - %s', [ExtractFileName(FFileName)]) else S := '';
+  // if Modified then Modif := '*' else Modif := '';
   Caption := Format(Trim('%s %s'), [Application.Title, S]) + Modif;
   // Tabs
   tsRooms.Caption := Format(F, [RoomsName, GetResource(rtRoom, '').Count]);
   tsItems.Caption := Format(F, [ItemsName, GetResource(rtItem, '').Count]);
-  tsVars.Caption  := Format(F, [VarsName,  GetResource(rtVar,  '').Count]);
+  tsVars.Caption := Format(F, [VarsName, GetResource(rtVar, '').Count]);
 end;
 
 procedure TfMain.TVRDblClick(Sender: TObject);
@@ -198,7 +202,8 @@ var
 begin
   mmExport.Visible := False;
   S := Trim(TVR.Selected.Text);
-  if (S = '') or (S = RoomsName) then Exit;
+  if (S = '') or (S = RoomsName) then
+    Exit;
   CreateRoom(S);
 end;
 
@@ -212,7 +217,8 @@ begin
   SetTV(TVI, ItemsName, 1);
   SetTV(TVV, VarsName, 2);
   for I := MDIChildCount - 1 downto 0 do
-    with MDIChildren[I] do Close;
+    with MDIChildren[I] do
+      Close;
   PC.ActivePageIndex := 0;
   mmExport.Visible := False;
   FFileName := '';
@@ -239,9 +245,9 @@ end;
 function TfMain.CheckModified: Boolean;
 begin
   Result := False;
-  if Modified and (MsgDlg(stCheckModified,
-      mtConfirmation, mbOKCancel) <> mrOk) then
-        Result := True;
+  if Modified and (MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <> mrOk)
+  then
+    Result := True;
 end;
 
 procedure TfMain.acSaveProjectExecute(Sender: TObject);
@@ -260,7 +266,7 @@ var
     for I := 0 to SL.Count - 1 do
     begin
       D := IfThen(I <> SL.Count - 1, '|', '');
-      //if (I <> SL.Count - 1) then D := '|' else D := '';
+      // if (I <> SL.Count - 1) then D := '|' else D := '';
       Result := Result + SL[I] + D;
     end;
   end;
@@ -280,21 +286,25 @@ begin
   begin
     if FileExists(SD.FileName) and
       (MsgDlg(Format(stProjectExists, [ExtractFileName(SD.FileName)]),
-      mtConfirmation, [mbOk, mbCancel]) = mrCancel) then Exit;
+      mtConfirmation, [mbOk, mbCancel]) = mrCancel) then
+      Exit;
     DeleteFile(SD.FileName);
     FFileName := SD.FileName;
-    save_label:
+  save_label:
     Ini := TIniFile.Create(SD.FileName);
     try
       // Настройки
       Ini.WriteString('settings', 'value', '');
       // Комнаты
       SL := GetResource(rtRoom, '');
-      for I := 0 to SL.Count - 1 do Ini.WriteString(SL[I], 'value', QL[I]);
+      for I := 0 to SL.Count - 1 do
+        Ini.WriteString(SL[I], 'value', QL[I]);
       // Предметы
-      SL := GetResource(rtItem, ''); Ini.WriteString('items', 'value', AddItems());
+      SL := GetResource(rtItem, '');
+      Ini.WriteString('items', 'value', AddItems());
       // Переменные
-      SL := GetResource(rtVar, ''); Ini.WriteString('variables', 'value', AddItems());
+      SL := GetResource(rtVar, '');
+      Ini.WriteString('variables', 'value', AddItems());
     finally
       Ini.Free;
     end;
@@ -305,18 +315,20 @@ end;
 procedure TfMain.acNewProjectExecute(Sender: TObject);
 begin
   // Новый проект
-  if CheckModified then Exit;
+  if CheckModified then
+    Exit;
   NewProject;
 end;
 
 procedure TfMain.acOpenProjectExecute(Sender: TObject);
 var
-  S: string;
+  S, N: string;
   I: Integer;
   Ini: TIniFile;
 begin
   // Загрузить проект
-  if CheckModified then Exit;
+  if CheckModified then
+    Exit;
   OD.InitialDir := Path + 'projects';
   OD.DefaultExt := QCProjExt;
   OD.Filter := QCProjFilters;
@@ -335,8 +347,9 @@ begin
       Ini.ReadSections(SL);
       for I := 0 to SL.Count - 1 do
       begin
-        if (SL[I] = 'settings') or (SL[I] = 'variables')
-          or (SL[I] = 'items') then Continue;
+        if (SL[I] = 'settings') or (SL[I] = 'variables') or (SL[I] = 'items')
+        then
+          Continue;
         AddTVItem(TVR, SL[I], 3, 4);
         QL.Append(Ini.ReadString(SL[I], 'value', ''));
       end;
@@ -345,13 +358,21 @@ begin
       SL.Clear;
       SL := ExplodeString('|', S);
       for I := 0 to SL.Count - 1 do
-        AddTVItem(TVI, SL[I], 1, 1);
+      begin
+        N := Trim(SL[I]);
+        if (N <> '') then
+          AddTVItem(TVI, N, 1, 1);
+      end;
       // Переменные
       S := Ini.ReadString('variables', 'value', '');
       SL.Clear;
       SL := ExplodeString('|', S);
       for I := 0 to SL.Count - 1 do
-        AddTVItem(TVV, SL[I], 2, 2);
+      begin
+        N := Trim(SL[I]);
+        if (N <> '') then
+        AddTVItem(TVV, N, 2, 2);
+      end;
     finally
       Ini.Free;
     end;
@@ -420,7 +441,7 @@ begin
   // Экспорт
   with mmExportMemo do
   begin
-    if mmExport.Visible  then
+    if mmExport.Visible then
     begin
       mmExport.Visible := False;
       Exit;
@@ -444,12 +465,14 @@ begin
           D := '';
           if (P <= 0) then
           begin
-            if F then D := Trim(Copy(Q, 1, Length(Q)));
+            if F then
+              D := Trim(Copy(Q, 1, Length(Q)));
             Q := '';
           end
           else
           begin
-            if F then D := Trim(Copy(Q, 1, P - 1));
+            if F then
+              D := Trim(Copy(Q, 1, P - 1));
             Delete(Q, 1, P);
           end;
           if (D = 'finishblock') then
@@ -466,15 +489,19 @@ begin
           end;
           if H then
           begin
-            if (Copy(D, 1, 3) = 'if ') then M := '';
+            if (Copy(D, 1, 3) = 'if ') then
+              M := '';
             Lines[V] := Lines[V] + D + M;
             M := OpDiv;
-          end else begin
+          end
+          else
+          begin
             U := Lines[V];
             if (V > 0) and (U[Length(U)] = OpDiv) then
               Delete(U, Length(U), 1);
             Lines[V] := U;
-            if (D <> '') then Add(D);
+            if (D <> '') then
+              Add(D);
           end;
         end;
 
@@ -507,7 +534,8 @@ end;
 
 procedure TfMain.acCloseExecute(Sender: TObject);
 begin
-  if (ActiveMDIChild <> nil) then ActiveMDIChild.Close;
+  if (ActiveMDIChild <> nil) then
+    ActiveMDIChild.Close;
 end;
 
 procedure TfMain.acCloseAllExecute(Sender: TObject);
@@ -556,7 +584,8 @@ end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);
 begin
-  Self.mmExportMemo.Lines.SaveToFile(Path + 'quests\' + ChangeFileExt(ExtractFileName(FFileName), '.qst'));
+  Self.mmExportMemo.Lines.SaveToFile(Path + 'quests\' +
+    ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
 end;
 

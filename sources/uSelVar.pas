@@ -10,13 +10,13 @@ type
   TfSelVar = class(TForm)
     edVar: TComboBox;
     edValue: TEdit;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
+    btOK: TBitBtn;
+    btCancel: TBitBtn;
     VarType: TRadioGroup;
     Label1: TLabel;
     Label2: TLabel;
     procedure FormShow(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
+    procedure btOKClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -51,7 +51,7 @@ begin
   edVar.SetFocus;
 end;
 
-procedure TfSelVar.BitBtn1Click(Sender: TObject);
+procedure TfSelVar.btOKClick(Sender: TObject);
 var
   S: string;
 begin

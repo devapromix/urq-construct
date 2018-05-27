@@ -31,6 +31,8 @@ type
 const
   // Запрещенные имена для комнат, предметов и переменных
   ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
+  // Запрещенные символы для комнат, предметов и переменных
+  ErChars: array [0 .. 0] of string = ('|');
 
 var
   // Путь
@@ -40,22 +42,28 @@ var
   // Разделитель операторов в URQL
   OpDiv: string = '&';
 
-function MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 function ExplodeString(const Separator, Source: string): TStringList;
-procedure SetTVImages(const TreeNode: TTreeNode; const ImgIndex, SelIndex: Integer);
+procedure SetTVImages(const TreeNode: TTreeNode;
+  const ImgIndex, SelIndex: Integer);
 procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
-function AddTVItem(const TV: TTreeView; const Title: string; const ImageIndex, SelectedIndex: Integer): TTreeNode;
+function AddTVItem(const TV: TTreeView; const Title: string;
+  const ImageIndex, SelectedIndex: Integer): TTreeNode;
 function GetResource(const RT: TResType; Current: string = ''): TStringList;
 // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
 function GetRoomIndexByName(const AName: string): Integer;
-function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string; overload;
-function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char; overload;
+function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string)
+  : string; overload;
+function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char)
+  : Char; overload;
 
 implementation
 
 uses SysUtils, uMain, uUtils;
 
-function MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
   Result := Utils.ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
@@ -66,7 +74,8 @@ begin
   Result.Text := StringReplace(Source, Separator, #13, [rfReplaceAll]);
 end;
 
-procedure SetTVImages(const TreeNode: TTreeNode; const ImgIndex, SelIndex: Integer);
+procedure SetTVImages(const TreeNode: TTreeNode;
+  const ImgIndex, SelIndex: Integer);
 begin
   TreeNode.ImageIndex := ImgIndex;
   TreeNode.SelectedIndex := SelIndex;
@@ -81,7 +90,8 @@ begin
   SetTVImages(F, ImageIndex, ImageIndex);
 end;
 
-function AddTVItem(const TV: TTreeView; const Title: string; const ImageIndex, SelectedIndex: Integer): TTreeNode;
+function AddTVItem(const TV: TTreeView; const Title: string;
+  const ImageIndex, SelectedIndex: Integer): TTreeNode;
 begin
   Result := TV.Items.AddChild(TV.Items.Item[0], Title);
   SetTVImages(Result, ImageIndex, SelectedIndex);
@@ -143,7 +153,8 @@ begin
   end;
 end;
 
-function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string;
+function IfThen(AValue: Boolean; const ATrue: string;
+  const AFalse: string): string;
 begin
   if AValue then
     Result := ATrue

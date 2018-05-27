@@ -3,7 +3,7 @@ value=
 [variables]
 value=ogl|screame|stick|crab|crab2
 [items]
-value=Палка|Краб
+value=Палка|Краб|Топор
 [0]
 value=1pln Привет, всем|1pln Представляю вам свой квест|1pln|1pln "Остров"  ver 1.0|1pln|1btn 4, Начать игру|1btn 1, Предисловие|1btn 2, Авторы|1btn 3, Спасибо|1invkill|1perkill
 [4]
@@ -82,3 +82,5 @@ value=1pln Ты протягиваешь вождю компас.|1pln Он очень заинтересован этой неизве
 value=1pln Несмотря на то, что злой краб больно тяпнул тебя за руку, ты все-таки засовываешь его в карман.|1crab = 1|1crab2 = 1|1inv+ Краб|1btn west2, Назад
 [g]
 value=1pln|1p Конец|1btn 0, Начать заново
+[room0]
+value=

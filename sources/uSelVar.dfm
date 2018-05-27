@@ -50,7 +50,7 @@ object fSelVar: TfSelVar
     TabOrder = 1
     Text = '0'
   end
-  object BitBtn1: TBitBtn
+  object btOK: TBitBtn
     Left = 0
     Top = 152
     Width = 107
@@ -93,9 +93,9 @@ object fSelVar: TfSelVar
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
     TabOrder = 2
-    OnClick = BitBtn1Click
+    OnClick = btOKClick
   end
-  object BitBtn2: TBitBtn
+  object btCancel: TBitBtn
     Left = 112
     Top = 152
     Width = 107
