@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ComCtrls, Menus, ExtCtrls, ActnList, ImgList,
-  StdActns, ToolWin;
+  StdActns, ToolWin, System.ImageList, System.Actions;
 
 type
   TfEditText = class(TForm)
@@ -33,9 +33,6 @@ type
     ToolBar1: TToolBar;
     OpenDialog1: TOpenDialog;
     SaveDialog1: TSaveDialog;
-    acClear: TAction;
-    ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
@@ -43,8 +40,9 @@ type
     ToolButton7: TToolButton;
     ToolButton8: TToolButton;
     ToolButton9: TToolButton;
+    btClear: TBitBtn;
     procedure btOkClick(Sender: TObject);
-    procedure acClearExecute(Sender: TObject);
+    procedure btClearClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,22 +58,24 @@ uses uSelText;
 
 {$R *.dfm}
 
+procedure TfEditText.btClearClick(Sender: TObject);
+begin
+  // Очистить окно редактора от текста
+  RE.Clear;
+  RE.SetFocus;
+end;
+
 procedure TfEditText.btOkClick(Sender: TObject);
 var
   I: Integer;
   S: string;
 begin
+  // Передать текст одной строкой в редактор
   S := '';
   for I := 0 to RE.Lines.Count - 1 do
     S := S + Trim(RE.Lines[I]) + #32;
   fSelText.edText.Text := Trim(S);
   fSelText.edText.SetFocus;
-end;
-
-procedure TfEditText.acClearExecute(Sender: TObject);
-begin
-  RE.Clear;
-  RE.SetFocus;
 end;
 
 end.

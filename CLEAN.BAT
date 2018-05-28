@@ -9,4 +9,3 @@ del /s *.local
 del /s *.cfg
 del /s *.ddp
 del /s *.o
-del *.exe

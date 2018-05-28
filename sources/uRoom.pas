@@ -3,7 +3,7 @@ unit uRoom;
 interface
 
 uses Windows, Classes, Dialogs, Graphics, Forms, Controls, StdCtrls, CheckLst,
-  ComCtrls, ToolWin, ImgList, Menus, ActnList, System.Actions;
+  ComCtrls, ToolWin, ImgList, Menus, ActnList, System.Actions, System.ImageList;
 
 type
   TfRoom = class(TForm)
@@ -86,9 +86,11 @@ type
     { Private declarations }
     SL: TStringList;
     FCurrent: Integer;
+    V: (T1, T2, T3);
     procedure AddOpGrA(const N: Integer);
     procedure AddOpGrB(const N: Integer; I: Integer = -1; P: string = '');
-    procedure AddOpGrC(const N: Integer; I: Integer = -1; P: string = ''; E: string = '');
+    procedure AddOpGrC(const N: Integer; I: Integer = -1; P: string = '';
+      E: string = '');
     procedure AddOpGrD(const N: Integer; I: Integer = -1; P: string = '');
     procedure AddOpGrE(const N: Integer; I: Integer = -1; P: string = '');
     procedure AddVar(I: Integer = -1);
@@ -102,7 +104,8 @@ type
 
 const
   // Операторы по группам
-  OpGrA: array [0 .. 5] of string = ('cls', 'clsb', 'invkill', 'perkill', 'startblock', 'finishblock');
+  OpGrA: array [0 .. 5] of string = ('cls', 'clsb', 'invkill', 'perkill',
+    'startblock', 'finishblock');
   OpGrB: array [0 .. 1] of string = ('goto', 'proc');
   OpGrC: array [0 .. 0] of string = ('btn');
   OpGrD: array [0 .. 1] of string = ('pln', 'p');
@@ -114,9 +117,6 @@ uses SysUtils, Math, uMain, uSelRoom, uSelText, uSelVar, uSelItem, uCommon;
 
 {$R *.dfm}
 
-var
-  V: (T1, T2, T3);
-
 procedure TfRoom.LoadCLB(const Index: Integer);
 var
   I: Integer;
@@ -124,7 +124,7 @@ var
   B: Char;
 begin
   SL.Clear;
-  SL := ExplodeString('|', fMain.QL[Index]);
+  SL := Common.ExplodeString('|', fMain.QL[Index]);
   CLB.Clear;
   for I := 0 to SL.Count - 1 do
   begin
@@ -145,8 +145,8 @@ begin
   S := '';
   for I := 0 to CLB.Count - 1 do
   begin
-    D := IfThen((I <> CLB.Count - 1), '|', '');
-    C := IfThen(CLB.Checked[I], '1', '0');
+    D := Common.IfThen((I <> CLB.Count - 1), '|', '');
+    C := Common.IfThen(CLB.Checked[I], '1', '0');
     S := S + C + CLB.Items.Strings[I] + D;
   end;
   with fMain do
@@ -181,7 +181,8 @@ begin
   SaveCLB(Current);
 end;
 
-procedure TfRoom.AddOpGrC(const N: Integer; I: Integer = -1; P: string = ''; E: string = '');
+procedure TfRoom.AddOpGrC(const N: Integer; I: Integer = -1; P: string = '';
+  E: string = '');
 var
   S, T, Op: string;
 begin
@@ -224,6 +225,7 @@ procedure TfRoom.AddOpGrE(const N: Integer; I: Integer; P: string);
 var
   S, Op: string;
 begin
+  // Оператор if
   Op := OpGrE[N];
   S := fSelText.GetText(P);
   if (S = '') then
@@ -289,7 +291,8 @@ end;
 procedure TfRoom.acDeleteExecute(Sender: TObject);
 begin
   // Попытка удалить команду из списка
-  if (CLB.ItemIndex >= 0) and (MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  if (CLB.ItemIndex >= 0) and
+    (Common.MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Items.Delete(CLB.ItemIndex);
     SaveCLB(Current);
@@ -299,7 +302,7 @@ end;
 procedure TfRoom.acClearExecute(Sender: TObject);
 begin
   // Очистить
-  if (MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  if (Common.MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Clear;
     SaveCLB(Current);
@@ -316,6 +319,7 @@ var
   I, J, K, Index: Integer;
   S, T: string;
 begin
+  //
   Index := CLB.ItemIndex;
   if (Index < 0) then
     Exit;
@@ -334,7 +338,8 @@ begin
     begin
       J := Length(OpGrC[I]) + 1;
       K := Pos(',', S);
-      AddOpGrC(I, Index, Trim(Copy(S, J, K - J)), Trim(Copy(S, K + 1, Length(S))));
+      AddOpGrC(I, Index, Trim(Copy(S, J, K - J)),
+        Trim(Copy(S, K + 1, Length(S))));
       Exit;
     end;
   // Группа D
@@ -367,7 +372,7 @@ begin
     if (Pos(',', S) > 0) then
     begin
       SL.Clear;
-      SL := ExplodeString(',', Trim(Copy(S, 5, Length(S))));
+      SL := Common.ExplodeString(',', Trim(Copy(S, 5, Length(S))));
       T := Trim(SL[1]);
       K := StrToIntDef(SL[0], 1);
     end
@@ -382,7 +387,7 @@ begin
   // Переменная
   begin
     SL.Clear;
-    SL := ExplodeString('=', S);
+    SL := Common.ExplodeString('=', S);
     fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
     S := '';
     if (SL.Count > 1) then

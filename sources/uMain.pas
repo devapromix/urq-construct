@@ -141,7 +141,7 @@ implementation
 {$R *.dfm}
 
 uses uRoom, uAddRoom, uSelItem, uSelVar, uAddVar, uAddItem,
-  uAbout, uSettings, uUtils;
+  uAbout, uSettings;
 
 procedure TfMain.CreateRoom(const AName: string);
 var
@@ -150,7 +150,7 @@ var
 
   function GetCurrent(const AName: string): Integer;
   begin
-    Result := GetRoomIndexByName(AName) - 1;
+    Result := Common.GetRoomIndexByName(AName) - 1;
   end;
 
   function GetCaption(const AName: string): string;
@@ -169,7 +169,7 @@ begin
         Exit;
       end;
     end;
-  if (GetRoomIndexByName(AName) < 0) then
+  if (Common.GetRoomIndexByName(AName) < 0) then
     Exit;
   Room := TfRoom.Create(Application);
   Room.Current := GetCurrent(AName);
@@ -184,16 +184,16 @@ const
   F = '%s (%d)';
 begin
   // Caption
-  S := IfThen((FFileName <> ''),
+  S := Common.IfThen((FFileName <> ''),
     Format(' - %s', [ExtractFileName(FFileName)]), '');
-  Modif := IfThen(Modified, '*', '');
+  Modif := Common.IfThen(Modified, '*', '');
   // if (FFileName <> '') then S := Format(' - %s', [ExtractFileName(FFileName)]) else S := '';
   // if Modified then Modif := '*' else Modif := '';
   Caption := Format(Trim('%s %s'), [Application.Title, S]) + Modif;
   // Tabs
-  tsRooms.Caption := Format(F, [RoomsName, GetResource(rtRoom, '').Count]);
-  tsItems.Caption := Format(F, [ItemsName, GetResource(rtItem, '').Count]);
-  tsVars.Caption := Format(F, [VarsName, GetResource(rtVar, '').Count]);
+  tsRooms.Caption := Format(F, [RoomsName, Common.GetResource(rtRoom, '').Count]);
+  tsItems.Caption := Format(F, [ItemsName, Common.GetResource(rtItem, '').Count]);
+  tsVars.Caption := Format(F, [VarsName, Common.GetResource(rtVar, '').Count]);
 end;
 
 procedure TfMain.TVRDblClick(Sender: TObject);
@@ -213,9 +213,9 @@ var
 begin
   SL.Clear;
   QL.Clear;
-  SetTV(TVR, RoomsName, 0);
-  SetTV(TVI, ItemsName, 1);
-  SetTV(TVV, VarsName, 2);
+  Common.SetTV(TVR, RoomsName, 0);
+  Common.SetTV(TVI, ItemsName, 1);
+  Common.SetTV(TVV, VarsName, 2);
   for I := MDIChildCount - 1 downto 0 do
     with MDIChildren[I] do
       Close;
@@ -245,7 +245,7 @@ end;
 function TfMain.CheckModified: Boolean;
 begin
   Result := False;
-  if Modified and (MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <> mrOk)
+  if Modified and (Common.MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <> mrOk)
   then
     Result := True;
 end;
@@ -265,7 +265,7 @@ var
     Result := '';
     for I := 0 to SL.Count - 1 do
     begin
-      D := IfThen(I <> SL.Count - 1, '|', '');
+      D := Common.IfThen(I <> SL.Count - 1, '|', '');
       // if (I <> SL.Count - 1) then D := '|' else D := '';
       Result := Result + SL[I] + D;
     end;
@@ -285,7 +285,7 @@ begin
   if SD.Execute then
   begin
     if FileExists(SD.FileName) and
-      (MsgDlg(Format(stProjectExists, [ExtractFileName(SD.FileName)]),
+      (Common.MsgDlg(Format(stProjectExists, [ExtractFileName(SD.FileName)]),
       mtConfirmation, [mbOk, mbCancel]) = mrCancel) then
       Exit;
     DeleteFile(SD.FileName);
@@ -296,14 +296,14 @@ begin
       // Настройки
       Ini.WriteString('settings', 'value', '');
       // Комнаты
-      SL := GetResource(rtRoom, '');
+      SL := Common.GetResource(rtRoom, '');
       for I := 0 to SL.Count - 1 do
         Ini.WriteString(SL[I], 'value', QL[I]);
       // Предметы
-      SL := GetResource(rtItem, '');
+      SL := Common.GetResource(rtItem, '');
       Ini.WriteString('items', 'value', AddItems());
       // Переменные
-      SL := GetResource(rtVar, '');
+      SL := Common.GetResource(rtVar, '');
       Ini.WriteString('variables', 'value', AddItems());
     finally
       Ini.Free;
@@ -347,30 +347,30 @@ begin
       Ini.ReadSections(SL);
       for I := 0 to SL.Count - 1 do
       begin
-        if IsErName(SL[I]) or IsErChar(SL[I]) then
+        if Common.IsErName(SL[I]) or Common.IsErChar(SL[I]) then
           Continue;
-        AddTVItem(TVR, SL[I], 3, 4);
+        Common.AddTVItem(TVR, SL[I], 3, 4);
         QL.Append(Ini.ReadString(SL[I], 'value', ''));
       end;
       // Предметы
       S := Ini.ReadString('items', 'value', '');
       SL.Clear;
-      SL := ExplodeString('|', S);
+      SL := Common.ExplodeString('|', S);
       for I := 0 to SL.Count - 1 do
       begin
         N := Trim(SL[I]);
         if (N <> '') then
-          AddTVItem(TVI, N, 1, 1);
+          Common.AddTVItem(TVI, N, 1, 1);
       end;
       // Переменные
       S := Ini.ReadString('variables', 'value', '');
       SL.Clear;
-      SL := ExplodeString('|', S);
+      SL := Common.ExplodeString('|', S);
       for I := 0 to SL.Count - 1 do
       begin
         N := Trim(SL[I]);
         if (N <> '') then
-        AddTVItem(TVV, N, 2, 2);
+        Common.AddTVItem(TVV, N, 2, 2);
       end;
     finally
       Ini.Free;
@@ -573,19 +573,19 @@ end;
 
 procedure TfMain.acAboutExecute(Sender: TObject);
 begin
-  Utils.ShowForm(fAbout)
+  Common.ShowForm(fAbout)
 end;
 
 procedure TfMain.acSettingsExecute(Sender: TObject);
 begin
-  Utils.ShowForm(fSettings)
+  Common.ShowForm(fSettings)
 end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);
 begin
   Self.mmExportMemo.Lines.SaveToFile(Path + 'quests\' +
     ChangeFileExt(ExtractFileName(FFileName), '.qst'));
-  MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
+  Common.MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
 end;
 
 end.

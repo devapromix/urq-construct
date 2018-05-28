@@ -218,11 +218,11 @@ object fAbout: TfAbout
   end
   object btOK: TBitBtn
     Left = 110
-    Top = 145
+    Top = 144
     Width = 107
     Height = 30
     Cancel = True
-    Caption = #1043#1086#1090#1086#1074#1086
+    Caption = 'OK'
     Default = True
     Glyph.Data = {
       36040000424D3604000000000000360000002800000010000000100000000100
