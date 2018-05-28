@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon, uUtils;
+uses uMain, uCommon;
 
 {$R *.dfm}
 
@@ -44,11 +44,11 @@ var
   I: Integer;
 begin
   // Добавить предмет
-  SL.Assign(GetResource(rtItem, ''));
+  SL.Assign(Common.GetResource(rtItem, ''));
   for I := 0 to SL.Count - 1 do
     if (SL[I] = ItemName) then
       Exit;
-  AddTVItem(fMain.TVI, ItemName, 1, 1);
+  Common.AddTVItem(fMain.TVI, ItemName, 1, 1);
   fMain.Modified := True;
 end;
 
@@ -59,8 +59,8 @@ end;
 
 procedure TfAddItem.NewItem;
 begin
-  cbItemName.Items.Assign(GetResource(rtItem, ''));
-  Utils.ShowForm(Self);
+  cbItemName.Items.Assign(Common.GetResource(rtItem, ''));
+  Common.ShowForm(Self);
 end;
 
 procedure TfAddItem.btOKClick(Sender: TObject);
@@ -68,7 +68,7 @@ var
   S: string;
   I: Integer;
 begin
-  SL.Assign(GetResource(rtItem, ''));
+  SL.Assign(Common.GetResource(rtItem, ''));
   S := LowerCase(Trim(cbItemName.Text));
   if (S = '') then
   begin
@@ -81,12 +81,12 @@ begin
       ShowMessage('!!!');
       Exit;
     end;
-  if IsErName(S) then
+  if Common.IsErName(S) then
   begin
     ShowMessage('!!!');
     Exit;
   end;
-  if IsErChar(S) then
+  if Common.IsErChar(S) then
   begin
     ShowMessage('!!!');
     Exit;

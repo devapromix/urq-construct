@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon, uUtils;
+uses uMain, uCommon;
 
 {$R *.dfm}
 
@@ -42,8 +42,8 @@ end;
 procedure TfAddVar.NewVar;
 begin
   // Добавить новую переменную
-  cbVarName.Items.Assign(GetResource(rtVar, ''));
-  Utils.ShowForm(Self);
+  cbVarName.Items.Assign(Common.GetResource(rtVar, ''));
+  Common.ShowForm(Self);
 end;
 
 procedure TfAddVar.FormShow(Sender: TObject);
@@ -57,7 +57,7 @@ var
   I: Integer;
 begin
   // OK
-  SL.Assign(GetResource(rtVar, ''));
+  SL.Assign(Common.GetResource(rtVar, ''));
   S := LowerCase(Trim(cbVarName.Text));
   if (S = '') then
   begin
@@ -70,12 +70,12 @@ begin
       ShowMessage('!!!');
       Exit;
     end;
-  if IsErName(S) then
+  if Common.IsErName(S) then
   begin
     ShowMessage('!!!');
     Exit;
   end;
-  if IsErChar(S) then
+  if Common.IsErChar(S) then
   begin
     ShowMessage('!!!');
     Exit;
@@ -89,11 +89,11 @@ var
   I: Integer;
 begin
   // Добавить переменную
-  SL.Assign(GetResource(rtVar, ''));
+  SL.Assign(Common.GetResource(rtVar, ''));
   for I := 0 to SL.Count - 1 do
     if (SL[I] = VarName) then
       Exit;
-  AddTVItem(fMain.TVV, VarName, 2, 2);
+  Common.AddTVItem(fMain.TVV, VarName, 2, 2);
   fMain.Modified := True;
 end;
 

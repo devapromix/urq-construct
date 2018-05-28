@@ -29,17 +29,17 @@ var
 
 implementation
 
-uses uMain, uAddVar, uCommon, uUtils;
+uses uMain, uAddVar, uCommon;
 
 {$R *.dfm}
-
 { TfSelVar }
 
 procedure TfSelVar.GetVar(var VarName, Value: string);
 begin
   VarName := '';
   Value := '';
-  if (Utils.ShowForm(Self) = mrCancel) then Exit;
+  if (Common.ShowForm(Self) = mrCancel) then
+    Exit;
   VarName := Trim(edVar.Text);
   Value := Trim(edValue.Text);
   fAddVar.AddVar(VarName);
@@ -47,7 +47,7 @@ end;
 
 procedure TfSelVar.FormShow(Sender: TObject);
 begin
-  edVar.Items.Assign(GetResource(rtVar, ''));
+  edVar.Items.Assign(Common.GetResource(rtVar, ''));
   edVar.SetFocus;
 end;
 
@@ -56,7 +56,7 @@ var
   S: string;
 begin
   S := Trim(edVar.Text);
-  if (S = '') or (S[1] in ['0'..'9']) then
+  if Common.IsFirstCharDigit(S) then
   begin
     ShowMessage('!!!');
     Exit;

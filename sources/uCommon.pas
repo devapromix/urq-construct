@@ -32,7 +32,7 @@ const
   // Запрещенные имена для комнат, предметов и переменных
   ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
   // Запрещенные символы для комнат, предметов и переменных
-  ErChars: array [0 .. 1] of Char = ('|','&');
+  ErChars: array [0 .. 1] of Char = ('|', '&');
 
 var
   // Путь
@@ -42,48 +42,64 @@ var
   // Разделитель операторов в URQL
   OpDiv: string = '&';
 
-function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
-function ExplodeString(const Separator, Source: string): TStringList;
-procedure SetTVImages(const TreeNode: TTreeNode;
-  const ImgIndex, SelIndex: Integer);
-procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
-function AddTVItem(const TV: TTreeView; const Title: string;
-  const ImageIndex, SelectedIndex: Integer): TTreeNode;
-function GetResource(const RT: TResType; Current: string = ''): TStringList;
-// procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
-function GetRoomIndexByName(const AName: string): Integer;
-function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string)
-  : string; overload;
-function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char)
-  : Char; overload;
-function IsErName(const S: string): Boolean;
-function IsErChar(const S: string): Boolean;
+type
+  Common = class(TObject)
+    class function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
+      Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+    class function ExplodeString(const Separator, Source: string): TStringList;
+    class procedure SetTVImages(const TreeNode: TTreeNode;
+      const ImgIndex, SelIndex: Integer);
+    class procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
+    class function AddTVItem(const TV: TTreeView; const Title: string;
+      const ImageIndex, SelectedIndex: Integer): TTreeNode;
+    class function GetResource(const RT: TResType; Current: string = ''): TStringList;
+    // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
+    class function GetRoomIndexByName(const AName: string): Integer;
+    class function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string)
+      : string; overload;
+    class function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char)
+      : Char; overload;
+    class function IsErName(const S: string): Boolean;
+    class function IsErChar(const S: string): Boolean;
+    class function IsFirstCharDigit(const S: string): Boolean;
+        class function GetPath(SubDir: string): string;
+    class function ShowForm(const Form: TForm): Integer;
+  end;
 
 implementation
 
-uses SysUtils, uMain, uUtils;
+uses SysUtils, uMain;
 
-function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
+class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
   Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
-  Result := Utils.ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
+  Result := ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
 
-function ExplodeString(const Separator, Source: string): TStringList;
+class function Common.ExplodeString(const Separator, Source: string): TStringList;
 begin
   Result := TStringList.Create();
   Result.Text := StringReplace(Source, Separator, #13, [rfReplaceAll]);
 end;
 
-procedure SetTVImages(const TreeNode: TTreeNode;
+class procedure Common.SetTVImages(const TreeNode: TTreeNode;
   const ImgIndex, SelIndex: Integer);
 begin
   TreeNode.ImageIndex := ImgIndex;
   TreeNode.SelectedIndex := SelIndex;
 end;
 
-procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
+class function Common.ShowForm(const Form: TForm): Integer;
+begin
+  with Form do
+  begin
+    BorderStyle := bsDialog;
+    Position := poOwnerFormCenter;
+    Result := ShowModal;
+  end;
+end;
+
+class procedure Common.SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
 var
   F: TTreeNode;
 begin
@@ -92,14 +108,20 @@ begin
   SetTVImages(F, ImageIndex, ImageIndex);
 end;
 
-function AddTVItem(const TV: TTreeView; const Title: string;
+class function Common.AddTVItem(const TV: TTreeView; const Title: string;
   const ImageIndex, SelectedIndex: Integer): TTreeNode;
 begin
   Result := TV.Items.AddChild(TV.Items.Item[0], Title);
   SetTVImages(Result, ImageIndex, SelectedIndex);
 end;
 
-function GetResource(const RT: TResType; Current: string = ''): TStringList;
+class function Common.GetPath(SubDir: string): string;
+begin
+  Result := ExtractFilePath(ParamStr(0));
+  Result := IncludeTrailingPathDelimiter(Result + SubDir);
+end;
+
+class function Common.GetResource(const RT: TResType; Current: string = ''): TStringList;
 var
   L: TStringList;
   TV: TTreeView;
@@ -137,7 +159,7 @@ begin
   Result := L;
 end;
 
-function GetRoomIndexByName(const AName: string): Integer;
+class function Common.GetRoomIndexByName(const AName: string): Integer;
 var
   S: string;
   I: Integer;
@@ -155,7 +177,7 @@ begin
   end;
 end;
 
-function IfThen(AValue: Boolean; const ATrue: string;
+class function Common.IfThen(AValue: Boolean; const ATrue: string;
   const AFalse: string): string;
 begin
   if AValue then
@@ -164,7 +186,7 @@ begin
     Result := AFalse;
 end;
 
-function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char;
+class function Common.IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char;
 begin
   if AValue then
     Result := ATrue
@@ -172,7 +194,7 @@ begin
     Result := AFalse;
 end;
 
-function IsErName(const S: string): Boolean;
+class function Common.IsErName(const S: string): Boolean;
 var
   I: Integer;
 begin
@@ -185,7 +207,7 @@ begin
     end;
 end;
 
-function IsErChar(const S: string): Boolean;
+class function Common.IsErChar(const S: string): Boolean;
 var
   I: Integer;
 begin
@@ -196,6 +218,11 @@ begin
       Result := True;
       Exit;
     end;
+end;
+
+class function Common.IsFirstCharDigit(const S: string): Boolean;
+begin
+  Result := (S[1] in ['0' .. '9']);
 end;
 
 end.

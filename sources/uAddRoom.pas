@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon, uUtils;
+uses uMain, uCommon;
 
 {$R *.dfm}
 
@@ -43,7 +43,7 @@ procedure TfAddRoom.btOKClick(Sender: TObject);
 var
   I: Integer;
 begin
-  SL.Assign(GetResource(rtRoom, ''));
+  SL.Assign(Common.GetResource(rtRoom, ''));
   FNewRoomName := LowerCase(Trim(cbRoomName.Text));
   if (FNewRoomName = '') then
   begin
@@ -61,17 +61,17 @@ begin
     ShowMessage('!!!');
     Exit;
   end;
-  if IsErName(FNewRoomName) then
+  if Common.IsErName(FNewRoomName) then
   begin
     ShowMessage('!!!');
     Exit;
   end;
-  if IsErChar(FNewRoomName) then
+  if Common.IsErChar(FNewRoomName) then
   begin
     ShowMessage('!!!');
     Exit;
   end;
-  AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
+  Common.AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
   fMain.QL.Append('');
   fMain.Modified := True;
   Self.ModalResult := mrOk;
@@ -85,7 +85,7 @@ begin
   Result := '';
   FNewRoomName := '';
   Self.cbRoomName.Clear;
-  SL.Assign(GetResource(rtRoom, ''));
+  SL.Assign(Common.GetResource(rtRoom, ''));
   C := 0;
   repeat
     F := True;
@@ -102,7 +102,7 @@ begin
   until F;
   Self.cbRoomName.Items.Assign(SL);
   Self.cbRoomName.Text := FNewRoomName;
-  Utils.ShowForm(Self);
+  Common.ShowForm(Self);
   Result := FNewRoomName;
   fMain.CreateRoom(FNewRoomName);
 end;
