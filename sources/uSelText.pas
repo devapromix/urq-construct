@@ -29,18 +29,19 @@ var
 
 implementation
 
-uses uCommon, uEditText, uUtils;
+uses uCommon, uEditText;
 
 {$R *.dfm}
-
 { TfSelText }
 
 function TfSelText.GetText(S: string = ''): string;
 begin
   Result := '';
   S := Trim(S);
-  if (S <> '') then Self.edText.Text := S;
-  if (Utils.ShowForm(Self) = mrCancel) then Exit;
+  if (S <> '') then
+    Self.edText.Text := S;
+  if (Common.ShowForm(Self) = mrCancel) then
+    Exit;
   Result := Self.edText.Text;
 end;
 
@@ -59,7 +60,7 @@ end;
 procedure TfSelText.BitBtn2Click(Sender: TObject);
 begin
   fEditText.RE.Text := Trim(edText.Text);
-  Utils.ShowForm(fEditText);
+  Common.ShowForm(fEditText);
 end;
 
 end.

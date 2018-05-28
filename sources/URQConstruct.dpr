@@ -14,8 +14,7 @@ uses
   uCommon in 'uCommon.pas',
   uAbout in 'uAbout.pas' {fAbout},
   uSettings in 'uSettings.pas' {fSettings},
-  uEditText in 'uEditText.pas' {fEditText},
-  uUtils in 'uUtils.pas';
+  uEditText in 'uEditText.pas' {fEditText};
 
 {$R *.RES}
 

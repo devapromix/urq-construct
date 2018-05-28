@@ -28,25 +28,29 @@ var
 
 implementation
 
-uses uMain, uAddRoom, uCommon, uUtils;
+uses uMain, uAddRoom, uCommon;
 
 {$R *.dfm}
-
 { TfSelRoom }
 
-function TfSelRoom.GetRoom(const CurrentRoom: string; SelRoom: string = ''): string;
+function TfSelRoom.GetRoom(const CurrentRoom: string;
+  SelRoom: string = ''): string;
 var
   I: Integer;
 begin
   FIndex := 0;
   Result := '';
-  RoomList.Items.Assign(GetResource(rtRoom, CurrentRoom));
+  RoomList.Items.Assign(Common.GetResource(rtRoom, CurrentRoom));
   I := RoomList.Items.IndexOf('common');
-  if (I >= 0) then RoomList.Items.Delete(I);
+  if (I >= 0) then
+    RoomList.Items.Delete(I);
   SelRoom := Trim(SelRoom);
-  if (SelRoom <> '') then FIndex := RoomList.Items.IndexOf(SelRoom);
-  if (FIndex < 0) then FIndex := 0;
-  if (Utils.ShowForm(Self) = mrCancel) or (RoomList.ItemIndex < 0) then Exit;
+  if (SelRoom <> '') then
+    FIndex := RoomList.Items.IndexOf(SelRoom);
+  if (FIndex < 0) then
+    FIndex := 0;
+  if (Common.ShowForm(Self) = mrCancel) or (RoomList.ItemIndex < 0) then
+    Exit;
   Result := Trim(RoomList.Items.Strings[RoomList.ItemIndex]);
 end;
 

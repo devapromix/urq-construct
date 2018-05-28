@@ -30,17 +30,17 @@ var
 
 implementation
 
-uses uMain, uAddItem, uCommon, uUtils;
+uses uMain, uAddItem, uCommon;
 
 {$R *.dfm}
-
 { TfEditItem }
 
 procedure TfSelItem.GetItem(var ItemName: string; var Amount: Integer);
 begin
   ItemName := '';
   Amount := 1;
-  if (Utils.ShowForm(Self) = mrCancel) then Exit;
+  if (Common.ShowForm(Self) = mrCancel) then
+    Exit;
   ItemName := Trim(edItem.Text);
   Amount := StrToIntDef(edAmount.Text, 1);
   fAddItem.AddItem(ItemName);
@@ -56,7 +56,7 @@ begin
     ShowMessage('!!!');
     Exit;
   end;
-  if (S[1] in ['0'..'9']) then
+  if Common.IsFirstCharDigit(S) then
   begin
     ShowMessage('!!!');
     Exit;
@@ -66,7 +66,7 @@ end;
 
 procedure TfSelItem.FormShow(Sender: TObject);
 begin
-  edItem.Items.Assign(GetResource(rtItem, ''));
+  edItem.Items.Assign(Common.GetResource(rtItem, ''));
   edItem.SetFocus;
 end;
 
