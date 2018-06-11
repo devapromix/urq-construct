@@ -49,20 +49,22 @@ type
     class function ExplodeString(const Separator, Source: string): TStringList;
     class procedure SetTVImages(const TreeNode: TTreeNode;
       const ImgIndex, SelIndex: Integer);
-    class procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
+    class procedure SetTV(const TV: TTreeView; Title: string;
+      ImageIndex: Integer);
     class function AddTVItem(const TV: TTreeView; const Title: string;
       const ImageIndex, SelectedIndex: Integer): TTreeNode;
-    class function GetResource(const RT: TResType; Current: string = ''): TStringList;
+    class function GetResource(const RT: TResType; Current: string = '')
+      : TStringList;
     // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
     class function GetRoomIndexByName(const AName: string): Integer;
-    class function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string)
-      : string; overload;
-    class function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char)
-      : Char; overload;
+    class function IfThen(AValue: Boolean; const ATrue: string;
+      const AFalse: string): string; overload;
+    class function IfThen(AValue: Boolean; const ATrue: Char;
+      const AFalse: Char): Char; overload;
     class function IsErName(const S: string): Boolean;
     class function IsErChar(const S: string): Boolean;
     class function IsFirstCharDigit(const S: string): Boolean;
-        class function GetPath(SubDir: string): string;
+    class function GetPath(SubDir: string): string;
     class function ShowForm(const Form: TForm): Integer;
   end;
 
@@ -76,7 +78,8 @@ begin
   Result := ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
 
-class function Common.ExplodeString(const Separator, Source: string): TStringList;
+class function Common.ExplodeString(const Separator, Source: string)
+  : TStringList;
 begin
   Result := TStringList.Create();
   Result.Text := StringReplace(Source, Separator, #13, [rfReplaceAll]);
@@ -99,7 +102,8 @@ begin
   end;
 end;
 
-class procedure Common.SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
+class procedure Common.SetTV(const TV: TTreeView; Title: string;
+  ImageIndex: Integer);
 var
   F: TTreeNode;
 begin
@@ -121,7 +125,8 @@ begin
   Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
-class function Common.GetResource(const RT: TResType; Current: string = ''): TStringList;
+class function Common.GetResource(const RT: TResType; Current: string = '')
+  : TStringList;
 var
   L: TStringList;
   TV: TTreeView;
@@ -186,7 +191,8 @@ begin
     Result := AFalse;
 end;
 
-class function Common.IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char;
+class function Common.IfThen(AValue: Boolean; const ATrue: Char;
+  const AFalse: Char): Char;
 begin
   if AValue then
     Result := ATrue
