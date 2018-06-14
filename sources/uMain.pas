@@ -241,8 +241,6 @@ begin
   QL := TStringList.Create;
   SL := TStringList.Create;
   SL.Duplicates := dupIgnore;
-  GetDir(0, Path);
-  Path := Path + '\';
   NewProject;
 end;
 
@@ -332,11 +330,31 @@ begin
   NewProject;
 end;
 
+{ procedure LoadLayer(L: TLayerEnum);
+  var
+  X, Y: Integer;
+  SL: TStringList;
+  V: TArray<string>;
+  begin
+  SetLength(FMap[L], FWidth, FHeight);
+  Node := XMLDoc.DocumentElement.ChildNodes[I].ChildNodes['data'];
+  SL := TStringList.Create;
+  SL.Text := Trim(Node.Text);
+  for Y := 0 to FHeight - 1 do
+  begin
+  V := SL[Y].Split([',']);
+  for X := 0 to FWidth - 1 do
+  FMap[L][X][Y] := StrToIntDef(V[X], 0) - 1;
+  end;
+  FreeAndNil(SL);
+  end; }
+
 procedure TfMain.acOpenProjectExecute(Sender: TObject);
 var
   S, N: string;
   I: Integer;
   Ini: TIniFile;
+  V: TArray<string>;
 begin
   // Загрузить проект
   if CheckModified then
@@ -366,21 +384,19 @@ begin
       end;
       // Предметы
       S := Ini.ReadString('items', 'value', '');
-      SL.Clear;
-      SL := Common.ExplodeString('|', S);
-      for I := 0 to SL.Count - 1 do
+      V := S.Split(['|']);
+      for I := 0 to High(V) do
       begin
-        N := Trim(SL[I]);
+        N := Trim(V[I]);
         if (N <> '') then
           Common.AddTVItem(TVI, N, 1, 1);
       end;
       // Переменные
       S := Ini.ReadString('variables', 'value', '');
-      SL.Clear;
-      SL := Common.ExplodeString('|', S);
-      for I := 0 to SL.Count - 1 do
+      V := S.Split(['|']);
+      for I := 0 to High(V) do
       begin
-        N := Trim(SL[I]);
+        N := Trim(V[I]);
         if (N <> '') then
           Common.AddTVItem(TVV, N, 2, 2);
       end;
