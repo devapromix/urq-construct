@@ -33,6 +33,7 @@ implementation
 uses uMain, uAddItem, uCommon, uUtils;
 
 {$R *.dfm}
+
 { TfEditItem }
 
 procedure TfSelItem.GetItem(var ItemName: string; var Amount: Integer);

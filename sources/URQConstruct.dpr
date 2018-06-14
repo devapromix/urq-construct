@@ -23,7 +23,7 @@ uses
 begin
 {$IFNDEF FPC}
 {$IF COMPILERVERSION >= 18}
-//  ReportMemoryLeaksOnShutdown := True;
+  ReportMemoryLeaksOnShutdown := True;
 {$IFEND}
 {$ENDIF}
   Randomize;
