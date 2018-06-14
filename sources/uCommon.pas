@@ -35,8 +35,6 @@ const
   ErChars: array [0 .. 1] of Char = ('|', '&');
 
 var
-  // Путь
-  Path: string = '';
   // Фильтр
   QCProjFilters: string = '';
   // Разделитель операторов в URQL

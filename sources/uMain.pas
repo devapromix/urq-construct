@@ -283,7 +283,7 @@ var
 
 begin
   // Сохранить проект
-  SD.InitialDir := Path + 'projects';
+  SD.InitialDir := Utils.GetPath('projects');
   SD.DefaultExt := QCProjExt;
   SD.Filter := QCProjFilters;
   SD.FilterIndex := 0;
@@ -359,7 +359,7 @@ begin
   // Загрузить проект
   if CheckModified then
     Exit;
-  OD.InitialDir := Path + 'projects';
+  OD.InitialDir := Utils.GetPath('projects');
   OD.DefaultExt := QCProjExt;
   OD.Filter := QCProjFilters;
   OD.FilterIndex := 0;
@@ -611,7 +611,7 @@ end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);
 begin
-  Self.mmExportMemo.Lines.SaveToFile(Path + 'quests\' +
+  Self.mmExportMemo.Lines.SaveToFile(Utils.GetPath('quests') +
     ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   Common.MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
 end;
