@@ -33,7 +33,6 @@ implementation
 uses uMain, uAddItem, uCommon, uUtils;
 
 {$R *.dfm}
-
 { TfEditItem }
 
 procedure TfSelItem.GetItem(var ItemName: string; var Amount: Integer);
@@ -66,8 +65,16 @@ begin
 end;
 
 procedure TfSelItem.FormShow(Sender: TObject);
+var
+  SL: TStringList;
 begin
-  edItem.Items.Assign(Common.GetResource(rtItem, ''));
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtItem, '');
+    edItem.Items.Assign(SL);
+  finally
+    SL.Free;
+  end;
   edItem.SetFocus;
 end;
 

@@ -53,8 +53,8 @@ type
       ImageIndex: Integer);
     class function AddTVItem(const TV: TTreeView; const Title: string;
       const ImageIndex, SelectedIndex: Integer): TTreeNode;
-    class function GetResource(const RT: TResType; Current: string = '')
-      : TStringList;
+    class procedure GetResource(var SL: TStringList; const RT: TResType;
+      Current: string = '');
     // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
     class function GetRoomIndexByName(const AName: string): Integer;
     class function IfThen(AValue: Boolean; const ATrue: string;
@@ -107,10 +107,9 @@ begin
   SetTVImages(Result, ImageIndex, SelectedIndex);
 end;
 
-class function Common.GetResource(const RT: TResType; Current: string = '')
-  : TStringList;
+class procedure Common.GetResource(var SL: TStringList; const RT: TResType;
+  Current: string = '');
 var
-  L: TStringList;
   TV: TTreeView;
   Name, S: string;
   I: Integer;
@@ -136,14 +135,13 @@ begin
         Name := VarsName;
       end;
   end;
-  L := TStringList.Create;
+  SL.Clear;
   for I := 0 to TV.Items.Count - 1 do
   begin
     S := LowerCase(TV.Items[I].Text);
     if (S <> Name) and (S <> Current) then
-      L.Append(S);
+      SL.Append(S);
   end;
-  Result := L;
 end;
 
 class function Common.GetRoomIndexByName(const AName: string): Integer;

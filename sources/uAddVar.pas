@@ -40,9 +40,17 @@ begin
 end;
 
 procedure TfAddVar.NewVar;
+var
+  SL: TStringList;
 begin
   // Добавить новую переменную
-  cbVarName.Items.Assign(Common.GetResource(rtVar, ''));
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtVar, '');
+    cbVarName.Items.Assign(SL);
+  finally
+    SL.Free;
+  end;
   Utils.ShowForm(Self);
 end;
 
@@ -57,7 +65,7 @@ var
   I: Integer;
 begin
   // OK
-  SL.Assign(Common.GetResource(rtVar, ''));
+  Common.GetResource(SL, rtVar, '');
   S := LowerCase(Trim(cbVarName.Text));
   if (S = '') then
   begin
@@ -89,7 +97,7 @@ var
   I: Integer;
 begin
   // Добавить переменную
-  SL.Assign(Common.GetResource(rtVar, ''));
+  Common.GetResource(SL, rtVar, '');
   for I := 0 to SL.Count - 1 do
     if (SL[I] = VarName) then
       Exit;

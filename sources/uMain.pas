@@ -180,6 +180,7 @@ end;
 procedure TfMain.UpdateProject;
 var
   S, Modif: string;
+  SL: TStringList;
 const
   F = '%s (%d)';
 begin
@@ -191,9 +192,17 @@ begin
   // if Modified then Modif := '*' else Modif := '';
   Caption := Format(Trim('%s %s'), [Application.Title, S]) + Modif;
   // Tabs
-  tsRooms.Caption := Format(F, [RoomsName, Common.GetResource(rtRoom, '').Count]);
-  tsItems.Caption := Format(F, [ItemsName, Common.GetResource(rtItem, '').Count]);
-  tsVars.Caption := Format(F, [VarsName, Common.GetResource(rtVar, '').Count]);
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtRoom, '');
+    tsRooms.Caption := Format(F, [RoomsName, SL.Count]);
+    Common.GetResource(SL, rtItem, '');
+    tsItems.Caption := Format(F, [ItemsName, SL.Count]);
+    Common.GetResource(SL, rtVar, '');
+    tsVars.Caption := Format(F, [VarsName, SL.Count]);
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TfMain.TVRDblClick(Sender: TObject);
@@ -248,8 +257,8 @@ end;
 function TfMain.CheckModified: Boolean;
 begin
   Result := False;
-  if Modified and (Common.MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <> mrOk)
-  then
+  if Modified and (Common.MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <>
+    mrOk) then
     Result := True;
 end;
 
@@ -299,14 +308,14 @@ begin
       // Настройки
       Ini.WriteString('settings', 'value', '');
       // Комнаты
-      SL := Common.GetResource(rtRoom, '');
+      Common.GetResource(SL, rtRoom, '');
       for I := 0 to SL.Count - 1 do
         Ini.WriteString(SL[I], 'value', QL[I]);
       // Предметы
-      SL := Common.GetResource(rtItem, '');
+      Common.GetResource(SL, rtItem, '');
       Ini.WriteString('items', 'value', AddItems());
       // Переменные
-      SL := Common.GetResource(rtVar, '');
+      Common.GetResource(SL, rtVar, '');
       Ini.WriteString('variables', 'value', AddItems());
     finally
       Ini.Free;
@@ -373,7 +382,7 @@ begin
       begin
         N := Trim(SL[I]);
         if (N <> '') then
-        Common.AddTVItem(TVV, N, 2, 2);
+          Common.AddTVItem(TVV, N, 2, 2);
       end;
     finally
       Ini.Free;

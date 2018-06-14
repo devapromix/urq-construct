@@ -37,10 +37,17 @@ function TfSelRoom.GetRoom(const CurrentRoom: string;
   SelRoom: string = ''): string;
 var
   I: Integer;
+  SL: TStringList;
 begin
   FIndex := 0;
   Result := '';
-  RoomList.Items.Assign(Common.GetResource(rtRoom, CurrentRoom));
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtRoom, CurrentRoom);
+    RoomList.Items.Assign(SL);
+  finally
+    SL.Free;
+  end;
   I := RoomList.Items.IndexOf('common');
   if (I >= 0) then
     RoomList.Items.Delete(I);

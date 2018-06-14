@@ -43,7 +43,7 @@ procedure TfAddRoom.btOKClick(Sender: TObject);
 var
   I: Integer;
 begin
-  SL.Assign(Common.GetResource(rtRoom, ''));
+  Common.GetResource(SL, rtRoom, '');
   FNewRoomName := LowerCase(Trim(cbRoomName.Text));
   if (FNewRoomName = '') then
   begin
@@ -85,7 +85,7 @@ begin
   Result := '';
   FNewRoomName := '';
   Self.cbRoomName.Clear;
-  SL.Assign(Common.GetResource(rtRoom, ''));
+  Common.GetResource(SL, rtRoom, '');
   C := 0;
   repeat
     F := True;

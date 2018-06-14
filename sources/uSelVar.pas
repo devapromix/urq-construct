@@ -46,8 +46,16 @@ begin
 end;
 
 procedure TfSelVar.FormShow(Sender: TObject);
+var
+  SL: TStringList;
 begin
-  edVar.Items.Assign(Common.GetResource(rtVar, ''));
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtVar, '');
+    edVar.Items.Assign(SL);
+  finally
+    SL.Free;
+  end;
   edVar.SetFocus;
 end;
 

@@ -44,7 +44,7 @@ var
   I: Integer;
 begin
   // Добавить предмет
-  SL.Assign(Common.GetResource(rtItem, ''));
+  Common.GetResource(SL, rtItem, '');
   for I := 0 to SL.Count - 1 do
     if (SL[I] = ItemName) then
       Exit;
@@ -58,8 +58,16 @@ begin
 end;
 
 procedure TfAddItem.NewItem;
+var
+  SL: TStringList;
 begin
-  cbItemName.Items.Assign(Common.GetResource(rtItem, ''));
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtItem, '');
+    cbItemName.Items.Assign(SL);
+  finally
+    SL.Free;
+  end;
   Utils.ShowForm(Self);
 end;
 
@@ -68,7 +76,7 @@ var
   S: string;
   I: Integer;
 begin
-  SL.Assign(Common.GetResource(rtItem, ''));
+  Common.GetResource(SL, rtItem, '');
   S := LowerCase(Trim(cbItemName.Text));
   if (S = '') then
   begin
