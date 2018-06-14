@@ -64,18 +64,16 @@ type
     class function IsErName(const S: string): Boolean;
     class function IsErChar(const S: string): Boolean;
     class function IsFirstCharDigit(const S: string): Boolean;
-    class function GetPath(SubDir: string): string;
-    class function ShowForm(const Form: TForm): Integer;
   end;
 
 implementation
 
-uses SysUtils, uMain;
+uses SysUtils, uMain, uUtils;
 
 class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
   Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
-  Result := ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
+  Result := Utils.ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
 
 class function Common.ExplodeString(const Separator, Source: string)
@@ -90,16 +88,6 @@ class procedure Common.SetTVImages(const TreeNode: TTreeNode;
 begin
   TreeNode.ImageIndex := ImgIndex;
   TreeNode.SelectedIndex := SelIndex;
-end;
-
-class function Common.ShowForm(const Form: TForm): Integer;
-begin
-  with Form do
-  begin
-    BorderStyle := bsDialog;
-    Position := poOwnerFormCenter;
-    Result := ShowModal;
-  end;
 end;
 
 class procedure Common.SetTV(const TV: TTreeView; Title: string;
@@ -117,12 +105,6 @@ class function Common.AddTVItem(const TV: TTreeView; const Title: string;
 begin
   Result := TV.Items.AddChild(TV.Items.Item[0], Title);
   SetTVImages(Result, ImageIndex, SelectedIndex);
-end;
-
-class function Common.GetPath(SubDir: string): string;
-begin
-  Result := ExtractFilePath(ParamStr(0));
-  Result := IncludeTrailingPathDelimiter(Result + SubDir);
 end;
 
 class function Common.GetResource(const RT: TResType; Current: string = '')

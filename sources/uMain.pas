@@ -141,7 +141,7 @@ implementation
 {$R *.dfm}
 
 uses uRoom, uAddRoom, uSelItem, uSelVar, uAddVar, uAddItem,
-  uAbout, uSettings;
+  uAbout, uSettings, uUtils, uLanguage;
 
 procedure TfMain.CreateRoom(const AName: string);
 var
@@ -227,6 +227,7 @@ end;
 
 procedure TfMain.FormCreate(Sender: TObject);
 begin
+  Language := TLanguage.Create(True);
   QCProjFilters := Format(stProjFilters, [Application.Title, QCProjExt]);
   QL := TStringList.Create;
   SL := TStringList.Create;
@@ -240,6 +241,8 @@ procedure TfMain.FormDestroy(Sender: TObject);
 begin
   SL.Free;
   QL.Free;
+  Language.SaveDefault;
+  FreeAndNil(Language);
 end;
 
 function TfMain.CheckModified: Boolean;
@@ -573,12 +576,12 @@ end;
 
 procedure TfMain.acAboutExecute(Sender: TObject);
 begin
-  Common.ShowForm(fAbout)
+  Utils.ShowForm(fAbout)
 end;
 
 procedure TfMain.acSettingsExecute(Sender: TObject);
 begin
-  Common.ShowForm(fSettings)
+  Utils.ShowForm(fSettings)
 end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);

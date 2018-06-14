@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon;
+uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
@@ -43,7 +43,7 @@ procedure TfAddVar.NewVar;
 begin
   // Добавить новую переменную
   cbVarName.Items.Assign(Common.GetResource(rtVar, ''));
-  Common.ShowForm(Self);
+  Utils.ShowForm(Self);
 end;
 
 procedure TfAddVar.FormShow(Sender: TObject);

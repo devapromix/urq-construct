@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uAddItem, uCommon;
+uses uMain, uAddItem, uCommon, uUtils;
 
 {$R *.dfm}
 { TfEditItem }
@@ -39,7 +39,7 @@ procedure TfSelItem.GetItem(var ItemName: string; var Amount: Integer);
 begin
   ItemName := '';
   Amount := 1;
-  if (Common.ShowForm(Self) = mrCancel) then
+  if (Utils.ShowForm(Self) = mrCancel) then
     Exit;
   ItemName := Trim(edItem.Text);
   Amount := StrToIntDef(edAmount.Text, 1);

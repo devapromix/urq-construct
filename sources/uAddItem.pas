@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses uMain, uCommon;
+uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
@@ -60,7 +60,7 @@ end;
 procedure TfAddItem.NewItem;
 begin
   cbItemName.Items.Assign(Common.GetResource(rtItem, ''));
-  Common.ShowForm(Self);
+  Utils.ShowForm(Self);
 end;
 
 procedure TfAddItem.btOKClick(Sender: TObject);

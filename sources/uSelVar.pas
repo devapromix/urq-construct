@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses uMain, uAddVar, uCommon;
+uses uMain, uAddVar, uCommon, uUtils;
 
 {$R *.dfm}
 { TfSelVar }
@@ -38,7 +38,7 @@ procedure TfSelVar.GetVar(var VarName, Value: string);
 begin
   VarName := '';
   Value := '';
-  if (Common.ShowForm(Self) = mrCancel) then
+  if (Utils.ShowForm(Self) = mrCancel) then
     Exit;
   VarName := Trim(edVar.Text);
   Value := Trim(edValue.Text);

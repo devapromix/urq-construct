@@ -28,7 +28,7 @@ var
 
 implementation
 
-uses uMain, uAddRoom, uCommon;
+uses uMain, uAddRoom, uCommon, uUtils;
 
 {$R *.dfm}
 { TfSelRoom }
@@ -49,7 +49,7 @@ begin
     FIndex := RoomList.Items.IndexOf(SelRoom);
   if (FIndex < 0) then
     FIndex := 0;
-  if (Common.ShowForm(Self) = mrCancel) or (RoomList.ItemIndex < 0) then
+  if (Utils.ShowForm(Self) = mrCancel) or (RoomList.ItemIndex < 0) then
     Exit;
   Result := Trim(RoomList.Items.Strings[RoomList.ItemIndex]);
 end;
