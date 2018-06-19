@@ -69,8 +69,8 @@ type
     ToolButton1: TToolButton;
     ToolButton8: TToolButton;
     ToolButton10: TToolButton;
-    Action1: TAction;
-    Action2: TAction;
+    acMoveUp: TAction;
+    acMoveDown: TAction;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure acDeleteUpdate(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);
@@ -88,6 +88,10 @@ type
     procedure acEditVarExecute(Sender: TObject);
     procedure acEditItemExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
+    procedure acMoveDownUpdate(Sender: TObject);
+    procedure acMoveUpUpdate(Sender: TObject);
+    procedure acMoveUpExecute(Sender: TObject);
+    procedure acMoveDownExecute(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -297,8 +301,8 @@ end;
 procedure TfRoom.acDeleteExecute(Sender: TObject);
 begin
   // Попытка удалить команду из списка
-  if (CLB.ItemIndex >= 0) and
-    (Common.MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  if (CLB.ItemIndex >= 0) and (Common.MsgDlg('Удалить?', mtConfirmation,
+    [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Items.Delete(CLB.ItemIndex);
     SaveCLB(Current);
@@ -308,7 +312,8 @@ end;
 procedure TfRoom.acClearExecute(Sender: TObject);
 begin
   // Очистить
-  if (Common.MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  if (Common.MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk)
+  then
   begin
     CLB.Clear;
     SaveCLB(Current);
@@ -464,6 +469,26 @@ end;
 procedure TfRoom.acEditVarExecute(Sender: TObject);
 begin
   AddVar();
+end;
+
+procedure TfRoom.acMoveDownExecute(Sender: TObject);
+begin
+  // Вниз
+end;
+
+procedure TfRoom.acMoveDownUpdate(Sender: TObject);
+begin
+  // Вниз
+end;
+
+procedure TfRoom.acMoveUpExecute(Sender: TObject);
+begin
+  // Вверх
+end;
+
+procedure TfRoom.acMoveUpUpdate(Sender: TObject);
+begin
+  // Вверх
 end;
 
 procedure TfRoom.acEditItemExecute(Sender: TObject);

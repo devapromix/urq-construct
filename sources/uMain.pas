@@ -173,6 +173,7 @@ begin
   if (Common.GetRoomIndexByName(AName) < 0) then
     Exit;
   Room := TfRoom.Create(Application);
+  Room.Width := 500;
   Room.Current := GetCurrent(AName);
   Room.Caption := GetCaption(AName);
   Room.LoadCLB(Room.Current);
