@@ -612,6 +612,8 @@ end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);
 begin
+  if (Trim(FFileName) = '') then
+    Exit;
   Self.mmExportMemo.Lines.SaveToFile(Utils.GetPath('quests') +
     ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   Common.MsgDlg(' вест сохранен в папке "Quests"!', mtInformation, [mbOk]);
@@ -619,7 +621,7 @@ end;
 
 procedure TfMain.acSaveQSTUpdate(Sender: TObject);
 begin
-  acSaveQST.Enabled := FFileName <> ''
+  acSaveQST.Enabled := FFileName <> '';
 end;
 
 end.
