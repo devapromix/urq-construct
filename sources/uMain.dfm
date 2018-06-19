@@ -130,10 +130,6 @@ object fMain: TfMain
     TabPosition = tpLeft
     object tsRooms: TTabSheet
       Caption = 'Rooms'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TVR: TTreeView
         Left = 0
         Top = 23
@@ -173,10 +169,6 @@ object fMain: TfMain
     object tsItems: TTabSheet
       Caption = 'Items'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TVI: TTreeView
         Left = 0
         Top = 23
@@ -215,10 +207,6 @@ object fMain: TfMain
     object tsVars: TTabSheet
       Caption = 'Variables'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TVV: TTreeView
         Left = 0
         Top = 23
@@ -517,13 +505,14 @@ object fMain: TfMain
       Hint = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1082#1074#1077#1089#1090
       ImageIndex = 8
       OnExecute = acSaveQSTExecute
+      OnUpdate = acSaveQSTUpdate
     end
   end
   object MenuImages: TImageList
     Left = 264
     Top = 48
     Bitmap = {
-      494C010116001800280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101160018002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000EFF7F700D6ADAD00CE8C9C00D69CAD00D69CAD00CE8C9C00D6ADAD00EFF7
@@ -1330,7 +1319,7 @@ object fMain: TfMain
     Left = 296
     Top = 48
     Bitmap = {
-      494C010105000700280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101050007002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

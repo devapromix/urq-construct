@@ -116,6 +116,7 @@ type
     procedure acAboutExecute(Sender: TObject);
     procedure acSettingsExecute(Sender: TObject);
     procedure acSaveQSTExecute(Sender: TObject);
+    procedure acSaveQSTUpdate(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -614,6 +615,11 @@ begin
   Self.mmExportMemo.Lines.SaveToFile(Utils.GetPath('quests') +
     ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   Common.MsgDlg(' вест сохранен в папке "Quests"!', mtInformation, [mbOk]);
+end;
+
+procedure TfMain.acSaveQSTUpdate(Sender: TObject);
+begin
+  acSaveQST.Enabled := FFileName <> ''
 end;
 
 end.
