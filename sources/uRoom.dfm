@@ -83,8 +83,20 @@ object fRoom: TfRoom
       Top = 0
       Action = acClose
     end
-    object ToolButton4: TToolButton
+    object ToolButton8: TToolButton
       Left = 23
+      Top = 0
+      Caption = 'ToolButton8'
+      ImageIndex = 0
+    end
+    object ToolButton10: TToolButton
+      Left = 46
+      Top = 0
+      Caption = 'ToolButton10'
+      ImageIndex = 1
+    end
+    object ToolButton4: TToolButton
+      Left = 69
       Top = 0
       Width = 8
       Caption = 'ToolButton4'
@@ -92,22 +104,22 @@ object fRoom: TfRoom
       Style = tbsSeparator
     end
     object btPrintLine: TToolButton
-      Left = 31
+      Left = 77
       Top = 0
       Action = acTextLine
     end
     object btPrint: TToolButton
-      Left = 54
+      Left = 100
       Top = 0
       Action = acText
     end
     object btButton: TToolButton
-      Left = 77
+      Left = 123
       Top = 0
       Action = acBtn
     end
     object ToolButton9: TToolButton
-      Left = 100
+      Left = 146
       Top = 0
       Width = 8
       Caption = 'ToolButton9'
@@ -115,18 +127,18 @@ object fRoom: TfRoom
       Style = tbsSeparator
     end
     object btGoto: TToolButton
-      Left = 108
+      Left = 154
       Top = 0
       Action = acGoto
     end
     object btProc: TToolButton
       Tag = 1
-      Left = 131
+      Left = 177
       Top = 0
       Action = acProc
     end
     object ToolButton11: TToolButton
-      Left = 154
+      Left = 200
       Top = 0
       Width = 8
       Caption = 'ToolButton11'
@@ -134,22 +146,22 @@ object fRoom: TfRoom
       Style = tbsSeparator
     end
     object ToolButton3: TToolButton
-      Left = 162
+      Left = 208
       Top = 0
       Action = acExpression
     end
     object ToolButton7: TToolButton
-      Left = 185
+      Left = 231
       Top = 0
       Action = acStartBlock
     end
     object ToolButton5: TToolButton
-      Left = 208
+      Left = 254
       Top = 0
       Action = acFinishBlock
     end
     object ToolButton2: TToolButton
-      Left = 231
+      Left = 277
       Top = 0
       Width = 8
       Caption = 'ToolButton2'
@@ -157,17 +169,17 @@ object fRoom: TfRoom
       Style = tbsSeparator
     end
     object ToolButton12: TToolButton
-      Left = 239
+      Left = 285
       Top = 0
       Action = acEditVar
     end
     object ToolButton14: TToolButton
-      Left = 262
+      Left = 308
       Top = 0
       Action = acEditItem
     end
     object ToolButton6: TToolButton
-      Left = 285
+      Left = 331
       Top = 0
       Width = 8
       Caption = 'ToolButton6'
@@ -175,35 +187,40 @@ object fRoom: TfRoom
       Style = tbsSeparator
     end
     object btCLS: TToolButton
-      Left = 293
+      Left = 339
       Top = 0
       Action = acCLS
       ImageIndex = 14
     end
     object btCLSB: TToolButton
-      Left = 316
+      Left = 362
       Top = 0
       Action = acCLSB
       ImageIndex = 13
     end
     object btPerKill: TToolButton
-      Left = 339
+      Left = 385
       Top = 0
       Action = acPerKill
       ImageIndex = 11
     end
     object btInvKill: TToolButton
-      Left = 362
+      Left = 408
       Top = 0
       Action = acInvKill
       ImageIndex = 12
+    end
+    object ToolButton1: TToolButton
+      Left = 431
+      Top = 0
+      Action = acEnd
     end
   end
   object ButsImages: TImageList
     Left = 16
     Top = 40
     Bitmap = {
-      494C01010F002400300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F0024003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       000000000000000000000000000000000000000000008381F8008786F4000000
       0000000000007D7CEF007170F000000000000000000000000000000000003BA8
@@ -806,6 +823,18 @@ object fRoom: TfRoom
       ImageIndex = 4
       OnExecute = acOpGrBExecute
     end
+    object Action1: TAction
+      Caption = #1047#1072#1082#1088#1099#1090#1100
+      Hint = #1047#1072#1082#1088#1099#1090#1100'|'#1047#1072#1082#1088#1099#1090#1100' '#1082#1086#1084#1085#1072#1090#1091
+      ImageIndex = 0
+      OnExecute = acCloseExecute
+    end
+    object Action2: TAction
+      Caption = #1047#1072#1082#1088#1099#1090#1100
+      Hint = #1047#1072#1082#1088#1099#1090#1100'|'#1047#1072#1082#1088#1099#1090#1100' '#1082#1086#1084#1085#1072#1090#1091
+      ImageIndex = 0
+      OnExecute = acCloseExecute
+    end
     object acProc: TAction
       Tag = 1
       Category = 'OperatorsGroupB'
@@ -830,6 +859,14 @@ object fRoom: TfRoom
       Hint = #1050#1086#1085#1077#1094' '#1073#1083#1086#1082#1072'|'#1044#1086#1073#1072#1074#1080#1090#1100' '#1082#1086#1085#1077#1094' '#1073#1083#1086#1082#1072
       ImageIndex = 2
       ShortCut = 49222
+      OnExecute = acOpGrAExecute
+    end
+    object acEnd: TAction
+      Tag = 6
+      Category = 'OperatorsGroupA'
+      Caption = 'acEnd'
+      Hint = 'end'
+      ShortCut = 49221
       OnExecute = acOpGrAExecute
     end
     object acCLS: TAction

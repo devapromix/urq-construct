@@ -65,6 +65,12 @@ type
     N10: TMenuItem;
     N11: TMenuItem;
     N12: TMenuItem;
+    acEnd: TAction;
+    ToolButton1: TToolButton;
+    ToolButton8: TToolButton;
+    ToolButton10: TToolButton;
+    Action1: TAction;
+    Action2: TAction;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure acDeleteUpdate(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);
@@ -104,8 +110,8 @@ type
 
 const
   // Операторы по группам
-  OpGrA: array [0 .. 5] of string = ('cls', 'clsb', 'invkill', 'perkill',
-    'startblock', 'finishblock');
+  OpGrA: array [0 .. 6] of string = ('cls', 'clsb', 'invkill', 'perkill',
+    'startblock', 'finishblock', 'end');
   OpGrB: array [0 .. 1] of string = ('goto', 'proc');
   OpGrC: array [0 .. 0] of string = ('btn');
   OpGrD: array [0 .. 1] of string = ('pln', 'p');
