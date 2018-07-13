@@ -68,6 +68,84 @@ implementation
 
 uses SysUtils, uMain, uUtils;
 
+// Проверка на запрещённые символы:
+function CheckSymbols(Input: string): Boolean; inline;
+var
+  C: Char;
+begin
+  Result := False;
+  for C in Input do
+    if C in ['/', '\', ':', '?', '|', '*', '"', '<', '>', ' '] then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+// Добавление в список
+procedure AddPlayer(const Login: string);
+var
+  PlayersCount: LongWord;
+  I: LongWord;
+begin
+  PlayersCount := Length(Players);
+
+  // Проверяем, нет ли игрока в списке:
+  if PlayersCount > 0 then
+    for I := 0 to PlayersCount - 1 do
+      if Players[I].Name = Login then
+        Exit;
+  SetLength(Players, PlayersCount + 1);
+  Players[PlayersCount].Name := Login;
+end;
+
+// Удаление из списка
+procedure RemovePlayer(const Login: string);
+var
+  PlayersCount: LongWord;
+  I: LongWord;
+begin
+  PlayersCount := Length(Players);
+  for I := 0 to PlayersCount - 1 do
+  begin
+    if Players[I].Name = Login then
+    begin
+      Players[I] := Players[PlayersCount - 1];
+      SetLength(Players, PlayersCount - 1);
+      Break;
+    end;
+  end;
+end;
+
+// Сущ. ли игрок в списке
+function IsPlayerInList(const Player: string): Boolean;
+var
+  PlayersCount: LongWord;
+  I: LongWord;
+begin
+  Result := False;
+  PlayersCount := Length(Players);
+  if PlayersCount > 0 then
+    for I := 0 to PlayersCount - 1 do
+    begin
+      if Players[I].Name = Player then
+      begin
+        Result := True;
+        Exit;
+      end;
+    end;
+end;
+
+function GetColor(const Color:TColor):Integer;
+var
+	RGBColor : Integer;
+begin
+	RGBColor := ColorToRGB(Color);
+	Result := (RGBColor shr 16) OR
+	(((RGBColor AND $FFFF) shr 8)shl 8)OR
+	((RGBColor AND $FF)shl 16);
+end;
+
 class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
   Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
