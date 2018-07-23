@@ -66,7 +66,7 @@ type
 
 implementation
 
-uses SysUtils, uMain, uUtils;
+uses SysUtils, uMain, uUtils, Vcl.Graphics;
 
 // Проверка на запрещённые символы:
 function CheckSymbols(Input: string): Boolean; inline;
@@ -82,7 +82,7 @@ begin
     end;
 end;
 
-// Добавление в список
+{// Добавление в список
 procedure AddPlayer(const Login: string);
 var
   PlayersCount: LongWord;
@@ -134,7 +134,7 @@ begin
         Exit;
       end;
     end;
-end;
+end;   }
 
 function GetColor(const Color:TColor):Integer;
 var
