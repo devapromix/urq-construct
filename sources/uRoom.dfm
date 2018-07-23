@@ -65,7 +65,7 @@ object fRoom: TfRoom
     PopupMenu = PM
     TabOrder = 1
     OnDblClick = CLBDblClick
-    ExplicitWidth = 459
+    ExplicitTop = 29
   end
   object ToolBar1: TToolBar
     Left = 0
@@ -79,7 +79,6 @@ object fRoom: TfRoom
     EdgeOuter = esNone
     Images = ButsImages
     TabOrder = 2
-    ExplicitWidth = 459
     object btClose: TToolButton
       Left = 0
       Top = 0
@@ -220,7 +219,7 @@ object fRoom: TfRoom
     Left = 16
     Top = 40
     Bitmap = {
-      494C010111002400480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101110024004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

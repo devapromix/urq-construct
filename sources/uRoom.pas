@@ -472,23 +472,44 @@ begin
 end;
 
 procedure TfRoom.acMoveDownExecute(Sender: TObject);
+var
+  Tmp: string;
 begin
   // ¬низ
+  if (CLB.ItemIndex >= 0) then
+  begin
+    Tmp := CLB.Items[CLB.ItemIndex + 1];
+    CLB.Items[CLB.ItemIndex + 1] := CLB.Items[CLB.ItemIndex];
+    CLB.Items[CLB.ItemIndex] := Tmp;
+    CLB.ItemIndex := CLB.ItemIndex + 1;
+  end;
 end;
 
 procedure TfRoom.acMoveDownUpdate(Sender: TObject);
 begin
   // ¬низ
+  acMoveDown.Enabled := (CLB.Count > 1) and
+    (CLB.ItemIndex < CLB.Items.Count - 1);
 end;
 
 procedure TfRoom.acMoveUpExecute(Sender: TObject);
+var
+  Tmp: string;
 begin
   // ¬верх
+  if (CLB.ItemIndex >= 0) then
+  begin
+    Tmp := CLB.Items[CLB.ItemIndex - 1];
+    CLB.Items[CLB.ItemIndex - 1] := CLB.Items[CLB.ItemIndex];
+    CLB.Items[CLB.ItemIndex] := Tmp;
+    CLB.ItemIndex := CLB.ItemIndex - 1;
+  end;
 end;
 
 procedure TfRoom.acMoveUpUpdate(Sender: TObject);
 begin
   // ¬верх
+  acMoveUp.Enabled := (CLB.Count > 1) and (CLB.ItemIndex > 0);
 end;
 
 procedure TfRoom.acEditItemExecute(Sender: TObject);
