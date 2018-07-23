@@ -282,8 +282,7 @@ object fMain: TfMain
       object ToolButton17: TToolButton
         Left = 23
         Top = 0
-        Caption = 'ToolButton17'
-        ImageIndex = 9
+        Action = acRun
       end
     end
     object mmExportMemo: TMemo
@@ -325,6 +324,9 @@ object fMain: TfMain
       end
       object N13: TMenuItem
         Action = acExportToQST
+      end
+      object acRun1: TMenuItem
+        Action = acRun
       end
       object N14: TMenuItem
         Caption = '-'
@@ -514,7 +516,10 @@ object fMain: TfMain
       OnUpdate = acSaveQSTUpdate
     end
     object acRun: TAction
-      Caption = 'acRun'
+      Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
+      Hint = #1042#1099#1087#1086#1083#1085#1080#1090#1100
+      ImageIndex = 16
+      ShortCut = 120
       OnExecute = acRunExecute
       OnUpdate = acRunUpdate
     end

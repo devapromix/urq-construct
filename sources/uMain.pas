@@ -90,6 +90,7 @@ type
     acSaveQST: TAction;
     ToolButton17: TToolButton;
     acRun: TAction;
+    acRun1: TMenuItem;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
