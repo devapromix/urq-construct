@@ -88,6 +88,8 @@ type
     ToolButton16: TToolButton;
     mmExportMemo: TMemo;
     acSaveQST: TAction;
+    ToolButton17: TToolButton;
+    acRun: TAction;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -117,6 +119,8 @@ type
     procedure acSettingsExecute(Sender: TObject);
     procedure acSaveQSTExecute(Sender: TObject);
     procedure acSaveQSTUpdate(Sender: TObject);
+    procedure acRunExecute(Sender: TObject);
+    procedure acRunUpdate(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -256,7 +260,7 @@ begin
     if (Trim(ParamStr(1)) = '-d') then
     begin
       N := 2;
-      //FIsDebug := True;
+      // FIsDebug := True;
     end;
     if ParamCount > 0 then
     begin
@@ -434,6 +438,17 @@ begin
     NewProject;
     LoadProject(OD.FileName);
   end;
+end;
+
+procedure TfMain.acRunExecute(Sender: TObject);
+begin
+  // Run
+end;
+
+procedure TfMain.acRunUpdate(Sender: TObject);
+begin
+  // Run
+
 end;
 
 procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
