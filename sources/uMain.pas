@@ -449,7 +449,7 @@ end;
 procedure TfMain.acRunUpdate(Sender: TObject);
 begin
   // Run
-
+  acRun.Enabled := FFileName <> '';
 end;
 
 procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
