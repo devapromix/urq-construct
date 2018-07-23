@@ -116,14 +116,18 @@ object fSettings: TfSettings
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
+      object edInterPath: TEdit
+        Left = 16
+        Top = 80
+        Width = 249
+        Height = 21
+        TabOrder = 0
+        Text = 'edInterPath'
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'TabSheet2'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 8
         Top = 8

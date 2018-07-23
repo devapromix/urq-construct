@@ -19,6 +19,7 @@ type
     Label3: TLabel;
     HotKey2: THotKey;
     HotKey3: THotKey;
+    edInterPath: TEdit;
   private
     { Private declarations }
   public
