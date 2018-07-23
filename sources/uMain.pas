@@ -127,6 +127,7 @@ type
     SL: TStringList;
     FFileName: string;
     FModified: Boolean;
+    FExported: Boolean;
     procedure NewProject;
     procedure SetModified(const Value: Boolean);
     procedure LoadProject(const FileName: string);
@@ -148,7 +149,7 @@ implementation
 {$R *.dfm}
 
 uses uRoom, uAddRoom, uSelItem, uSelVar, uAddVar, uAddItem,
-  uAbout, uSettings, uUtils, uLanguage;
+  uAbout, uSettings, uUtils, uLanguage, ShellAPI;
 
 procedure TfMain.CreateRoom(const AName: string);
 var
@@ -239,6 +240,7 @@ begin
   PC.ActivePageIndex := 0;
   mmExport.Visible := False;
   FFileName := '';
+  FExported := False;
   Modified := False;
 end;
 
@@ -441,17 +443,6 @@ begin
   end;
 end;
 
-procedure TfMain.acRunExecute(Sender: TObject);
-begin
-  // Run
-end;
-
-procedure TfMain.acRunUpdate(Sender: TObject);
-begin
-  // Run
-  acRun.Enabled := FFileName <> '';
-end;
-
 procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   CanClose := not CheckModified;
@@ -584,6 +575,7 @@ begin
     end;
     mmExport.Visible := True;
   end;
+  FExported := True;
 end;
 
 procedure TfMain.acMinimizeAllExecute(Sender: TObject);
@@ -666,6 +658,36 @@ end;
 procedure TfMain.acSaveQSTUpdate(Sender: TObject);
 begin
   acSaveQST.Enabled := FFileName <> '';
+end;
+
+procedure TfMain.acRunExecute(Sender: TObject);
+var
+  FileName, IntURQPath: string;
+begin
+  // Run
+  if (Trim(FFileName) = '') then
+    Exit;
+  if not FExported then
+    acExportToQSTExecute(Sender);
+  FileName := Utils.GetPath('quests') +
+    ChangeFileExt(ExtractFileName(FFileName), '.qst');
+  Self.mmExportMemo.Lines.SaveToFile(FileName);
+  IntURQPath := Trim(fSettings.edSelURQ.Text);
+  if (IntURQPath = '') or not FileExists(IntURQPath) then
+    Exit;
+  // S := 'C:\Windows\Notepad.exe';
+  // ShowMessage(F + ' ' + S);
+  ShellExecute(Application.Handle, 'open', PWideChar(IntURQPath),
+    PWideChar(FileName), nil, SW_SHOWNORMAL);
+end;
+
+procedure TfMain.acRunUpdate(Sender: TObject);
+var
+  IntURQPath: string;
+begin
+  IntURQPath := Trim(fSettings.edSelURQ.Text);
+  acRun.Enabled := (FFileName <> '') and FExported and not FModified and
+    (IntURQPath <> '') and FileExists(IntURQPath)
 end;
 
 end.

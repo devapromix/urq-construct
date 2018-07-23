@@ -6,7 +6,7 @@ object fSettings: TfSettings
   BorderWidth = 8
   Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
   ClientHeight = 344
-  ClientWidth = 423
+  ClientWidth = 425
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -108,70 +108,36 @@ object fSettings: TfSettings
     TabOrder = 1
   end
   object PageControl1: TPageControl
-    Left = 24
-    Top = 8
-    Width = 289
-    Height = 233
+    Left = 0
+    Top = 0
+    Width = 425
+    Height = 306
     ActivePage = TabSheet1
     TabOrder = 2
     object TabSheet1: TTabSheet
-      Caption = 'TabSheet1'
-      object edInterPath: TEdit
-        Left = 16
-        Top = 80
-        Width = 249
+      Caption = #1048#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088
+      ExplicitHeight = 273
+      object Label4: TLabel
+        Left = 8
+        Top = 16
+        Width = 146
+        Height = 13
+        Caption = #1055#1091#1090#1100' '#1082' '#1080#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088#1091' URQ'
+      end
+      object btSelURQ: TSpeedButton
+        Left = 375
+        Top = 39
+        Width = 34
+        Height = 22
+        Caption = '...'
+        OnClick = btSelURQClick
+      end
+      object edSelURQ: TEdit
+        Left = 3
+        Top = 40
+        Width = 366
         Height = 21
         TabOrder = 0
-        Text = 'edInterPath'
-      end
-    end
-    object TabSheet2: TTabSheet
-      Caption = 'TabSheet2'
-      ImageIndex = 1
-      object Label1: TLabel
-        Left = 8
-        Top = 8
-        Width = 31
-        Height = 13
-        Caption = 'Label1'
-      end
-      object Label2: TLabel
-        Left = 8
-        Top = 32
-        Width = 31
-        Height = 13
-        Caption = 'Label2'
-      end
-      object Label3: TLabel
-        Left = 8
-        Top = 56
-        Width = 31
-        Height = 13
-        Caption = 'Label3'
-      end
-      object HotKey1: THotKey
-        Left = 152
-        Top = 8
-        Width = 121
-        Height = 19
-        HotKey = 32833
-        TabOrder = 0
-      end
-      object HotKey2: THotKey
-        Left = 152
-        Top = 32
-        Width = 121
-        Height = 19
-        HotKey = 32833
-        TabOrder = 1
-      end
-      object HotKey3: THotKey
-        Left = 152
-        Top = 56
-        Width = 121
-        Height = 19
-        HotKey = 32833
-        TabOrder = 2
       end
     end
   end

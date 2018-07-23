@@ -502,7 +502,6 @@ object fMain: TfMain
     object acSettings: TAction
       Category = #1055#1088#1086#1077#1082#1090
       Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
-      Enabled = False
       Hint = #1053#1072#1089#1090#1088#1086#1081#1082#1080' '#1087#1088#1086#1077#1082#1090#1072
       ImageIndex = 10
       OnExecute = acSettingsExecute

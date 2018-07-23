@@ -12,14 +12,10 @@ type
     btCancel: TBitBtn;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
-    HotKey1: THotKey;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    HotKey2: THotKey;
-    HotKey3: THotKey;
-    edInterPath: TEdit;
+    Label4: TLabel;
+    btSelURQ: TSpeedButton;
+    edSelURQ: TEdit;
+    procedure btSelURQClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,5 +28,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfSettings.btSelURQClick(Sender: TObject);
+begin
+  // Выбор интерпретатора для запуска квестов
+end;
 
 end.
