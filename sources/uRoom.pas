@@ -482,6 +482,7 @@ begin
     CLB.Items[CLB.ItemIndex + 1] := CLB.Items[CLB.ItemIndex];
     CLB.Items[CLB.ItemIndex] := Tmp;
     CLB.ItemIndex := CLB.ItemIndex + 1;
+    SaveCLB(Current);
   end;
 end;
 
@@ -503,6 +504,7 @@ begin
     CLB.Items[CLB.ItemIndex - 1] := CLB.Items[CLB.ItemIndex];
     CLB.Items[CLB.ItemIndex] := Tmp;
     CLB.ItemIndex := CLB.ItemIndex - 1;
+    SaveCLB(Current);
   end;
 end;
 

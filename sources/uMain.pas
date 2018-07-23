@@ -124,6 +124,7 @@ type
     FModified: Boolean;
     procedure NewProject;
     procedure SetModified(const Value: Boolean);
+    procedure LoadProject(const FileName: string);
   public
     { Public declarations }
     QL: TStringList;
@@ -237,6 +238,9 @@ begin
 end;
 
 procedure TfMain.FormCreate(Sender: TObject);
+var
+  I, N: Integer;
+  F: string;
 begin
   Language := TLanguage.Create(True);
   QCProjFilters := Format(stProjFilters, [Application.Title, QCProjExt]);
@@ -244,6 +248,24 @@ begin
   SL := TStringList.Create;
   SL.Duplicates := dupIgnore;
   NewProject;
+  F := '';
+  if ParamCount > 0 then
+  begin
+    N := 1;
+    // Debug mode -d
+    if (Trim(ParamStr(1)) = '-d') then
+    begin
+      N := 2;
+      //FIsDebug := True;
+    end;
+    if ParamCount > 0 then
+    begin
+      for I := N to ParamCount do
+        F := Trim(F + ' ' + ParamStr(I));
+      LoadProject(F);
+      Exit;
+    end;
+  end;
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
@@ -351,12 +373,54 @@ end;
   FreeAndNil(SL);
   end; }
 
-procedure TfMain.acOpenProjectExecute(Sender: TObject);
+procedure TfMain.LoadProject(const FileName: string);
 var
   S, N: string;
   I: Integer;
   Ini: TIniFile;
   V: TArray<string>;
+begin
+  FFileName := Trim(FileName);
+  Ini := TIniFile.Create(FFileName);
+  try
+    // Настройки
+
+    // Комнаты
+    QL.Clear;
+    SL.Clear;
+    Ini.ReadSections(SL);
+    for I := 0 to SL.Count - 1 do
+    begin
+      if Common.IsErName(SL[I]) or Common.IsErChar(SL[I]) then
+        Continue;
+      Common.AddTVItem(TVR, SL[I], 3, 4);
+      QL.Append(Ini.ReadString(SL[I], 'value', ''));
+    end;
+    // Предметы
+    S := Ini.ReadString('items', 'value', '');
+    V := S.Split(['|']);
+    for I := 0 to High(V) do
+    begin
+      N := Trim(V[I]);
+      if (N <> '') then
+        Common.AddTVItem(TVI, N, 1, 1);
+    end;
+    // Переменные
+    S := Ini.ReadString('variables', 'value', '');
+    V := S.Split(['|']);
+    for I := 0 to High(V) do
+    begin
+      N := Trim(V[I]);
+      if (N <> '') then
+        Common.AddTVItem(TVV, N, 2, 2);
+    end;
+  finally
+    Ini.Free;
+  end;
+  Modified := False;
+end;
+
+procedure TfMain.acOpenProjectExecute(Sender: TObject);
 begin
   // Загрузить проект
   if CheckModified then
@@ -368,45 +432,8 @@ begin
   if OD.Execute then
   begin
     NewProject;
-    FFileName := OD.FileName;
-    Ini := TIniFile.Create(OD.FileName);
-    try
-      // Настройки
-
-      // Комнаты
-      QL.Clear;
-      SL.Clear;
-      Ini.ReadSections(SL);
-      for I := 0 to SL.Count - 1 do
-      begin
-        if Common.IsErName(SL[I]) or Common.IsErChar(SL[I]) then
-          Continue;
-        Common.AddTVItem(TVR, SL[I], 3, 4);
-        QL.Append(Ini.ReadString(SL[I], 'value', ''));
-      end;
-      // Предметы
-      S := Ini.ReadString('items', 'value', '');
-      V := S.Split(['|']);
-      for I := 0 to High(V) do
-      begin
-        N := Trim(V[I]);
-        if (N <> '') then
-          Common.AddTVItem(TVI, N, 1, 1);
-      end;
-      // Переменные
-      S := Ini.ReadString('variables', 'value', '');
-      V := S.Split(['|']);
-      for I := 0 to High(V) do
-      begin
-        N := Trim(V[I]);
-        if (N <> '') then
-          Common.AddTVItem(TVV, N, 2, 2);
-      end;
-    finally
-      Ini.Free;
-    end;
+    LoadProject(OD.FileName);
   end;
-  Modified := False;
 end;
 
 procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
