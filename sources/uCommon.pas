@@ -5,39 +5,39 @@ interface
 uses Forms, Dialogs, Classes, ComCtrls;
 
 const
-  // Версия конструктора
+  // Р’РµСЂСЃРёСЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
   Version = '0.1.0';
 
 const
-  // Расширение ini-файла проекта (QCPROJ = QuestConstructPROJect)
+  // Р Р°СЃС€РёСЂРµРЅРёРµ ini-С„Р°Р№Р»Р° РїСЂРѕРµРєС‚Р° (QCPROJ = QuestConstructPROJect)
   QCProjExt = 'qcproj';
 
 var
-  stProjectExists: string = 'Проект %s существует! Перезаписать?';
-  stCheckModified: string = 'Проект изменен! Отбросить изменения и продолжить?';
-  stProjFilters: string = 'Проект %s|*.%s|Все файлы (*.*)|*.*';
+  stProjectExists: string = 'РџСЂРѕРµРєС‚ %s СЃСѓС‰РµСЃС‚РІСѓРµС‚! РџРµСЂРµР·Р°РїРёСЃР°С‚СЊ?';
+  stCheckModified: string = 'РџСЂРѕРµРєС‚ РёР·РјРµРЅРµРЅ! РћС‚Р±СЂРѕСЃРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ Рё РїСЂРѕРґРѕР»Р¶РёС‚СЊ?';
+  stProjFilters: string = 'РџСЂРѕРµРєС‚ %s|*.%s|Р’СЃРµ С„Р°Р№Р»С‹ (*.*)|*.*';
 
 const
-  RoomsName = 'Комнаты';
-  ItemsName = 'Предметы';
-  VarsName = 'Переменные';
+  RoomsName = 'РљРѕРјРЅР°С‚С‹';
+  ItemsName = 'РџСЂРµРґРјРµС‚С‹';
+  VarsName = 'РџРµСЂРµРјРµРЅРЅС‹Рµ';
   RoomDefaultName = 'room';
-  RoomDefaultCaption = 'Комната';
+  RoomDefaultCaption = 'РљРѕРјРЅР°С‚Р°';
 
 type
-  // Типы ресурсов
+  // РўРёРїС‹ СЂРµСЃСѓСЂСЃРѕРІ
   TResType = (rtRoom, rtItem, rtVar);
 
 const
-  // Запрещенные имена для комнат, предметов и переменных
+  // Р—Р°РїСЂРµС‰РµРЅРЅС‹Рµ РёРјРµРЅР° РґР»СЏ РєРѕРјРЅР°С‚, РїСЂРµРґРјРµС‚РѕРІ Рё РїРµСЂРµРјРµРЅРЅС‹С…
   ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
-  // Запрещенные символы для комнат, предметов и переменных
+  // Р—Р°РїСЂРµС‰РµРЅРЅС‹Рµ СЃРёРјРІРѕР»С‹ РґР»СЏ РєРѕРјРЅР°С‚, РїСЂРµРґРјРµС‚РѕРІ Рё РїРµСЂРµРјРµРЅРЅС‹С…
   ErChars: array [0 .. 1] of Char = ('|', '&');
 
 var
-  // Фильтр
+  // Р¤РёР»СЊС‚СЂ
   QCProjFilters: string = '';
-  // Разделитель операторов в URQL
+  // Р Р°Р·РґРµР»РёС‚РµР»СЊ РѕРїРµСЂР°С‚РѕСЂРѕРІ РІ URQL
   OpDiv: string = '&';
 
 type
@@ -53,7 +53,7 @@ type
       const ImageIndex, SelectedIndex: Integer): TTreeNode;
     class procedure GetResource(var SL: TStringList; const RT: TResType;
       Current: string = '');
-    // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
+    // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, Рё РјР°СЃСЃРёРІ, РґРёРЅ. РґРѕР±Р°РІР». TV
     class function GetRoomIndexByName(const AName: string): Integer;
     class function IfThen(AValue: Boolean; const ATrue: string;
       const AFalse: string): string; overload;
@@ -68,7 +68,7 @@ implementation
 
 uses SysUtils, uMain, uUtils, Vcl.Graphics;
 
-// Проверка на запрещённые символы:
+// РџСЂРѕРІРµСЂРєР° РЅР° Р·Р°РїСЂРµС‰С‘РЅРЅС‹Рµ СЃРёРјРІРѕР»С‹:
 function CheckSymbols(Input: string): Boolean; inline;
 var
   C: Char;
@@ -82,7 +82,7 @@ begin
     end;
 end;
 
-{// Добавление в список
+{// Р”РѕР±Р°РІР»РµРЅРёРµ РІ СЃРїРёСЃРѕРє
 procedure AddPlayer(const Login: string);
 var
   PlayersCount: LongWord;
@@ -90,7 +90,7 @@ var
 begin
   PlayersCount := Length(Players);
 
-  // Проверяем, нет ли игрока в списке:
+  // РџСЂРѕРІРµСЂСЏРµРј, РЅРµС‚ Р»Рё РёРіСЂРѕРєР° РІ СЃРїРёСЃРєРµ:
   if PlayersCount > 0 then
     for I := 0 to PlayersCount - 1 do
       if Players[I].Name = Login then
@@ -99,7 +99,7 @@ begin
   Players[PlayersCount].Name := Login;
 end;
 
-// Удаление из списка
+// РЈРґР°Р»РµРЅРёРµ РёР· СЃРїРёСЃРєР°
 procedure RemovePlayer(const Login: string);
 var
   PlayersCount: LongWord;
@@ -117,7 +117,7 @@ begin
   end;
 end;
 
-// Сущ. ли игрок в списке
+// РЎСѓС‰. Р»Рё РёРіСЂРѕРє РІ СЃРїРёСЃРєРµ
 function IsPlayerInList(const Player: string): Boolean;
 var
   PlayersCount: LongWord;
@@ -192,19 +192,19 @@ var
 begin
   TV := nil;
   case RT of
-    // Комната
+    // РљРѕРјРЅР°С‚Р°
     rtRoom:
       begin
         TV := fMain.TVR;
         Name := RoomsName;
       end;
-    // Предмет
+    // РџСЂРµРґРјРµС‚
     rtItem:
       begin
         TV := fMain.TVI;
         Name := ItemsName;
       end;
-    // Переменная
+    // РџРµСЂРµРјРµРЅРЅР°СЏ
     rtVar:
       begin
         TV := fMain.TVV;
