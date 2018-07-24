@@ -14,11 +14,8 @@ type
     Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btOKClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
-    SL: TStringList;
   public
     { Public declarations }
     procedure NewItem;
@@ -34,22 +31,23 @@ uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
-procedure TfAddItem.FormCreate(Sender: TObject);
-begin
-  SL := TStringList.Create;
-end;
-
 procedure TfAddItem.AddItem(ItemName: string);
 var
   I: Integer;
+  SL: TStringList;
 begin
   // Добавить предмет
-  Common.GetResource(SL, rtItem, '');
-  for I := 0 to SL.Count - 1 do
-    if (SL[I] = ItemName) then
-      Exit;
-  Common.AddTVItem(fMain.TVI, ItemName, 1, 1);
-  fMain.Modified := True;
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtItem, '');
+    for I := 0 to SL.Count - 1 do
+      if (SL[I] = ItemName) then
+        Exit;
+    Common.AddTVItem(fMain.TVI, ItemName, 1, 1);
+    fMain.Modified := True;
+  finally
+    FreeAndNil(SL);
+  end;
 end;
 
 procedure TfAddItem.FormShow(Sender: TObject);
@@ -65,47 +63,48 @@ begin
   try
     Common.GetResource(SL, rtItem, '');
     cbItemName.Items.Assign(SL);
+    Utils.ShowForm(Self);
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
-  Utils.ShowForm(Self);
 end;
 
 procedure TfAddItem.btOKClick(Sender: TObject);
 var
   S: string;
   I: Integer;
+  SL: TStringList;
 begin
-  Common.GetResource(SL, rtItem, '');
-  S := LowerCase(Trim(cbItemName.Text));
-  if (S = '') then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  for I := 0 to SL.Count - 1 do
-    if (S = SL.Strings[I]) then
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtItem, '');
+    S := LowerCase(Trim(cbItemName.Text));
+    if (S = '') then
     begin
       ShowMessage('!!!');
       Exit;
     end;
-  if Common.IsErName(S) then
-  begin
-    ShowMessage('!!!');
-    Exit;
+    for I := 0 to SL.Count - 1 do
+      if (S = SL.Strings[I]) then
+      begin
+        ShowMessage('!!!');
+        Exit;
+      end;
+    if Common.IsErName(S) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    if Common.IsErChar(S) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    AddItem(S);
+    Self.ModalResult := mrOk;
+  finally
+    FreeAndNil(SL);
   end;
-  if Common.IsErChar(S) then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  AddItem(S);
-  Self.ModalResult := mrOk;
-end;
-
-procedure TfAddItem.FormDestroy(Sender: TObject);
-begin
-  SL.Free;
 end;
 
 end.
