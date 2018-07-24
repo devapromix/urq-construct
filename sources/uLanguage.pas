@@ -106,7 +106,10 @@ end;
 procedure TLanguage.SaveDefault;
 begin
   if Language.UseDefaultLanguage then
+  begin
+    ForceDirectories(GetPath('languages'));
     SaveToFile(GetPath('languages') + 'default.lng');
+  end;
 end;
 
 procedure TLanguage.SaveToFile(AFileName: string);
