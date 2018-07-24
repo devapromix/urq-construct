@@ -144,6 +144,8 @@ begin
     CLB.Items.Append(S);
     CLB.Checked[I] := (B = '1');
   end;
+  if CLB.Items.Count > 0 then
+    CLB.ItemIndex := 0;
 end;
 
 procedure TfRoom.SaveCLB(const Index: Integer);
