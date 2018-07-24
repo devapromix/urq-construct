@@ -46,7 +46,7 @@ begin
     Common.GetResource(SL, rtRoom, CurrentRoom);
     RoomList.Items.Assign(SL);
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
   I := RoomList.Items.IndexOf('common');
   if (I >= 0) then

@@ -53,10 +53,10 @@ begin
   try
     Common.GetResource(SL, rtVar, '');
     edVar.Items.Assign(SL);
+    edVar.SetFocus;
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
-  edVar.SetFocus;
 end;
 
 procedure TfSelVar.btOKClick(Sender: TObject);

@@ -72,10 +72,10 @@ begin
   try
     Common.GetResource(SL, rtItem, '');
     edItem.Items.Assign(SL);
+    edItem.SetFocus;
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
-  edItem.SetFocus;
 end;
 
 end.

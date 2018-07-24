@@ -80,7 +80,6 @@ type
     procedure acOpGrCExecute(Sender: TObject);
     procedure acOpGrDExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure CLBClickCheck(Sender: TObject);
     procedure acClearExecute(Sender: TObject);
     procedure acClearUpdate(Sender: TObject);
@@ -94,7 +93,6 @@ type
     procedure acMoveDownExecute(Sender: TObject);
   private
     { Private declarations }
-    SL: TStringList;
     FCurrent: Integer;
     V: (T1, T2, T3);
     FAutoInsertStartBlock: Boolean;
@@ -133,20 +131,25 @@ var
   I: Integer;
   S: string;
   B: Char;
+  SL: TStringList;
 begin
-  SL.Clear;
-  SL := Common.ExplodeString('|', fMain.QL[Index]);
-  CLB.Clear;
-  for I := 0 to SL.Count - 1 do
-  begin
-    S := Trim(SL[I]);
-    B := S[1];
-    Delete(S, 1, 1);
-    CLB.Items.Append(S);
-    CLB.Checked[I] := (B = '1');
+  SL := TStringList.Create;
+  try
+    SL := Common.ExplodeString('|', fMain.QL[Index]);
+    CLB.Clear;
+    for I := 0 to SL.Count - 1 do
+    begin
+      S := Trim(SL[I]);
+      B := S[1];
+      Delete(S, 1, 1);
+      CLB.Items.Append(S);
+      CLB.Checked[I] := (B = '1');
+    end;
+    if CLB.Items.Count > 0 then
+      CLB.ItemIndex := 0;
+  finally
+    FreeAndNil(SL);
   end;
-  if CLB.Items.Count > 0 then
-    CLB.ItemIndex := 0;
 end;
 
 procedure TfRoom.SaveCLB(const Index: Integer);
@@ -332,6 +335,7 @@ procedure TfRoom.CLBDblClick(Sender: TObject);
 var
   I, J, K, Index: Integer;
   S, T: string;
+  SL: TStringList;
 begin
   //
   Index := CLB.ItemIndex;
@@ -373,56 +377,55 @@ begin
       AddOpGrE(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  // Предмет
-  T := Copy(S, 1, 4);
-  if (T = 'inv+') or (T = 'inv-') then
-  begin
-    case T[4] of
-      '+':
-        fSelItem.Switch.ItemIndex := 0;
-      '-':
-        fSelItem.Switch.ItemIndex := 1;
+  SL := TStringList.Create;
+  try
+    // Предмет
+    T := Copy(S, 1, 4);
+    if (T = 'inv+') or (T = 'inv-') then
+    begin
+      case T[4] of
+        '+':
+          fSelItem.Switch.ItemIndex := 0;
+        '-':
+          fSelItem.Switch.ItemIndex := 1;
+      end;
+      K := 1;
+      if (Pos(',', S) > 0) then
+      begin
+        SL.Clear;
+        SL := Common.ExplodeString(',', Trim(Copy(S, 5, Length(S))));
+        T := Trim(SL[1]);
+        K := StrToIntDef(SL[0], 1);
+      end
+      else
+        T := Trim(Copy(S, 5, Length(S)));
+      //
+      fSelItem.edItem.Text := T;
+      fSelItem.UpDn.Position := K;
+      AddItem(Index);
+      Exit;
     end;
-    K := 1;
-    if (Pos(',', S) > 0) then
+    // Переменная
     begin
       SL.Clear;
-      SL := Common.ExplodeString(',', Trim(Copy(S, 5, Length(S))));
-      T := Trim(SL[1]);
-      K := StrToIntDef(SL[0], 1);
-    end
-    else
-      T := Trim(Copy(S, 5, Length(S)));
-    //
-    fSelItem.edItem.Text := T;
-    fSelItem.UpDn.Position := K;
-    AddItem(Index);
-    Exit;
-  end;
-  // Переменная
-  begin
-    SL.Clear;
-    SL := Common.ExplodeString('=', S);
-    fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
-    S := '';
-    if (SL.Count > 1) then
-      S := StringReplace(Trim(SL[1]), '"', '', [rfReplaceAll]);
-    fSelVar.edVar.Text := Trim(SL[0]);
-    fSelVar.edValue.Text := S;
-    AddVar(Index);
-    Exit;
+      SL := Common.ExplodeString('=', S);
+      fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
+      S := '';
+      if (SL.Count > 1) then
+        S := StringReplace(Trim(SL[1]), '"', '', [rfReplaceAll]);
+      fSelVar.edVar.Text := Trim(SL[0]);
+      fSelVar.edValue.Text := S;
+      AddVar(Index);
+      Exit;
+    end;
+  finally
+    FreeAndNil(SL);
   end;
 end;
 
 procedure TfRoom.FormCreate(Sender: TObject);
 begin
-  SL := TStringList.Create;
   Current := 0;
-end;
-
-procedure TfRoom.FormDestroy(Sender: TObject);
-begin
-  SL.Free;
 end;
 
 procedure TfRoom.FormClose(Sender: TObject; var Action: TCloseAction);
