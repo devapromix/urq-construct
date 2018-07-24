@@ -86,11 +86,11 @@ type
     mmExport: TPanel;
     ToolBar5: TToolBar;
     ToolButton16: TToolButton;
-    mmExportMemo: TMemo;
     acSaveQST: TAction;
     ToolButton17: TToolButton;
     acRun: TAction;
     acRun1: TMenuItem;
+    mmExportMemo: TRichEdit;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
