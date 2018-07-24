@@ -66,7 +66,7 @@ type
 
 implementation
 
-uses SysUtils, uMain, uUtils, Vcl.Graphics;
+uses SysUtils, uMain, uUtils, Vcl.Graphics, System.Character;
 
 // Проверка на запрещённые символы:
 function CheckSymbols(Input: string): Boolean; inline;
@@ -283,7 +283,7 @@ end;
 
 class function Common.IsFirstCharDigit(const S: string): Boolean;
 begin
-  Result := CharInSet(S[1], ['0' .. '9']);
+  Result := TCharacter.IsDigit(S, 1);
 end;
 
 end.
