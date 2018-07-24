@@ -1,4 +1,4 @@
-unit uCommon;
+﻿unit uCommon;
 
 interface
 
@@ -82,68 +82,67 @@ begin
     end;
 end;
 
-{// Добавление в список
-procedure AddPlayer(const Login: string);
-var
+{ // Добавление в список
+  procedure AddPlayer(const Login: string);
+  var
   PlayersCount: LongWord;
   I: LongWord;
-begin
+  begin
   PlayersCount := Length(Players);
 
   // Проверяем, нет ли игрока в списке:
   if PlayersCount > 0 then
-    for I := 0 to PlayersCount - 1 do
-      if Players[I].Name = Login then
-        Exit;
+  for I := 0 to PlayersCount - 1 do
+  if Players[I].Name = Login then
+  Exit;
   SetLength(Players, PlayersCount + 1);
   Players[PlayersCount].Name := Login;
-end;
+  end;
 
-// Удаление из списка
-procedure RemovePlayer(const Login: string);
-var
+  // Удаление из списка
+  procedure RemovePlayer(const Login: string);
+  var
   PlayersCount: LongWord;
   I: LongWord;
-begin
+  begin
   PlayersCount := Length(Players);
   for I := 0 to PlayersCount - 1 do
   begin
-    if Players[I].Name = Login then
-    begin
-      Players[I] := Players[PlayersCount - 1];
-      SetLength(Players, PlayersCount - 1);
-      Break;
-    end;
+  if Players[I].Name = Login then
+  begin
+  Players[I] := Players[PlayersCount - 1];
+  SetLength(Players, PlayersCount - 1);
+  Break;
   end;
-end;
+  end;
+  end;
 
-// Сущ. ли игрок в списке
-function IsPlayerInList(const Player: string): Boolean;
-var
+  // Сущ. ли игрок в списке
+  function IsPlayerInList(const Player: string): Boolean;
+  var
   PlayersCount: LongWord;
   I: LongWord;
-begin
+  begin
   Result := False;
   PlayersCount := Length(Players);
   if PlayersCount > 0 then
-    for I := 0 to PlayersCount - 1 do
-    begin
-      if Players[I].Name = Player then
-      begin
-        Result := True;
-        Exit;
-      end;
-    end;
-end;   }
+  for I := 0 to PlayersCount - 1 do
+  begin
+  if Players[I].Name = Player then
+  begin
+  Result := True;
+  Exit;
+  end;
+  end;
+  end; }
 
-function GetColor(const Color:TColor):Integer;
+function GetColor(const Color: TColor): Integer;
 var
-	RGBColor : Integer;
+  RGBColor: Integer;
 begin
-	RGBColor := ColorToRGB(Color);
-	Result := (RGBColor shr 16) OR
-	(((RGBColor AND $FFFF) shr 8)shl 8)OR
-	((RGBColor AND $FF)shl 16);
+  RGBColor := ColorToRGB(Color);
+  Result := (RGBColor shr 16) OR (((RGBColor AND $FFFF) shr 8) shl 8) OR
+    ((RGBColor AND $FF) shl 16);
 end;
 
 class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
@@ -284,7 +283,7 @@ end;
 
 class function Common.IsFirstCharDigit(const S: string): Boolean;
 begin
-  Result := (S[1] in ['0' .. '9']);
+  Result := CharInSet(S[1], ['0' .. '9']);
 end;
 
 end.
