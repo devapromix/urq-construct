@@ -97,6 +97,7 @@ type
     SL: TStringList;
     FCurrent: Integer;
     V: (T1, T2, T3);
+    FAutoInsertStartBlock: Boolean;
     procedure AddOpGrA(const N: Integer);
     procedure AddOpGrB(const N: Integer; I: Integer = -1; P: string = '');
     procedure AddOpGrC(const N: Integer; I: Integer = -1; P: string = '';
@@ -250,7 +251,7 @@ begin
   CLB.Checked[I] := True;
   SaveCLB(Current);
   // Автомат. вставить начало блока
-  if (Op = 'if') then
+  if (Op = 'if') and FAutoInsertStartBlock then
     AddOpGrA(4);
 end;
 
@@ -367,6 +368,7 @@ begin
   for I := 0 to High(OpGrE) do
     if (Copy(S, 1, Length(OpGrE[I])) = OpGrE[I]) then
     begin
+      FAutoInsertStartBlock := False;
       J := Length(OpGrE[I]) + 1;
       AddOpGrE(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
@@ -459,7 +461,8 @@ end;
 
 procedure TfRoom.acOpGrEExecute(Sender: TObject);
 begin
-  //
+  // If
+  FAutoInsertStartBlock := True;
   AddOpGrE((Sender as TAction).Tag);
 end;
 
