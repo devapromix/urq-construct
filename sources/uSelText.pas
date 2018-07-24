@@ -13,10 +13,10 @@ type
     edText: TEdit;
     btClear: TBitBtn;
     Label1: TLabel;
-    BitBtn2: TBitBtn;
+    btSel: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure btClearClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure btSelClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,7 +57,7 @@ begin
   Self.edText.SetFocus;
 end;
 
-procedure TfSelText.BitBtn2Click(Sender: TObject);
+procedure TfSelText.btSelClick(Sender: TObject);
 begin
   fEditText.RE.Text := Trim(edText.Text);
   Utils.ShowForm(fEditText);

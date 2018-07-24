@@ -151,7 +151,7 @@ object fSelText: TfSelText
     TabOrder = 3
     OnClick = btClearClick
   end
-  object BitBtn2: TBitBtn
+  object btSel: TBitBtn
     Left = 632
     Top = 16
     Width = 34
@@ -159,6 +159,6 @@ object fSelText: TfSelText
     Hint = #1056#1072#1089#1096#1080#1088#1077#1085#1085#1099#1081' '#1088#1077#1076#1072#1082#1090#1086#1088' '#1090#1077#1082#1089#1090#1072
     Caption = '...'
     TabOrder = 4
-    OnClick = BitBtn2Click
+    OnClick = btSelClick
   end
 end
