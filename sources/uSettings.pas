@@ -30,9 +30,12 @@ implementation
 
 {$R *.dfm}
 
+uses uCommon;
+
 procedure TfSettings.btSelURQClick(Sender: TObject);
 begin
   // Выбор интерпретатора для запуска квестов
+  OpenDialog.Filter := stURQIntFilters;
   if OpenDialog.Execute then
     edSelURQ.Text := Trim(OpenDialog.FileName);
 end;
