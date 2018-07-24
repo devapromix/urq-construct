@@ -14,8 +14,6 @@ object fAddVar: TfAddVar
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

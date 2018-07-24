@@ -14,11 +14,8 @@ type
     Label1: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btOKClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
-    SL: TStringList;
   public
     { Public declarations }
     procedure NewVar;
@@ -34,11 +31,6 @@ uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
-procedure TfAddVar.FormCreate(Sender: TObject);
-begin
-  SL := TStringList.Create;
-end;
-
 procedure TfAddVar.NewVar;
 var
   SL: TStringList;
@@ -48,10 +40,10 @@ begin
   try
     Common.GetResource(SL, rtVar, '');
     cbVarName.Items.Assign(SL);
+    Utils.ShowForm(Self);
   finally
-    SL.Free;
+    FreeAndNil(SL);
   end;
-  Utils.ShowForm(Self);
 end;
 
 procedure TfAddVar.FormShow(Sender: TObject);
@@ -63,51 +55,58 @@ procedure TfAddVar.btOKClick(Sender: TObject);
 var
   S: string;
   I: Integer;
+  SL: TStringList;
 begin
   // OK
-  Common.GetResource(SL, rtVar, '');
-  S := LowerCase(Trim(cbVarName.Text));
-  if (S = '') then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  for I := 0 to SL.Count - 1 do
-    if (S = SL.Strings[I]) then
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtVar, '');
+    S := LowerCase(Trim(cbVarName.Text));
+    if (S = '') then
     begin
       ShowMessage('!!!');
       Exit;
     end;
-  if Common.IsErName(S) then
-  begin
-    ShowMessage('!!!');
-    Exit;
+    for I := 0 to SL.Count - 1 do
+      if (S = SL.Strings[I]) then
+      begin
+        ShowMessage('!!!');
+        Exit;
+      end;
+    if Common.IsErName(S) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    if Common.IsErChar(S) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    AddVar(S);
+    Self.ModalResult := mrOk;
+  finally
+    FreeAndNil(SL);
   end;
-  if Common.IsErChar(S) then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  AddVar(S);
-  Self.ModalResult := mrOk;
 end;
 
 procedure TfAddVar.AddVar(VarName: string);
 var
   I: Integer;
+  SL: TStringList;
 begin
   // Добавить переменную
-  Common.GetResource(SL, rtVar, '');
-  for I := 0 to SL.Count - 1 do
-    if (SL[I] = VarName) then
-      Exit;
-  Common.AddTVItem(fMain.TVV, VarName, 2, 2);
-  fMain.Modified := True;
-end;
-
-procedure TfAddVar.FormDestroy(Sender: TObject);
-begin
-  SL.Free;
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtVar, '');
+    for I := 0 to SL.Count - 1 do
+      if (SL[I] = VarName) then
+        Exit;
+    Common.AddTVItem(fMain.TVV, VarName, 2, 2);
+    fMain.Modified := True;
+  finally
+    FreeAndNil(SL);
+  end;
 end;
 
 end.
