@@ -116,7 +116,6 @@ object fSettings: TfSettings
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = #1048#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088
-      ExplicitHeight = 273
       object Label4: TLabel
         Left = 8
         Top = 16
@@ -140,5 +139,9 @@ object fSettings: TfSettings
         TabOrder = 0
       end
     end
+  end
+  object OpenDialog: TOpenDialog
+    Left = 252
+    Top = 24
   end
 end

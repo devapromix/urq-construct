@@ -15,6 +15,7 @@ type
     Label4: TLabel;
     btSelURQ: TSpeedButton;
     edSelURQ: TEdit;
+    OpenDialog: TOpenDialog;
     procedure btSelURQClick(Sender: TObject);
   private
     { Private declarations }
@@ -32,6 +33,8 @@ implementation
 procedure TfSettings.btSelURQClick(Sender: TObject);
 begin
   // Выбор интерпретатора для запуска квестов
+  if OpenDialog.Execute then
+    edSelURQ.Text := Trim(OpenDialog.FileName);
 end;
 
 end.
