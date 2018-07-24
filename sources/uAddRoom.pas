@@ -14,11 +14,8 @@ type
     lbDescr: TLabel;
     procedure btOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
-    SL: TStringList;
     FNewRoomName: string;
   public
     { Public declarations }
@@ -34,87 +31,89 @@ uses uMain, uCommon, uUtils;
 
 {$R *.dfm}
 
-procedure TfAddRoom.FormCreate(Sender: TObject);
-begin
-  SL := TStringList.Create;
-end;
-
 procedure TfAddRoom.btOKClick(Sender: TObject);
 var
   I: Integer;
+  SL: TStringList;
 begin
-  Common.GetResource(SL, rtRoom, '');
-  FNewRoomName := LowerCase(Trim(cbRoomName.Text));
-  if (FNewRoomName = '') then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  for I := 0 to SL.Count - 1 do
-    if (FNewRoomName = SL.Strings[I]) then
+  SL := TStringList.Create;
+  try
+    Common.GetResource(SL, rtRoom, '');
+    FNewRoomName := LowerCase(Trim(cbRoomName.Text));
+    if (FNewRoomName = '') then
     begin
       ShowMessage('!!!');
       Exit;
     end;
-  if (FNewRoomName = 'common') and (fMain.TVR.Items.Count <= 1) then
-  begin
-    ShowMessage('!!!');
-    Exit;
+    for I := 0 to SL.Count - 1 do
+      if (FNewRoomName = SL.Strings[I]) then
+      begin
+        ShowMessage('!!!');
+        Exit;
+      end;
+    if (FNewRoomName = 'common') and (fMain.TVR.Items.Count <= 1) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    if Common.IsErName(FNewRoomName) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    if Common.IsErChar(FNewRoomName) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
+    Common.AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
+    fMain.QL.Append('');
+    fMain.Modified := True;
+    Self.ModalResult := mrOk;
+  finally
+    FreeAndNil(SL);
   end;
-  if Common.IsErName(FNewRoomName) then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  if Common.IsErChar(FNewRoomName) then
-  begin
-    ShowMessage('!!!');
-    Exit;
-  end;
-  Common.AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
-  fMain.QL.Append('');
-  fMain.Modified := True;
-  Self.ModalResult := mrOk;
 end;
 
 function TfAddRoom.NewRoom: string;
 var
   I, C: Integer;
   F: Boolean;
+  SL: TStringList;
 begin
-  Result := '';
-  FNewRoomName := '';
-  Self.cbRoomName.Clear;
-  Common.GetResource(SL, rtRoom, '');
-  C := 0;
-  repeat
-    F := True;
-    FNewRoomName := RoomDefaultName + IntToStr(C);
-    for I := 0 to SL.Count - 1 do
-    begin
-      if (FNewRoomName = SL.Strings[I]) then
+  SL := TStringList.Create;
+  try
+    Result := '';
+    FNewRoomName := '';
+    Self.cbRoomName.Clear;
+    Common.GetResource(SL, rtRoom, '');
+    C := 0;
+    repeat
+      F := True;
+      FNewRoomName := RoomDefaultName + IntToStr(C);
+      for I := 0 to SL.Count - 1 do
       begin
-        Inc(C);
-        F := False;
-        Break;
+        if (FNewRoomName = SL.Strings[I]) then
+        begin
+          Inc(C);
+          F := False;
+          Break;
+        end;
       end;
-    end;
-  until F;
-  Self.cbRoomName.Items.Assign(SL);
-  Self.cbRoomName.Text := FNewRoomName;
-  Utils.ShowForm(Self);
-  Result := FNewRoomName;
-  fMain.CreateRoom(FNewRoomName);
+    until F;
+    Self.cbRoomName.Items.Assign(SL);
+    Self.cbRoomName.Text := FNewRoomName;
+    Utils.ShowForm(Self);
+    Result := FNewRoomName;
+    fMain.CreateRoom(FNewRoomName);
+  finally
+    FreeAndNil(SL);
+  end;
 end;
 
 procedure TfAddRoom.FormShow(Sender: TObject);
 begin
   Self.cbRoomName.SetFocus;
-end;
-
-procedure TfAddRoom.FormDestroy(Sender: TObject);
-begin
-  SL.Free;
 end;
 
 end.

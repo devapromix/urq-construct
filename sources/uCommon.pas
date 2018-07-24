@@ -68,7 +68,7 @@ implementation
 
 uses SysUtils, uMain, uUtils, Vcl.Graphics, System.Character;
 
-// Проверка на запрещённые символы:
+// Проверка на запрещённые символы
 function CheckSymbols(Input: string): Boolean; inline;
 var
   C: Char;
