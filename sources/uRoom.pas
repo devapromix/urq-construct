@@ -334,7 +334,7 @@ begin
   S := Trim(CLB.Items[Index]);
   // Группа B
   for I := 0 to High(OpGrB) do
-    if (Copy(S, 1, Length(OpGrB[I])) = OpGrB[I]) then
+    if S.StartsWith(OpGrB[I], True) then
     begin
       J := Length(OpGrB[I]) + 1;
       AddOpGrB(I, Index, Trim(Copy(S, J, Length(S))));
@@ -342,7 +342,7 @@ begin
     end;
   // Группа C
   for I := 0 to High(OpGrC) do
-    if (Copy(S, 1, Length(OpGrC[I])) = OpGrC[I]) then
+    if S.StartsWith(OpGrC[I], True) then
     begin
       J := Length(OpGrC[I]) + 1;
       K := Pos(',', S);
@@ -352,58 +352,58 @@ begin
     end;
   // Группа D
   for I := 0 to High(OpGrD) do
-    if (Copy(S, 1, Length(OpGrD[I])) = OpGrD[I]) then
+    if S.StartsWith(OpGrD[I], True) then
     begin
       J := Length(OpGrD[I]) + 1;
       AddOpGrD(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  // Группа E
+  // Группа E (IF)
   for I := 0 to High(OpGrE) do
-    if (Copy(S, 1, Length(OpGrE[I])) = OpGrE[I]) then
+    if S.StartsWith(OpGrE[I], True) then
     begin
       FAutoInsertStartBlock := False;
       J := Length(OpGrE[I]) + 1;
       AddOpGrE(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-    // Предмет
-    T := S.Substring(0, 4);
-    if (T = 'inv+') or (T = 'inv-') then
-    begin
-      case T[4] of
-        '+':
-          fSelItem.Switch.ItemIndex := 0;
-        '-':
-          fSelItem.Switch.ItemIndex := 1;
-      end;
-      K := 1;
-      if (Pos(',', S) > 0) then
-      begin
-        R := Trim(Copy(S, 5, Length(S))).Split([',']);
-        T := Trim(R[1]);
-        K := StrToIntDef(R[0], 1);
-      end
-      else
-        T := Trim(S.Substring(5));
-      //
-      fSelItem.edItem.Text := T;
-      fSelItem.UpDn.Position := K;
-      AddItem(Index);
-      Exit;
+  // Предмет
+  T := S.Substring(0, 4);
+  if (T = 'inv+') or (T = 'inv-') then
+  begin
+    case T[4] of
+      '+':
+        fSelItem.Switch.ItemIndex := 0;
+      '-':
+        fSelItem.Switch.ItemIndex := 1;
     end;
-    // Переменная
+    K := 1;
+    if (Pos(',', S) > 0) then
     begin
-      R := S.Split(['=']);
-      fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
-      S := '';
-      if (Length(R) > 1) then
-        S := StringReplace(Trim(R[1]), '"', '', [rfReplaceAll]);
-      fSelVar.edVar.Text := Trim(R[0]);
-      fSelVar.edValue.Text := S;
-      AddVar(Index);
-      Exit;
-    end;
+      R := Trim(Copy(S, 5, Length(S))).Split([',']);
+      T := Trim(R[1]);
+      K := StrToIntDef(R[0], 1);
+    end
+    else
+      T := Trim(S.Substring(5));
+    //
+    fSelItem.edItem.Text := T;
+    fSelItem.UpDn.Position := K;
+    AddItem(Index);
+    Exit;
+  end;
+  // Переменная
+  begin
+    R := S.Split(['=']);
+    fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
+    S := '';
+    if (Length(R) > 1) then
+      S := StringReplace(Trim(R[1]), '"', '', [rfReplaceAll]);
+    fSelVar.edVar.Text := Trim(R[0]);
+    fSelVar.edValue.Text := S;
+    AddVar(Index);
+    Exit;
+  end;
 end;
 
 procedure TfRoom.FormCreate(Sender: TObject);
