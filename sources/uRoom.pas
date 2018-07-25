@@ -332,6 +332,10 @@ begin
   if (Index < 0) then
     Exit;
   S := Trim(CLB.Items[Index]);
+  // Ãðóïïà À
+  for I := 0 to High(OpGrA) do
+    if S.StartsWith(OpGrA[I], True) then
+      Exit;
   // Ãðóïïà B
   for I := 0 to High(OpGrB) do
     if S.StartsWith(OpGrB[I], True) then
@@ -371,7 +375,7 @@ begin
   T := S.Substring(0, 4);
   if (T = 'inv+') or (T = 'inv-') then
   begin
-    case T[4] of
+    case T.Chars[3] of
       '+':
         fSelItem.Switch.ItemIndex := 0;
       '-':
@@ -386,7 +390,6 @@ begin
     end
     else
       T := Trim(S.Substring(5));
-    //
     fSelItem.edItem.Text := T;
     fSelItem.UpDn.Position := K;
     AddItem(Index);
