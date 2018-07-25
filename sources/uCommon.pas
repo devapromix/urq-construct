@@ -44,7 +44,6 @@ type
   Common = class(TObject)
     class function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
       Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
-    class function ExplodeString(const Separator, Source: string): TStringList;
     class procedure SetTVImages(const TreeNode: TTreeNode;
       const ImgIndex, SelIndex: Integer);
     class procedure SetTV(const TV: TTreeView; Title: string;
@@ -68,19 +67,19 @@ implementation
 
 uses SysUtils, uMain, uUtils, Vcl.Graphics, System.Character;
 
-// Проверка на запрещённые символы
-function CheckSymbols(Input: string): Boolean; inline;
-var
+{ // Проверка на запрещённые символы
+  function CheckSymbols(Input: string): Boolean; inline;
+  var
   C: Char;
-begin
+  begin
   Result := False;
   for C in Input do
-    if CharInSet(C, ['/', '\', ':', '?', '|', '*', '"', '<', '>', ' '])
-    then
-      Exit(True);
-end;
+  if CharInSet(C, ['/', '\', ':', '?', '|', '*', '"', '<', '>', ' '])
+  then
+  Exit(True);
+  end;
 
-{ // Добавление в список
+  // Добавление в список
   procedure AddPlayer(const Login: string);
   var
   PlayersCount: LongWord;
@@ -147,13 +146,6 @@ class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
   Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
   Result := Utils.ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
-end;
-
-class function Common.ExplodeString(const Separator, Source: string)
-  : TStringList;
-begin
-  Result := TStringList.Create();
-  Result.Text := StringReplace(Source, Separator, #13, [rfReplaceAll]);
 end;
 
 class procedure Common.SetTVImages(const TreeNode: TTreeNode;

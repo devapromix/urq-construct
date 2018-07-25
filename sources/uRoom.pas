@@ -325,9 +325,9 @@ procedure TfRoom.CLBDblClick(Sender: TObject);
 var
   I, J, K, Index: Integer;
   S, T: string;
-  SL: TStringList;
+  R: TArray<string>;
 begin
-  //
+  // Двойн. клик
   Index := CLB.ItemIndex;
   if (Index < 0) then
     Exit;
@@ -367,10 +367,8 @@ begin
       AddOpGrE(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  SL := TStringList.Create;
-  try
     // Предмет
-    T := Copy(S, 1, 4);
+    T := S.Substring(0, 4);
     if (T = 'inv+') or (T = 'inv-') then
     begin
       case T[4] of
@@ -382,13 +380,12 @@ begin
       K := 1;
       if (Pos(',', S) > 0) then
       begin
-        SL.Clear;
-        SL := Common.ExplodeString(',', Trim(Copy(S, 5, Length(S))));
-        T := Trim(SL[1]);
-        K := StrToIntDef(SL[0], 1);
+        R := Trim(Copy(S, 5, Length(S))).Split([',']);
+        T := Trim(R[1]);
+        K := StrToIntDef(R[0], 1);
       end
       else
-        T := Trim(Copy(S, 5, Length(S)));
+        T := Trim(S.Substring(5));
       //
       fSelItem.edItem.Text := T;
       fSelItem.UpDn.Position := K;
@@ -397,20 +394,16 @@ begin
     end;
     // Переменная
     begin
-      SL.Clear;
-      SL := Common.ExplodeString('=', S);
+      R := S.Split(['=']);
       fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
       S := '';
-      if (SL.Count > 1) then
-        S := StringReplace(Trim(SL[1]), '"', '', [rfReplaceAll]);
-      fSelVar.edVar.Text := Trim(SL[0]);
+      if (Length(R) > 1) then
+        S := StringReplace(Trim(R[1]), '"', '', [rfReplaceAll]);
+      fSelVar.edVar.Text := Trim(R[0]);
       fSelVar.edValue.Text := S;
       AddVar(Index);
       Exit;
     end;
-  finally
-    FreeAndNil(SL);
-  end;
 end;
 
 procedure TfRoom.FormCreate(Sender: TObject);

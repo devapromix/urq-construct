@@ -1,4 +1,4 @@
-unit uMain;
+п»їunit uMain;
 
 interface
 
@@ -313,7 +313,7 @@ var
   end;
 
 begin
-  // Сохранить проект
+  // РЎРѕС…СЂР°РЅРёС‚СЊ РїСЂРѕРµРєС‚
   SD.InitialDir := Utils.GetPath('projects');
   SD.DefaultExt := QCProjExt;
   SD.Filter := QCProjFilters;
@@ -334,16 +334,16 @@ begin
   save_label:
     Ini := TIniFile.Create(SD.FileName);
     try
-      // Настройки
+      // РќР°СЃС‚СЂРѕР№РєРё
       Ini.WriteString('settings', 'value', '');
-      // Комнаты
+      // РљРѕРјРЅР°С‚С‹
       Common.GetResource(SL, rtRoom, '');
       for I := 0 to SL.Count - 1 do
         Ini.WriteString(SL[I], 'value', QL[I]);
-      // Предметы
+      // РџСЂРµРґРјРµС‚С‹
       Common.GetResource(SL, rtItem, '');
       Ini.WriteString('items', 'value', AddItems());
-      // Переменные
+      // РџРµСЂРµРјРµРЅРЅС‹Рµ
       Common.GetResource(SL, rtVar, '');
       Ini.WriteString('variables', 'value', AddItems());
     finally
@@ -355,30 +355,11 @@ end;
 
 procedure TfMain.acNewProjectExecute(Sender: TObject);
 begin
-  // Новый проект
+  // РќРѕРІС‹Р№ РїСЂРѕРµРєС‚
   if CheckModified then
     Exit;
   NewProject;
 end;
-
-{ procedure LoadLayer(L: TLayerEnum);
-  var
-  X, Y: Integer;
-  SL: TStringList;
-  V: TArray<string>;
-  begin
-  SetLength(FMap[L], FWidth, FHeight);
-  Node := XMLDoc.DocumentElement.ChildNodes[I].ChildNodes['data'];
-  SL := TStringList.Create;
-  SL.Text := Trim(Node.Text);
-  for Y := 0 to FHeight - 1 do
-  begin
-  V := SL[Y].Split([',']);
-  for X := 0 to FWidth - 1 do
-  FMap[L][X][Y] := StrToIntDef(V[X], 0) - 1;
-  end;
-  FreeAndNil(SL);
-  end; }
 
 procedure TfMain.LoadProject(const FileName: string);
 var
@@ -390,9 +371,9 @@ begin
   FFileName := Trim(FileName);
   Ini := TIniFile.Create(FFileName);
   try
-    // Настройки
+    // РќР°СЃС‚СЂРѕР№РєРё
 
-    // Комнаты
+    // РљРѕРјРЅР°С‚С‹
     QL.Clear;
     SL.Clear;
     Ini.ReadSections(SL);
@@ -403,7 +384,7 @@ begin
       Common.AddTVItem(TVR, SL[I], 3, 4);
       QL.Append(Ini.ReadString(SL[I], 'value', ''));
     end;
-    // Предметы
+    // РџСЂРµРґРјРµС‚С‹
     S := Ini.ReadString('items', 'value', '');
     V := S.Split(['|']);
     for I := 0 to High(V) do
@@ -412,7 +393,7 @@ begin
       if (N <> '') then
         Common.AddTVItem(TVI, N, 1, 1);
     end;
-    // Переменные
+    // РџРµСЂРµРјРµРЅРЅС‹Рµ
     S := Ini.ReadString('variables', 'value', '');
     V := S.Split(['|']);
     for I := 0 to High(V) do
@@ -429,7 +410,7 @@ end;
 
 procedure TfMain.acOpenProjectExecute(Sender: TObject);
 begin
-  // Загрузить проект
+  // Р—Р°РіСЂСѓР·РёС‚СЊ РїСЂРѕРµРєС‚
   if CheckModified then
     Exit;
   OD.InitialDir := Utils.GetPath('projects');
@@ -461,22 +442,22 @@ end;
 
 procedure TfMain.acAddRoomExecute(Sender: TObject);
 begin
-  fAddRoom.NewRoom; // Добавить новую комнату
+  fAddRoom.NewRoom; // Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ РєРѕРјРЅР°С‚Сѓ
 end;
 
 procedure TfMain.acAddItemExecute(Sender: TObject);
 begin
-  fAddItem.NewItem; // Добавить новый предмет
+  fAddItem.NewItem; // Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ РїСЂРµРґРјРµС‚
 end;
 
 procedure TfMain.acAddVarExecute(Sender: TObject);
 begin
-  fAddVar.NewVar; // Добавить новую переменную
+  fAddVar.NewVar; // Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ
 end;
 
 procedure TfMain.acExitProgramExecute(Sender: TObject);
 begin
-  Close; // Завершить работу
+  Close; // Р—Р°РІРµСЂС€РёС‚СЊ СЂР°Р±РѕС‚Сѓ
 end;
 
 procedure TfMain.acNewProjectUpdate(Sender: TObject);
@@ -501,7 +482,7 @@ var
   end;
 
 begin
-  // Экспорт
+  // Р­РєСЃРїРѕСЂС‚
   with mmExportMemo do
   begin
     if mmExport.Visible then
@@ -652,7 +633,7 @@ begin
     Exit;
   Self.mmExportMemo.Lines.SaveToFile(Utils.GetPath('quests') +
     ChangeFileExt(ExtractFileName(FFileName), '.qst'));
-  Common.MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
+  Common.MsgDlg('РљРІРµСЃС‚ СЃРѕС…СЂР°РЅРµРЅ РІ РїР°РїРєРµ "Quests"!', mtInformation, [mbOk]);
 end;
 
 procedure TfMain.acSaveQSTUpdate(Sender: TObject);
