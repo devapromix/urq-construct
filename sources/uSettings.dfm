@@ -15,6 +15,7 @@ object fSettings: TfSettings
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object btOK: TBitBtn
@@ -61,9 +62,10 @@ object fSettings: TfSettings
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00}
     ModalResult = 1
     TabOrder = 0
+    OnClick = btOKClick
   end
   object btCancel: TBitBtn
-    Left = 214
+    Left = 215
     Top = 312
     Width = 107
     Height = 30
@@ -106,6 +108,7 @@ object fSettings: TfSettings
       FF00FFFFFF00FFFFFF006360F80AFFFFFF00FFFFFF00FFFFFF00}
     ModalResult = 2
     TabOrder = 1
+    OnClick = btCancelClick
   end
   object PageControl1: TPageControl
     Left = 0
