@@ -122,7 +122,8 @@ const
 
 implementation
 
-uses SysUtils, Math, uMain, uSelRoom, uSelText, uSelVar, uSelItem, uCommon;
+uses SysUtils, Math, uMain, uSelRoom, uSelText, uSelVar, uSelItem, uCommon,
+  Character;
 
 {$R *.dfm}
 
@@ -130,26 +131,18 @@ procedure TfRoom.LoadCLB(const Index: Integer);
 var
   I: Integer;
   S: string;
-  B: Char;
-  SL: TStringList;
+  R: TArray<string>;
 begin
-  SL := TStringList.Create;
-  try
-    SL := Common.ExplodeString('|', fMain.QL[Index]);
-    CLB.Clear;
-    for I := 0 to SL.Count - 1 do
-    begin
-      S := Trim(SL[I]);
-      B := S[1];
-      Delete(S, 1, 1);
-      CLB.Items.Append(S);
-      CLB.Checked[I] := (B = '1');
-    end;
-    if CLB.Items.Count > 0 then
-      CLB.ItemIndex := 0;
-  finally
-    FreeAndNil(SL);
+  R := fMain.QL[Index].Split(['|']);
+  CLB.Clear;
+  for I := 0 to Length(R) - 1 do
+  begin
+    S := Trim(R[I]);
+    CLB.Items.Append(S.Substring(1));
+    CLB.Checked[I] := (S[1] = '1');
   end;
+  if CLB.Items.Count > 0 then
+    CLB.ItemIndex := 0;
 end;
 
 procedure TfRoom.SaveCLB(const Index: Integer);
@@ -163,13 +156,10 @@ begin
   begin
     D := Common.IfThen((I <> CLB.Count - 1), '|', '');
     C := Common.IfThen(CLB.Checked[I], '1', '0');
-    S := S + C + CLB.Items.Strings[I] + D;
+    S := S + C + Trim(CLB.Items.Strings[I]) + D;
   end;
-  with fMain do
-  begin
-    QL[Index] := S;
-    Modified := True;
-  end;
+  fMain.QL[Index] := S;
+  fMain.Modified := True;
 end;
 
 procedure TfRoom.AddOpGrA(const N: Integer);

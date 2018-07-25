@@ -75,11 +75,9 @@ var
 begin
   Result := False;
   for C in Input do
-    if C in ['/', '\', ':', '?', '|', '*', '"', '<', '>', ' '] then
-    begin
-      Result := True;
-      Exit;
-    end;
+    if CharInSet(C, ['/', '\', ':', '?', '|', '*', '"', '<', '>', ' '])
+    then
+      Exit(True);
 end;
 
 { // Добавление в список
@@ -282,8 +280,11 @@ begin
 end;
 
 class function Common.IsFirstCharDigit(const S: string): Boolean;
+var
+  C: Char;
 begin
-  Result := TCharacter.IsDigit(S, 1);
+  C := S[1];
+  Result := C.IsDigit;
 end;
 
 end.
