@@ -16,7 +16,6 @@ var
   stProjectExists: string = 'Проект %s существует! Перезаписать?';
   stCheckModified: string = 'Проект изменен! Отбросить изменения и продолжить?';
   stProjFilters: string = 'Проект %s|*.%s|Все файлы (*.*)|*.*';
-  stURQIntFilters: string = 'Интерпретатор URQ|*.exe';
 
 const
   RoomsName = 'Комнаты';
