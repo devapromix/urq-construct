@@ -293,24 +293,37 @@ object fMain: TfMain
         Action = acRun
       end
     end
-    object mmExportMemo: TRichEdit
+    object SynEdit1: TSynEdit
       Left = 0
       Top = 23
       Width = 610
       Height = 497
       Align = alClient
-      Font.Charset = RUSSIAN_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Default'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Courier New'
       Font.Style = []
-      Lines.Strings = (
-        'mmExportMemo')
-      ParentFont = False
-      ScrollBars = ssBoth
       TabOrder = 1
-      WordWrap = False
-      Zoom = 100
+      CodeFolding.GutterShapeSize = 11
+      CodeFolding.CollapsedLineColor = clGrayText
+      CodeFolding.FolderBarLinesColor = clGrayText
+      CodeFolding.IndentGuidesColor = clGray
+      CodeFolding.IndentGuides = True
+      CodeFolding.ShowCollapsedLine = False
+      CodeFolding.ShowHintMark = True
+      UseCodeFolding = False
+      Gutter.Font.Charset = DEFAULT_CHARSET
+      Gutter.Font.Color = clWindowText
+      Gutter.Font.Height = -11
+      Gutter.Font.Name = 'Courier New'
+      Gutter.Font.Style = []
+      Gutter.ShowLineNumbers = True
+      Gutter.ShowModification = True
+      Highlighter = SynURQLSyn1
+      Lines.Strings = (
+        'SynEdit1')
+      FontSmoothing = fsmNone
     end
   end
   object MM: TMainMenu
@@ -542,7 +555,7 @@ object fMain: TfMain
     Left = 264
     Top = 48
     Bitmap = {
-      494C010117007000480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010117007000580010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000EFF7F700D6ADAD00CE8C9C00D69CAD00D69CAD00CE8C9C00D6ADAD00EFF7
@@ -1349,7 +1362,7 @@ object fMain: TfMain
     Left = 296
     Top = 48
     Bitmap = {
-      494C0101050007003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101050007004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1619,5 +1632,13 @@ object fMain: TfMain
       C00FF8030000F00FC00FE0030000F00FC03FFC078001FFFFC03FFC07C003FFFF
       FFFFF927F00FFFFFFFFFFF3FFC3FFFFF00000000000000000000000000000000
       000000000000}
+  end
+  object SynURQLSyn1: TSynURQLSyn
+    Options.AutoDetectEnabled = False
+    Options.AutoDetectLineLimit = 0
+    Options.Visible = False
+    StringAttri.Foreground = clBlue
+    Left = 395
+    Top = 82
   end
 end

@@ -37,7 +37,7 @@ const
 var
   // Фильтр
   QCProjFilters: string = '';
-  // Разделитель операторов в URQL
+  // Разделитель операторов
   OpDiv: string = '&';
 
 type

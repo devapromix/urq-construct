@@ -5,7 +5,7 @@ interface
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, Menus,
   StdCtrls, Dialogs, Buttons, Messages, ExtCtrls, ComCtrls, StdActns,
   ActnList, ToolWin, ImgList, IniFiles, Math, uCommon, System.Actions,
-  System.ImageList;
+  System.ImageList, SynEdit, SynEditHighlighter, SynHighlighterURQL;
 
 type
   TfMain = class(TForm)
@@ -90,7 +90,8 @@ type
     ToolButton17: TToolButton;
     acRun: TAction;
     acRun1: TMenuItem;
-    mmExportMemo: TRichEdit;
+    SynEdit1: TSynEdit;
+    SynURQLSyn1: TSynURQLSyn;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -131,12 +132,12 @@ type
     procedure NewProject;
     procedure SetModified(const Value: Boolean);
     procedure LoadProject(const FileName: string);
+    procedure UpdateProject();
   public
     { Public declarations }
     QL: TStringList;
     procedure CreateRoom(const AName: string);
     function CheckModified: Boolean;
-    procedure UpdateProject();
     property Modified: Boolean read FModified write SetModified;
 
   end;
@@ -478,12 +479,12 @@ var
 
   procedure Add(S: string);
   begin
-    V := mmExportMemo.Lines.Add(S);
+    V := SynEdit1.Lines.Add(S);
   end;
 
 begin
   // Экспорт
-  with mmExportMemo do
+  with SynEdit1 do
   begin
     if mmExport.Visible then
     begin
@@ -631,7 +632,7 @@ procedure TfMain.acSaveQSTExecute(Sender: TObject);
 begin
   if (Trim(FFileName) = '') then
     Exit;
-  Self.mmExportMemo.Lines.SaveToFile(Utils.GetPath('quests') +
+  SynEdit1.Lines.SaveToFile(Utils.GetPath('quests') +
     ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   Common.MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
 end;
@@ -652,7 +653,7 @@ begin
     acExportToQSTExecute(Sender);
   FileName := Utils.GetPath('quests') +
     ChangeFileExt(ExtractFileName(FFileName), '.qst');
-  Self.mmExportMemo.Lines.SaveToFile(FileName);
+  SynEdit1.Lines.SaveToFile(FileName);
   IntURQPath := Trim(fSettings.edSelURQ.Text);
   if (IntURQPath = '') or not FileExists(IntURQPath) then
     Exit;

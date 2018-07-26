@@ -64,6 +64,7 @@ object fRoom: TfRoom
     PopupMenu = PM
     TabOrder = 1
     OnDblClick = CLBDblClick
+    ExplicitTop = 29
   end
   object ToolBar1: TToolBar
     Left = 0
@@ -207,8 +208,16 @@ object fRoom: TfRoom
       Action = acInvKill
       ImageIndex = 12
     end
-    object ToolButton1: TToolButton
+    object ToolButton13: TToolButton
       Left = 431
+      Top = 0
+      Width = 8
+      Caption = 'ToolButton13'
+      ImageIndex = 0
+      Style = tbsSeparator
+    end
+    object ToolButton1: TToolButton
+      Left = 439
       Top = 0
       Action = acEnd
     end
@@ -217,7 +226,7 @@ object fRoom: TfRoom
     Left = 16
     Top = 40
     Bitmap = {
-      494C010111002400540010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010111002400680010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -886,7 +895,7 @@ object fRoom: TfRoom
   end
   object PM: TPopupMenu
     Images = ButsImages
-    Left = 48
+    Left = 88
     Top = 40
     object N5: TMenuItem
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100
@@ -937,8 +946,8 @@ object fRoom: TfRoom
   end
   object ActionList1: TActionList
     Images = ButsImages
-    Left = 80
-    Top = 40
+    Left = 16
+    Top = 96
     object acDelete: TAction
       Category = 'PopupMenu'
       Caption = #1059#1076#1072#1083#1080#1090#1100

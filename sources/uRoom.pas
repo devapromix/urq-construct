@@ -71,6 +71,7 @@ type
     ToolButton10: TToolButton;
     acMoveUp: TAction;
     acMoveDown: TAction;
+    ToolButton13: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure acDeleteUpdate(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);
@@ -94,7 +95,6 @@ type
   private
     { Private declarations }
     FCurrent: Integer;
-    V: (T1, T2, T3);
     FAutoInsertStartBlock: Boolean;
     procedure AddOpGrA(const N: Integer);
     procedure AddOpGrB(const N: Integer; I: Integer = -1; P: string = '');
@@ -113,8 +113,8 @@ type
 
 const
   // Операторы по группам
-  OpGrA: array [0 .. 6] of string = ('cls', 'clsb', 'invkill', 'perkill',
-    'startblock', 'finishblock', 'end');
+  OpGrA: array [0 .. 7] of string = ('cls', 'clsb', 'invkill', 'perkill',
+    'startblock', 'finishblock', 'end', 'quit');
   OpGrB: array [0 .. 1] of string = ('goto', 'proc');
   OpGrC: array [0 .. 0] of string = ('btn');
   OpGrD: array [0 .. 1] of string = ('pln', 'p');
