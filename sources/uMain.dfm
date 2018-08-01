@@ -169,10 +169,6 @@ object fMain: TfMain
     object tsItems: TTabSheet
       Caption = 'Items'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TVI: TTreeView
         Left = 0
         Top = 23
@@ -211,10 +207,6 @@ object fMain: TfMain
     object tsVars: TTabSheet
       Caption = 'Variables'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TVV: TTreeView
         Left = 0
         Top = 23
@@ -299,6 +291,7 @@ object fMain: TfMain
       Width = 610
       Height = 497
       Align = alClient
+      Color = clBlack
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -555,7 +548,7 @@ object fMain: TfMain
     Left = 264
     Top = 48
     Bitmap = {
-      494C010117007000580010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010117007000600010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000EFF7F700D6ADAD00CE8C9C00D69CAD00D69CAD00CE8C9C00D6ADAD00EFF7
@@ -1362,7 +1355,7 @@ object fMain: TfMain
     Left = 296
     Top = 48
     Bitmap = {
-      494C0101050007004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105000700540010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1638,7 +1631,7 @@ object fMain: TfMain
     Options.AutoDetectLineLimit = 0
     Options.Visible = False
     StringAttri.Foreground = clBlue
-    Left = 395
+    Left = 467
     Top = 82
   end
 end
