@@ -98,8 +98,7 @@ type
     FAutoInsertStartBlock: Boolean;
     procedure AddOpGrA(const N: Integer);
     procedure AddOpGrB(const N: Integer; I: Integer = -1; P: string = '');
-    procedure AddOpGrC(const N: Integer; I: Integer = -1; P: string = '';
-      E: string = '');
+    procedure AddOpGrC(const N: Integer; I: Integer = -1; P: string = ''; E: string = '');
     procedure AddOpGrD(const N: Integer; I: Integer = -1; P: string = '');
     procedure AddOpGrE(const N: Integer; I: Integer = -1; P: string = '');
     procedure AddVar(I: Integer = -1);
@@ -113,8 +112,7 @@ type
 
 const
   // Операторы по группам
-  OpGrA: array [0 .. 7] of string = ('cls', 'clsb', 'invkill', 'perkill',
-    'startblock', 'finishblock', 'end', 'quit');
+  OpGrA: array [0 .. 7] of string = ('cls', 'clsb', 'invkill', 'perkill', 'startblock', 'finishblock', 'end', 'quit');
   OpGrB: array [0 .. 1] of string = ('goto', 'proc');
   OpGrC: array [0 .. 0] of string = ('btn');
   OpGrD: array [0 .. 1] of string = ('pln', 'p');
@@ -187,8 +185,7 @@ begin
   SaveCLB(Current);
 end;
 
-procedure TfRoom.AddOpGrC(const N: Integer; I: Integer = -1; P: string = '';
-  E: string = '');
+procedure TfRoom.AddOpGrC(const N: Integer; I: Integer = -1; P: string = ''; E: string = '');
 var
   S, T, Op: string;
 begin
@@ -297,8 +294,7 @@ end;
 procedure TfRoom.acDeleteExecute(Sender: TObject);
 begin
   // Попытка удалить команду из списка
-  if (CLB.ItemIndex >= 0) and (Common.MsgDlg('Удалить?', mtConfirmation,
-    [mbOk, mbCancel]) = mrOk) then
+  if (CLB.ItemIndex >= 0) and (Common.MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Items.Delete(CLB.ItemIndex);
     SaveCLB(Current);
@@ -308,8 +304,7 @@ end;
 procedure TfRoom.acClearExecute(Sender: TObject);
 begin
   // Очистить
-  if (Common.MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk)
-  then
+  if (Common.MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Clear;
     SaveCLB(Current);
@@ -332,31 +327,30 @@ begin
   if (Index < 0) then
     Exit;
   S := Trim(CLB.Items[Index]);
-  // Группа А
+  // Группа А (CLS, INVKILL, ...)
   for I := 0 to High(OpGrA) do
-    if S.StartsWith(OpGrA[I], True) then
+    if LowerCase(S) = OpGrA[I] then
       Exit;
-  // Группа B
+  // Группа B (GOTO, PROC)
   for I := 0 to High(OpGrB) do
-    if S.StartsWith(OpGrB[I], True) then
+    if S.StartsWith(OpGrB[I] + ' ', True) then
     begin
       J := Length(OpGrB[I]) + 1;
       AddOpGrB(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  // Группа C
+  // Группа C (BTN)
   for I := 0 to High(OpGrC) do
-    if S.StartsWith(OpGrC[I], True) then
+    if S.StartsWith(OpGrC[I] + ' ', True) then
     begin
       J := Length(OpGrC[I]) + 1;
       K := Pos(',', S);
-      AddOpGrC(I, Index, Trim(Copy(S, J, K - J)),
-        Trim(Copy(S, K + 1, Length(S))));
+      AddOpGrC(I, Index, Trim(Copy(S, J, K - J)), Trim(Copy(S, K + 1, Length(S))));
       Exit;
     end;
-  // Группа D
+  // Группа D (P, PLN)
   for I := 0 to High(OpGrD) do
-    if S.StartsWith(OpGrD[I], True) then
+    if S.StartsWith(OpGrD[I] + ' ', True) then
     begin
       J := Length(OpGrD[I]) + 1;
       AddOpGrD(I, Index, Trim(Copy(S, J, Length(S))));
@@ -364,7 +358,7 @@ begin
     end;
   // Группа E (IF)
   for I := 0 to High(OpGrE) do
-    if S.StartsWith(OpGrE[I], True) then
+    if S.StartsWith(OpGrE[I] + ' ', True) then
     begin
       FAutoInsertStartBlock := False;
       J := Length(OpGrE[I]) + 1;
@@ -483,8 +477,7 @@ end;
 procedure TfRoom.acMoveDownUpdate(Sender: TObject);
 begin
   // Вниз
-  acMoveDown.Enabled := (CLB.Count > 1) and
-    (CLB.ItemIndex < CLB.Items.Count - 1);
+  acMoveDown.Enabled := (CLB.Count > 1) and (CLB.ItemIndex < CLB.Items.Count - 1);
 end;
 
 procedure TfRoom.acMoveUpExecute(Sender: TObject);
