@@ -7,7 +7,7 @@ value=
 [items]
 value=
 [variables]
-value=plname|facname|secname|botname|gametitle|game|splnname|btnname|clsname
+value=plname|facname|secname|botname|gametitle|game|splnname
 [0]
 value=1cls|1perkill|1invkill|1proc gen|1pln Давным-давно, в далекой-далекой галактике... Нет! Не так!|1pln Однажды на планете #splnname$... Нет! Планета эта называлась #plname$...|1btn 1, Дальше
 [1]
@@ -19,4 +19,6 @@ value=1pln В игре много отсылок к моим любимым фильмам, но только к тем, в котор
 [spoiler1]
 value=1if game=0|1startblock|1pln Запрещено! Сначала нужно пройти игру!|1finishblock|1if game=1|1startblock|1pln Один. Фильм "Книга Илая" - там многое запрещено! Перечислять не вижу смысла... Но саундтрэк к фильму офигенный! Правда?|1btn spoiler2, Два...|1finishblock
 [spoiler2]
+value=
+[spoiler3]
 value=

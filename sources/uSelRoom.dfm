@@ -35,7 +35,6 @@ object fSelRoom: TfSelRoom
     Align = alTop
     ItemHeight = 13
     TabOrder = 0
-    ExplicitTop = 15
   end
   object btOK: TBitBtn
     Left = 168

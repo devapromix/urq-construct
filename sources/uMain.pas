@@ -164,8 +164,7 @@ var
 
   function GetCaption(const AName: string): string;
   begin
-    Result := Format('%s: %s [%d]', [RoomDefaultCaption, AName,
-      GetCurrent(AName)]);
+    Result := Format('%s: %s [%d]', [RoomDefaultCaption, AName, GetCurrent(AName)]);
   end;
 
 begin
@@ -195,8 +194,7 @@ const
   F = '%s (%d)';
 begin
   // Caption
-  S := Common.IfThen((FFileName <> ''),
-    Format(' - %s', [ExtractFileName(FFileName)]), '');
+  S := Common.IfThen((FFileName <> ''), Format(' - %s', [ExtractFileName(FFileName)]), '');
   Modif := Common.IfThen(Modified, '*', '');
   // if (FFileName <> '') then S := Format(' - %s', [ExtractFileName(FFileName)]) else S := '';
   // if Modified then Modif := '*' else Modif := '';
@@ -287,8 +285,7 @@ end;
 function TfMain.CheckModified: Boolean;
 begin
   Result := False;
-  if Modified and (Common.MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <>
-    mrOk) then
+  if Modified and (Common.MsgDlg(stCheckModified, mtConfirmation, mbOKCancel) <> mrOk) then
     Result := True;
 end;
 
@@ -298,21 +295,6 @@ label
 var
   I: Integer;
   Ini: TIniFile;
-
-  function AddItems(): string;
-  var
-    I: Integer;
-    D: string;
-  begin
-    Result := '';
-    for I := 0 to SL.Count - 1 do
-    begin
-      D := Common.IfThen(I <> SL.Count - 1, '|', '');
-      // if (I <> SL.Count - 1) then D := '|' else D := '';
-      Result := Result + SL[I] + D;
-    end;
-  end;
-
 begin
   // Сохранить проект
   SD.InitialDir := Utils.GetPath('projects');
@@ -326,9 +308,8 @@ begin
   end;
   if SD.Execute then
   begin
-    if FileExists(SD.FileName) and
-      (Common.MsgDlg(Format(stProjectExists, [ExtractFileName(SD.FileName)]),
-      mtConfirmation, [mbOk, mbCancel]) = mrCancel) then
+    if FileExists(SD.FileName) and (Common.MsgDlg(Format(stProjectExists, [ExtractFileName(SD.FileName)]), mtConfirmation, [mbOk, mbCancel])
+      = mrCancel) then
       Exit;
     DeleteFile(SD.FileName);
     FFileName := SD.FileName;
@@ -343,10 +324,10 @@ begin
         Ini.WriteString(SL[I], 'value', QL[I]);
       // Предметы
       Common.GetResource(SL, rtItem, '');
-      Ini.WriteString('items', 'value', AddItems());
+      Ini.WriteString('items', 'value', string.Join(TkDiv, SL.ToStringArray));
       // Переменные
       Common.GetResource(SL, rtVar, '');
-      Ini.WriteString('variables', 'value', AddItems());
+      Ini.WriteString('variables', 'value', string.Join(TkDiv, SL.ToStringArray));
     finally
       Ini.Free;
     end;
@@ -387,7 +368,7 @@ begin
     end;
     // Предметы
     S := Ini.ReadString('items', 'value', '');
-    V := S.Split(['|']);
+    V := S.Split([TkDiv]);
     for I := 0 to High(V) do
     begin
       N := Trim(V[I]);
@@ -396,7 +377,7 @@ begin
     end;
     // Переменные
     S := Ini.ReadString('variables', 'value', '');
-    V := S.Split(['|']);
+    V := S.Split([TkDiv]);
     for I := 0 to High(V) do
     begin
       N := Trim(V[I]);
@@ -506,7 +487,7 @@ begin
         begin
           F := Q[1] = '1';
           Delete(Q, 1, 1);
-          P := Pos('|', Q);
+          P := Pos(TkDiv, Q);
           D := '';
           if (P <= 0) then
           begin
@@ -632,8 +613,7 @@ procedure TfMain.acSaveQSTExecute(Sender: TObject);
 begin
   if (Trim(FFileName) = '') then
     Exit;
-  SynEdit1.Lines.SaveToFile(Utils.GetPath('quests') +
-    ChangeFileExt(ExtractFileName(FFileName), '.qst'));
+  SynEdit1.Lines.SaveToFile(Utils.GetPath('quests') + ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   Common.MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
 end;
 
@@ -651,16 +631,14 @@ begin
     Exit;
   if not FExported then
     acExportToQSTExecute(Sender);
-  FileName := Utils.GetPath('quests') +
-    ChangeFileExt(ExtractFileName(FFileName), '.qst');
+  FileName := Utils.GetPath('quests') + ChangeFileExt(ExtractFileName(FFileName), '.qst');
   SynEdit1.Lines.SaveToFile(FileName);
   IntURQPath := Trim(fSettings.edSelURQ.Text);
   if (IntURQPath = '') or not FileExists(IntURQPath) then
     Exit;
   // S := 'C:\Windows\Notepad.exe';
   // ShowMessage(F + ' ' + S);
-  ShellExecute(Application.Handle, 'open', PWideChar(IntURQPath),
-    PWideChar(FileName), nil, SW_SHOWNORMAL);
+  ShellExecute(Application.Handle, 'open', PWideChar(IntURQPath), PWideChar(FileName), nil, SW_SHOWNORMAL);
 end;
 
 procedure TfMain.acRunUpdate(Sender: TObject);
@@ -668,8 +646,7 @@ var
   IntURQPath: string;
 begin
   IntURQPath := Trim(fSettings.edSelURQ.Text);
-  acRun.Enabled := (FFileName <> '') and FExported and not FModified and
-    (IntURQPath <> '') and FileExists(IntURQPath)
+  acRun.Enabled := (FFileName <> '') and FExported and not FModified and (IntURQPath <> '') and FileExists(IntURQPath)
 end;
 
 end.

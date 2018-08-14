@@ -1,4 +1,4 @@
-unit uSelText;
+﻿unit uSelText;
 
 interface
 

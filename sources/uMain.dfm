@@ -548,7 +548,7 @@ object fMain: TfMain
     Left = 264
     Top = 48
     Bitmap = {
-      494C010117007000600010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010117007000640010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000EFF7F700D6ADAD00CE8C9C00D69CAD00D69CAD00CE8C9C00D6ADAD00EFF7
@@ -1355,7 +1355,7 @@ object fMain: TfMain
     Left = 296
     Top = 48
     Bitmap = {
-      494C010105000700540010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105000700580010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1627,10 +1627,36 @@ object fMain: TfMain
       000000000000}
   end
   object SynURQLSyn1: TSynURQLSyn
+    DefaultFilter = 'URQ Quest File (*.qst)|*.qst'
     Options.AutoDetectEnabled = False
     Options.AutoDetectLineLimit = 0
     Options.Visible = False
-    StringAttri.Foreground = clBlue
+    CommentAttr.Background = clNone
+    CommentAttr.Foreground = clTeal
+    OverlineAttr.Background = clNone
+    OverlineAttr.Foreground = 7716607
+    NumberAttr.Background = clNone
+    NumberAttr.Foreground = clLime
+    DefaultAttr.Background = clNone
+    DefaultAttr.Foreground = clSilver
+    LabelAttr.Background = clNone
+    LabelAttr.Foreground = clFuchsia
+    SymbolAttr.Background = clNone
+    SymbolAttr.Foreground = clWhite
+    KeyWordAttr.Background = clNone
+    KeyWordAttr.Foreground = clYellow
+    StringAttr.Background = clNone
+    StringAttr.Foreground = clYellow
+    PlnTextAttr.Background = clNone
+    PlnTextAttr.Foreground = 15588540
+    SpecialAttr.Background = clNone
+    SpecialAttr.Foreground = 5160959
+    SubLevel1Attr.Background = clNone
+    SubLevel1Attr.Foreground = 11184895
+    SubLevel2Attr.Background = clNone
+    SubLevel2Attr.Foreground = 8550395
+    SubLevel3Attr.Background = clNone
+    SubLevel3Attr.Foreground = clRed
     Left = 467
     Top = 82
   end

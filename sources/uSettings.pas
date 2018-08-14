@@ -65,27 +65,27 @@ end;
 
 procedure TfSettings.LoadConfig;
 var
-  F: TIniFile;
+  IniFile: TIniFile;
 begin
-  F := TIniFile.Create(Utils.GetPath('') + 'config.ini');
+  IniFile := TIniFile.Create(Utils.GetPath('') + 'config.ini');
   try
     // Интерпретатор
-    edSelURQ.Text := Trim(F.ReadString('Main', 'URQInt', ''));
+    edSelURQ.Text := Trim(IniFile.ReadString('Main', 'URQInt', ''));
   finally
-    FreeAndNil(F);
+    FreeAndNil(IniFile);
   end;
 end;
 
 procedure TfSettings.SaveConfig;
 var
-  F: TIniFile;
+  IniFile: TIniFile;
 begin
-  F := TIniFile.Create(Utils.GetPath('') + 'config.ini');
+  IniFile := TIniFile.Create(Utils.GetPath('') + 'config.ini');
   try
     // Интерпретатор
-    F.WriteString('Main', 'URQInt', Trim(edSelURQ.Text));
+    IniFile.WriteString('Main', 'URQInt', Trim(edSelURQ.Text));
   finally
-    FreeAndNil(F);
+    FreeAndNil(IniFile);
   end;
 end;
 

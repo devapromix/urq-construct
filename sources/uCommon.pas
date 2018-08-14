@@ -28,36 +28,31 @@ type
   // Типы ресурсов
   TResType = (rtRoom, rtItem, rtVar);
 
-const
-  // Запрещенные имена для комнат, предметов и переменных
-  ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
-  // Запрещенные символы для комнат, предметов и переменных
-  ErChars: array [0 .. 1] of Char = ('|', '&');
-
 var
   // Фильтр
   QCProjFilters: string = '';
-  // Разделитель операторов
-  OpDiv: string = '&';
+
+const
+  // Разделитель операторов URQ
+  OpDiv = '&';
+  //
+  TkDiv = '|';
+  // Запрещенные имена для комнат, предметов и переменных
+  ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
+  // Запрещенные символы для комнат, предметов и переменных
+  ErChars: array [0 .. 1] of Char = (OpDiv, TkDiv);
 
 type
   Common = class(TObject)
-    class function MsgDlg(const Msg: string; DlgType: TMsgDlgType;
-      Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
-    class procedure SetTVImages(const TreeNode: TTreeNode;
-      const ImgIndex, SelIndex: Integer);
-    class procedure SetTV(const TV: TTreeView; Title: string;
-      ImageIndex: Integer);
-    class function AddTVItem(const TV: TTreeView; const Title: string;
-      const ImageIndex, SelectedIndex: Integer): TTreeNode;
-    class procedure GetResource(var SL: TStringList; const RT: TResType;
-      Current: string = '');
+    class function MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+    class procedure SetTVImages(const TreeNode: TTreeNode; const ImgIndex, SelIndex: Integer);
+    class procedure SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
+    class function AddTVItem(const TV: TTreeView; const Title: string; const ImageIndex, SelectedIndex: Integer): TTreeNode;
+    class procedure GetResource(var SL: TStringList; const RT: TResType; Current: string = '');
     // procedure AddResource(const RT: TResType; AName: string); AddItem, AddVar, и массив, дин. добавл. TV
     class function GetRoomIndexByName(const AName: string): Integer;
-    class function IfThen(AValue: Boolean; const ATrue: string;
-      const AFalse: string): string; overload;
-    class function IfThen(AValue: Boolean; const ATrue: Char;
-      const AFalse: Char): Char; overload;
+    class function IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string; overload;
+    class function IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char; overload;
     class function IsErName(const S: string): Boolean;
     class function IsErChar(const S: string): Boolean;
     class function IsFirstCharDigit(const S: string): Boolean;
@@ -138,42 +133,36 @@ var
   RGBColor: Integer;
 begin
   RGBColor := ColorToRGB(Color);
-  Result := (RGBColor shr 16) OR (((RGBColor AND $FFFF) shr 8) shl 8) OR
-    ((RGBColor AND $FF) shl 16);
+  Result := (RGBColor shr 16) OR (((RGBColor AND $FFFF) shr 8) shl 8) OR ((RGBColor AND $FF) shl 16);
 end;
 
-class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
+class function Common.MsgDlg(const Msg: string; DlgType: TMsgDlgType; Buttons: TMsgDlgButtons; HelpCtx: Integer = 0): Integer;
 begin
   Result := Utils.ShowForm(CreateMessageDialog(Msg, DlgType, Buttons));
 end;
 
-class procedure Common.SetTVImages(const TreeNode: TTreeNode;
-  const ImgIndex, SelIndex: Integer);
+class procedure Common.SetTVImages(const TreeNode: TTreeNode; const ImgIndex, SelIndex: Integer);
 begin
   TreeNode.ImageIndex := ImgIndex;
   TreeNode.SelectedIndex := SelIndex;
 end;
 
-class procedure Common.SetTV(const TV: TTreeView; Title: string;
-  ImageIndex: Integer);
+class procedure Common.SetTV(const TV: TTreeView; Title: string; ImageIndex: Integer);
 var
-  F: TTreeNode;
+  TreeNode: TTreeNode;
 begin
   TV.Items.Clear;
-  F := TV.Items.AddFirst(nil, Title);
-  SetTVImages(F, ImageIndex, ImageIndex);
+  TreeNode := TV.Items.AddFirst(nil, Title);
+  SetTVImages(TreeNode, ImageIndex, ImageIndex);
 end;
 
-class function Common.AddTVItem(const TV: TTreeView; const Title: string;
-  const ImageIndex, SelectedIndex: Integer): TTreeNode;
+class function Common.AddTVItem(const TV: TTreeView; const Title: string; const ImageIndex, SelectedIndex: Integer): TTreeNode;
 begin
   Result := TV.Items.AddChild(TV.Items.Item[0], Title);
   SetTVImages(Result, ImageIndex, SelectedIndex);
 end;
 
-class procedure Common.GetResource(var SL: TStringList; const RT: TResType;
-  Current: string = '');
+class procedure Common.GetResource(var SL: TStringList; const RT: TResType; Current: string = '');
 var
   TV: TTreeView;
   Name, S: string;
@@ -220,15 +209,11 @@ begin
     S := LowerCase(fMain.TVR.Items[I].Text);
     if (S <> RoomsName) then
       if (S = AName) then
-      begin
-        Result := I;
-        Exit;
-      end;
+        Exit(I);
   end;
 end;
 
-class function Common.IfThen(AValue: Boolean; const ATrue: string;
-  const AFalse: string): string;
+class function Common.IfThen(AValue: Boolean; const ATrue: string; const AFalse: string): string;
 begin
   if AValue then
     Result := ATrue
@@ -236,8 +221,7 @@ begin
     Result := AFalse;
 end;
 
-class function Common.IfThen(AValue: Boolean; const ATrue: Char;
-  const AFalse: Char): Char;
+class function Common.IfThen(AValue: Boolean; const ATrue: Char; const AFalse: Char): Char;
 begin
   if AValue then
     Result := ATrue
@@ -252,10 +236,7 @@ begin
   Result := False;
   for I := 0 to High(ErNames) do
     if (S = ErNames[I]) then
-    begin
-      Result := True;
-      Exit;
-    end;
+      Exit(True);
 end;
 
 class function Common.IsErChar(const S: string): Boolean;
@@ -265,10 +246,7 @@ begin
   Result := False;
   for I := 0 to High(ErChars) do
     if (S.CountChar(ErChars[I]) > 0) then
-    begin
-      Result := True;
-      Exit;
-    end;
+      Exit(True);
 end;
 
 class function Common.IsFirstCharDigit(const S: string): Boolean;

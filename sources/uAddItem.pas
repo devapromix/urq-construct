@@ -1,4 +1,4 @@
-unit uAddItem;
+п»їunit uAddItem;
 
 interface
 
@@ -36,7 +36,7 @@ var
   I: Integer;
   SL: TStringList;
 begin
-  // Добавить предмет
+  // Р”РѕР±Р°РІРёС‚СЊ РїСЂРµРґРјРµС‚
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtItem, '');

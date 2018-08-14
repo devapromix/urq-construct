@@ -1,4 +1,4 @@
-unit uAddVar;
+п»їunit uAddVar;
 
 interface
 
@@ -35,7 +35,7 @@ procedure TfAddVar.NewVar;
 var
   SL: TStringList;
 begin
-  // Добавить новую переменную
+  // Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtVar, '');
@@ -95,7 +95,7 @@ var
   I: Integer;
   SL: TStringList;
 begin
-  // Добавить переменную
+  // Р”РѕР±Р°РІРёС‚СЊ РїРµСЂРµРјРµРЅРЅСѓСЋ
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtVar, '');

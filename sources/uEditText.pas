@@ -1,4 +1,4 @@
-unit uEditText;
+п»їunit uEditText;
 
 interface
 
@@ -60,7 +60,7 @@ uses uSelText;
 
 procedure TfEditText.btClearClick(Sender: TObject);
 begin
-  // Очистить окно редактора от текста
+  // РћС‡РёСЃС‚РёС‚СЊ РѕРєРЅРѕ СЂРµРґР°РєС‚РѕСЂР° РѕС‚ С‚РµРєСЃС‚Р°
   RE.Clear;
   RE.SetFocus;
 end;
@@ -70,7 +70,7 @@ var
   I: Integer;
   S: string;
 begin
-  // Передать текст одной строкой в редактор
+  // РџРµСЂРµРґР°С‚СЊ С‚РµРєСЃС‚ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРѕР№ РІ СЂРµРґР°РєС‚РѕСЂ
   S := '';
   for I := 0 to RE.Lines.Count - 1 do
     S := S + Trim(RE.Lines[I]) + #32;

@@ -1,4 +1,4 @@
-unit uSelVar;
+﻿unit uSelVar;
 
 interface
 

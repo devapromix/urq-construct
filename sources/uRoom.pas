@@ -1,4 +1,4 @@
-unit uRoom;
+п»їunit uRoom;
 
 interface
 
@@ -111,7 +111,7 @@ type
   end;
 
 const
-  // Операторы по группам
+  // РћРїРµСЂР°С‚РѕСЂС‹ РїРѕ РіСЂСѓРїРїР°Рј
   OpGrA: array [0 .. 7] of string = ('cls', 'clsb', 'invkill', 'perkill', 'startblock', 'finishblock', 'end', 'quit');
   OpGrB: array [0 .. 1] of string = ('goto', 'proc');
   OpGrC: array [0 .. 0] of string = ('btn');
@@ -131,7 +131,7 @@ var
   S: string;
   R: TArray<string>;
 begin
-  R := fMain.QL[Index].Split(['|']);
+  R := fMain.QL[Index].Split([TkDiv]);
   CLB.Clear;
   for I := 0 to Length(R) - 1 do
   begin
@@ -152,7 +152,7 @@ begin
   S := '';
   for I := 0 to CLB.Count - 1 do
   begin
-    D := Common.IfThen((I <> CLB.Count - 1), '|', '');
+    D := Common.IfThen((I <> CLB.Count - 1), TkDiv, '');
     C := Common.IfThen(CLB.Checked[I], '1', '0');
     S := S + C + Trim(CLB.Items.Strings[I]) + D;
   end;
@@ -162,7 +162,7 @@ end;
 
 procedure TfRoom.AddOpGrA(const N: Integer);
 begin
-  // Операторы без параметров
+  // РћРїРµСЂР°С‚РѕСЂС‹ Р±РµР· РїР°СЂР°РјРµС‚СЂРѕРІ
   CLB.Checked[CLB.Items.Add(OpGrA[N])] := True;
   SaveCLB(Current);
 end;
@@ -171,7 +171,7 @@ procedure TfRoom.AddOpGrB(const N: Integer; I: Integer = -1; P: string = '');
 var
   S, Op: string;
 begin
-  // Операторы, у которых параметр - метка комнаты
+  // РћРїРµСЂР°С‚РѕСЂС‹, Сѓ РєРѕС‚РѕСЂС‹С… РїР°СЂР°РјРµС‚СЂ - РјРµС‚РєР° РєРѕРјРЅР°С‚С‹
   Op := OpGrB[N];
   S := fSelRoom.GetRoom(Self.Caption, P);
   if (S = '') then
@@ -189,7 +189,7 @@ procedure TfRoom.AddOpGrC(const N: Integer; I: Integer = -1; P: string = ''; E: 
 var
   S, T, Op: string;
 begin
-  // Операторы, осуществляющие переход в комнаты по кнопкам
+  // РћРїРµСЂР°С‚РѕСЂС‹, РѕСЃСѓС‰РµСЃС‚РІР»СЏСЋС‰РёРµ РїРµСЂРµС…РѕРґ РІ РєРѕРјРЅР°С‚С‹ РїРѕ РєРЅРѕРїРєР°Рј
   Op := OpGrC[N];
   S := fSelRoom.GetRoom(Self.Caption, P);
   if (S = '') then
@@ -210,7 +210,7 @@ procedure TfRoom.AddOpGrD(const N: Integer; I: Integer = -1; P: string = '');
 var
   S, Op: string;
 begin
-  // Операторы вывода текста
+  // РћРїРµСЂР°С‚РѕСЂС‹ РІС‹РІРѕРґР° С‚РµРєСЃС‚Р°
   Op := OpGrD[N];
   S := fSelText.GetText(P);
   if (S = '') then
@@ -228,7 +228,7 @@ procedure TfRoom.AddOpGrE(const N: Integer; I: Integer; P: string);
 var
   S, Op: string;
 begin
-  // Оператор if
+  // РћРїРµСЂР°С‚РѕСЂ if
   Op := OpGrE[N];
   S := fSelText.GetText(P);
   if (S = '') then
@@ -240,7 +240,7 @@ begin
     I := CLB.Items.Add(S);
   CLB.Checked[I] := True;
   SaveCLB(Current);
-  // Автомат. вставить начало блока
+  // РђРІС‚РѕРјР°С‚. РІСЃС‚Р°РІРёС‚СЊ РЅР°С‡Р°Р»Рѕ Р±Р»РѕРєР°
   if (Op = 'if') and FAutoInsertStartBlock then
     AddOpGrA(4);
 end;
@@ -249,7 +249,7 @@ procedure TfRoom.AddVar(I: Integer = -1);
 var
   VarName, Value, S: string;
 begin
-  // Добавить переменную
+  // Р”РѕР±Р°РІРёС‚СЊ РїРµСЂРµРјРµРЅРЅСѓСЋ
   fSelVar.GetVar(VarName, Value);
   if (VarName = '') then
     Exit;
@@ -270,7 +270,7 @@ var
   ItemName, SAmount, S: string;
   Amount: Integer;
 begin
-  // Добавить или забрать предмет
+  // Р”РѕР±Р°РІРёС‚СЊ РёР»Рё Р·Р°Р±СЂР°С‚СЊ РїСЂРµРґРјРµС‚
   SAmount := '';
   fSelItem.GetItem(ItemName, Amount);
   if (ItemName = '') then
@@ -293,8 +293,8 @@ end;
 
 procedure TfRoom.acDeleteExecute(Sender: TObject);
 begin
-  // Попытка удалить команду из списка
-  if (CLB.ItemIndex >= 0) and (Common.MsgDlg('Удалить?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  // РџРѕРїС‹С‚РєР° СѓРґР°Р»РёС‚СЊ РєРѕРјР°РЅРґСѓ РёР· СЃРїРёСЃРєР°
+  if (CLB.ItemIndex >= 0) and (Common.MsgDlg('РЈРґР°Р»РёС‚СЊ?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Items.Delete(CLB.ItemIndex);
     SaveCLB(Current);
@@ -303,8 +303,8 @@ end;
 
 procedure TfRoom.acClearExecute(Sender: TObject);
 begin
-  // Очистить
-  if (Common.MsgDlg('Удалить все?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
+  // РћС‡РёСЃС‚РёС‚СЊ
+  if (Common.MsgDlg('РЈРґР°Р»РёС‚СЊ РІСЃРµ?', mtConfirmation, [mbOk, mbCancel]) = mrOk) then
   begin
     CLB.Clear;
     SaveCLB(Current);
@@ -322,16 +322,16 @@ var
   S, T: string;
   R: TArray<string>;
 begin
-  // Двойн. клик
+  // Р”РІРѕР№РЅ. РєР»РёРє
   Index := CLB.ItemIndex;
   if (Index < 0) then
     Exit;
   S := Trim(CLB.Items[Index]);
-  // Группа А (CLS, INVKILL, ...)
+  // Р“СЂСѓРїРїР° Рђ (CLS, INVKILL, ...)
   for I := 0 to High(OpGrA) do
     if LowerCase(S) = OpGrA[I] then
       Exit;
-  // Группа B (GOTO, PROC)
+  // Р“СЂСѓРїРїР° B (GOTO, PROC)
   for I := 0 to High(OpGrB) do
     if S.StartsWith(OpGrB[I] + ' ', True) then
     begin
@@ -339,7 +339,7 @@ begin
       AddOpGrB(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  // Группа C (BTN)
+  // Р“СЂСѓРїРїР° C (BTN)
   for I := 0 to High(OpGrC) do
     if S.StartsWith(OpGrC[I] + ' ', True) then
     begin
@@ -348,7 +348,7 @@ begin
       AddOpGrC(I, Index, Trim(Copy(S, J, K - J)), Trim(Copy(S, K + 1, Length(S))));
       Exit;
     end;
-  // Группа D (P, PLN)
+  // Р“СЂСѓРїРїР° D (P, PLN)
   for I := 0 to High(OpGrD) do
     if S.StartsWith(OpGrD[I] + ' ', True) then
     begin
@@ -356,7 +356,7 @@ begin
       AddOpGrD(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  // Группа E (IF)
+  // Р“СЂСѓРїРїР° E (IF)
   for I := 0 to High(OpGrE) do
     if S.StartsWith(OpGrE[I] + ' ', True) then
     begin
@@ -365,7 +365,7 @@ begin
       AddOpGrE(I, Index, Trim(Copy(S, J, Length(S))));
       Exit;
     end;
-  // Предмет
+  // РџСЂРµРґРјРµС‚
   T := S.Substring(0, 4);
   if (T = 'inv+') or (T = 'inv-') then
   begin
@@ -389,7 +389,7 @@ begin
     AddItem(Index);
     Exit;
   end;
-  // Переменная
+  // РџРµСЂРµРјРµРЅРЅР°СЏ
   begin
     R := S.Split(['=']);
     fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
@@ -463,7 +463,7 @@ procedure TfRoom.acMoveDownExecute(Sender: TObject);
 var
   Tmp: string;
 begin
-  // Вниз
+  // Р’РЅРёР·
   if (CLB.ItemIndex >= 0) then
   begin
     Tmp := CLB.Items[CLB.ItemIndex + 1];
@@ -476,7 +476,7 @@ end;
 
 procedure TfRoom.acMoveDownUpdate(Sender: TObject);
 begin
-  // Вниз
+  // Р’РЅРёР·
   acMoveDown.Enabled := (CLB.Count > 1) and (CLB.ItemIndex < CLB.Items.Count - 1);
 end;
 
@@ -484,7 +484,7 @@ procedure TfRoom.acMoveUpExecute(Sender: TObject);
 var
   Tmp: string;
 begin
-  // Вверх
+  // Р’РІРµСЂС…
   if (CLB.ItemIndex >= 0) then
   begin
     Tmp := CLB.Items[CLB.ItemIndex - 1];
@@ -497,7 +497,7 @@ end;
 
 procedure TfRoom.acMoveUpUpdate(Sender: TObject);
 begin
-  // Вверх
+  // Р’РІРµСЂС…
   acMoveUp.Enabled := (CLB.Count > 1) and (CLB.ItemIndex > 0);
 end;
 

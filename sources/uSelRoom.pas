@@ -1,4 +1,4 @@
-unit uSelRoom;
+п»їunit uSelRoom;
 
 interface
 
@@ -69,7 +69,7 @@ end;
 
 procedure TfSelRoom.btNewClick(Sender: TObject);
 begin
-  // Добавить новую комнату
+  // Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ РєРѕРјРЅР°С‚Сѓ
   Self.RoomList.ItemIndex := Self.RoomList.Items.Add(fAddRoom.NewRoom);
   Self.btOK.SetFocus();
 end;
