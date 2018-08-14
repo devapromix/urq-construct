@@ -61,7 +61,7 @@ begin
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtVar, '');
-    S := LowerCase(Trim(cbVarName.Text));
+    S := string(cbVarName.Text).ToLower.Trim;
     if (S = '') then
     begin
       ShowMessage('!!!');

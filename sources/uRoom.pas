@@ -329,7 +329,7 @@ begin
   S := Trim(CLB.Items[Index]);
   // Группа А (CLS, INVKILL, ...)
   for I := 0 to High(OpGrA) do
-    if LowerCase(S) = OpGrA[I] then
+    if S.ToLower = OpGrA[I] then
       Exit;
   // Группа B (GOTO, PROC)
   for I := 0 to High(OpGrB) do

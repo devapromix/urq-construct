@@ -475,7 +475,7 @@ begin
     Clear;
     for I := 0 to TVR.Items.Count - 1 do
     begin
-      S := LowerCase(TVR.Items[I].Text);
+      S := TVR.Items[I].Text.ToLower;
       if (S <> RoomsName) then
       begin
         Add(':' + S);

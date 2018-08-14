@@ -167,32 +167,27 @@ var
   TV: TTreeView;
   Name, S: string;
   I: Integer;
+
+  procedure Add(ATV: TTreeView; AName: string);
+  begin
+    TV := ATV;
+    Name := AName;
+  end;
+
 begin
   TV := nil;
   case RT of
-    // Комната
-    rtRoom:
-      begin
-        TV := fMain.TVR;
-        Name := RoomsName;
-      end;
-    // Предмет
-    rtItem:
-      begin
-        TV := fMain.TVI;
-        Name := ItemsName;
-      end;
-    // Переменная
-    rtVar:
-      begin
-        TV := fMain.TVV;
-        Name := VarsName;
-      end;
+    rtRoom: // Комната
+      Add(fMain.TVR, RoomsName);
+    rtItem: // Предмет
+      Add(fMain.TVI, ItemsName);
+    rtVar: // Переменная
+      Add(fMain.TVV, VarsName);
   end;
   SL.Clear;
   for I := 0 to TV.Items.Count - 1 do
   begin
-    S := LowerCase(TV.Items[I].Text);
+    S := TV.Items[I].Text.ToLower;
     if (S <> Name) and (S <> Current) then
       SL.Append(S);
   end;
@@ -206,7 +201,7 @@ begin
   Result := -1;
   for I := 0 to fMain.TVR.Items.Count - 1 do
   begin
-    S := LowerCase(fMain.TVR.Items[I].Text);
+    S := fMain.TVR.Items[I].Text.ToLower;
     if (S <> RoomsName) then
       if (S = AName) then
         Exit(I);
