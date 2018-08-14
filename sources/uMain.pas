@@ -198,7 +198,7 @@ begin
   Modif := Common.IfThen(Modified, '*', '');
   // if (FFileName <> '') then S := Format(' - %s', [ExtractFileName(FFileName)]) else S := '';
   // if Modified then Modif := '*' else Modif := '';
-  Caption := Format(Trim('%s %s'), [Application.Title, S]) + Modif;
+  Caption := Format('%s %s'.Trim, [Application.Title, S]) + Modif;
   // Tabs
   SL := TStringList.Create;
   try
@@ -218,7 +218,7 @@ var
   S: string;
 begin
   mmExport.Visible := False;
-  S := Trim(TVR.Selected.Text);
+  S := TVR.Selected.Text.Trim;
   if (S = '') or (S = RoomsName) then
     Exit;
   CreateRoom(S);
@@ -371,7 +371,7 @@ begin
     V := S.Split([TkDiv]);
     for I := 0 to High(V) do
     begin
-      N := Trim(V[I]);
+      N := V[I].Trim;
       if (N <> '') then
         Common.AddTVItem(TVI, N, 1, 1);
     end;

@@ -135,7 +135,7 @@ begin
   CLB.Clear;
   for I := 0 to Length(R) - 1 do
   begin
-    S := Trim(R[I]);
+    S := R[I].Trim;
     CLB.Items.Append(S.Substring(1));
     CLB.Checked[I] := (S[1] = '1');
   end;
@@ -154,7 +154,7 @@ begin
   begin
     D := Common.IfThen((I <> CLB.Count - 1), TkDiv, '');
     C := Common.IfThen(CLB.Checked[I], '1', '0');
-    S := S + C + Trim(CLB.Items.Strings[I]) + D;
+    S := S + C + CLB.Items.Strings[I].Trim + D;
   end;
   fMain.QL[Index] := S;
   fMain.Modified := True;
@@ -326,7 +326,7 @@ begin
   Index := CLB.ItemIndex;
   if (Index < 0) then
     Exit;
-  S := Trim(CLB.Items[Index]);
+  S := CLB.Items[Index].Trim;
   // Группа А (CLS, INVKILL, ...)
   for I := 0 to High(OpGrA) do
     if S.ToLower = OpGrA[I] then
@@ -336,7 +336,7 @@ begin
     if S.StartsWith(OpGrB[I] + ' ', True) then
     begin
       J := Length(OpGrB[I]) + 1;
-      AddOpGrB(I, Index, Trim(Copy(S, J, Length(S))));
+      AddOpGrB(I, Index, Copy(S, J, S.Length).Trim);
       Exit;
     end;
   // Группа C (BTN)
@@ -345,7 +345,7 @@ begin
     begin
       J := Length(OpGrC[I]) + 1;
       K := Pos(',', S);
-      AddOpGrC(I, Index, Trim(Copy(S, J, K - J)), Trim(Copy(S, K + 1, Length(S))));
+      AddOpGrC(I, Index, Copy(S, J, K - J).Trim, Copy(S, K + 1, S.Length).Trim);
       Exit;
     end;
   // Группа D (P, PLN)
@@ -353,7 +353,7 @@ begin
     if S.StartsWith(OpGrD[I] + ' ', True) then
     begin
       J := Length(OpGrD[I]) + 1;
-      AddOpGrD(I, Index, Trim(Copy(S, J, Length(S))));
+      AddOpGrD(I, Index, Copy(S, J, S.Length).Trim);
       Exit;
     end;
   // Группа E (IF)
@@ -362,7 +362,7 @@ begin
     begin
       FAutoInsertStartBlock := False;
       J := Length(OpGrE[I]) + 1;
-      AddOpGrE(I, Index, Trim(Copy(S, J, Length(S))));
+      AddOpGrE(I, Index, Copy(S, J, S.Length).Trim);
       Exit;
     end;
   // Предмет
@@ -378,12 +378,12 @@ begin
     K := 1;
     if (Pos(',', S) > 0) then
     begin
-      R := Trim(Copy(S, 5, Length(S))).Split([',']);
-      T := Trim(R[1]);
+      R := Copy(S, 5, Length(S)).Trim.Split([',']);
+      T := R[1].Trim;
       K := StrToIntDef(R[0], 1);
     end
     else
-      T := Trim(S.Substring(5));
+      T := S.Substring(5).Trim;
     fSelItem.edItem.Text := T;
     fSelItem.UpDn.Position := K;
     AddItem(Index);
@@ -395,8 +395,8 @@ begin
     fSelVar.VarType.ItemIndex := IfThen((Pos('"', S) > 0), 1, 0);
     S := '';
     if (Length(R) > 1) then
-      S := StringReplace(Trim(R[1]), '"', '', [rfReplaceAll]);
-    fSelVar.edVar.Text := Trim(R[0]);
+      S := StringReplace(R[1].Trim, '"', '', [rfReplaceAll]);
+    fSelVar.edVar.Text := R[0].Trim;
     fSelVar.edValue.Text := S;
     AddVar(Index);
     Exit;

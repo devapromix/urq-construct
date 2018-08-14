@@ -61,7 +61,7 @@ begin
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtVar, '');
-    S := string(cbVarName.Text).ToLower.Trim;
+    S := cbVarName.Text.ToLower.Trim;
     if (S = '') then
     begin
       ShowMessage('!!!');

@@ -39,7 +39,7 @@ begin
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtRoom, '');
-    FNewRoomName := string(cbRoomName.Text).ToLower.Trim;
+    FNewRoomName := cbRoomName.Text.Trim.ToLower;
     if (FNewRoomName = '') then
     begin
       ShowMessage('!!!');

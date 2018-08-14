@@ -2,7 +2,7 @@
 
 interface
 
-uses Forms, Dialogs, Classes, ComCtrls;
+uses Forms, Dialogs, Classes, ComCtrls, Vcl.Controls;
 
 const
   // Версия конструктора
@@ -41,6 +41,12 @@ const
   ErNames: array [0 .. 2] of string = ('settings', 'items', 'variables');
   // Запрещенные символы для комнат, предметов и переменных
   ErChars: array [0 .. 1] of Char = (OpDiv, TkDiv);
+
+type
+  TCaptionHelper = record helper for TCaption
+    function Trim: string;
+    function ToLower: string;
+  end;
 
 type
   Common = class(TObject)
@@ -250,6 +256,18 @@ var
 begin
   C := S[1];
   Result := C.IsDigit;
+end;
+
+{ TCaptionHelper }
+
+function TCaptionHelper.ToLower: string;
+begin
+  Result := string(Self).ToLower;
+end;
+
+function TCaptionHelper.Trim: string;
+begin
+  Result := string(Self).Trim;
 end;
 
 end.

@@ -40,8 +40,8 @@ begin
   Value := '';
   if (Utils.ShowForm(Self) = mrCancel) then
     Exit;
-  VarName := Trim(edVar.Text);
-  Value := Trim(edValue.Text);
+  VarName := edVar.Text.Trim;
+  Value := edValue.Text.Trim;
   fAddVar.AddVar(VarName);
 end;
 
@@ -63,7 +63,7 @@ procedure TfSelVar.btOKClick(Sender: TObject);
 var
   S: string;
 begin
-  S := Trim(edVar.Text);
+  S := edVar.Text.Trim;
   if Common.IsFirstCharDigit(S) then
   begin
     ShowMessage('!!!');

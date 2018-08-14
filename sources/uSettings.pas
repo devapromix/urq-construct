@@ -35,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses uUtils, IniFiles;
+uses uUtils, IniFiles, uCommon;
 
 const
   stURQIntFilters: string = 'Интерпретатор URQ|*.exe';
@@ -70,7 +70,7 @@ begin
   IniFile := TIniFile.Create(Utils.GetPath('') + 'config.ini');
   try
     // Интерпретатор
-    edSelURQ.Text := Trim(IniFile.ReadString('Main', 'URQInt', ''));
+    edSelURQ.Text := IniFile.ReadString('Main', 'URQInt', '').Trim;
   finally
     FreeAndNil(IniFile);
   end;
@@ -83,7 +83,7 @@ begin
   IniFile := TIniFile.Create(Utils.GetPath('') + 'config.ini');
   try
     // Интерпретатор
-    IniFile.WriteString('Main', 'URQInt', Trim(edSelURQ.Text));
+    IniFile.WriteString('Main', 'URQInt', edSelURQ.Text.Trim);
   finally
     FreeAndNil(IniFile);
   end;

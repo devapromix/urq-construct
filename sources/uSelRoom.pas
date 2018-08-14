@@ -33,8 +33,7 @@ uses uMain, uAddRoom, uCommon, uUtils;
 {$R *.dfm}
 { TfSelRoom }
 
-function TfSelRoom.GetRoom(const CurrentRoom: string;
-  SelRoom: string = ''): string;
+function TfSelRoom.GetRoom(const CurrentRoom: string; SelRoom: string = ''): string;
 var
   I: Integer;
   SL: TStringList;
@@ -51,14 +50,14 @@ begin
   I := RoomList.Items.IndexOf('common');
   if (I >= 0) then
     RoomList.Items.Delete(I);
-  SelRoom := Trim(SelRoom);
+  SelRoom := SelRoom.Trim;
   if (SelRoom <> '') then
     FIndex := RoomList.Items.IndexOf(SelRoom);
   if (FIndex < 0) then
     FIndex := 0;
   if (Utils.ShowForm(Self) = mrCancel) or (RoomList.ItemIndex < 0) then
     Exit;
-  Result := Trim(RoomList.Items.Strings[RoomList.ItemIndex]);
+  Result := RoomList.Items.Strings[RoomList.ItemIndex].Trim;
 end;
 
 procedure TfSelRoom.FormShow(Sender: TObject);

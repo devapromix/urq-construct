@@ -73,8 +73,8 @@ begin
   // Передать текст одной строкой в редактор
   S := '';
   for I := 0 to RE.Lines.Count - 1 do
-    S := S + Trim(RE.Lines[I]) + #32;
-  fSelText.edText.Text := Trim(S);
+    S := S + RE.Lines[I].Trim + #32;
+  fSelText.edText.Text := S.Trim;
   fSelText.edText.SetFocus;
 end;
 

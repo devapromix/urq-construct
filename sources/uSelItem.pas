@@ -41,7 +41,7 @@ begin
   Amount := 1;
   if (Utils.ShowForm(Self) = mrCancel) then
     Exit;
-  ItemName := Trim(edItem.Text);
+  ItemName := edItem.Text.Trim;
   Amount := StrToIntDef(edAmount.Text, 1);
   fAddItem.AddItem(ItemName);
 end;
@@ -50,7 +50,7 @@ procedure TfSelItem.btOKClick(Sender: TObject);
 var
   S: string;
 begin
-  S := Trim(edItem.Text);
+  S := edItem.Text.Trim;
   if (S = '') then
   begin
     ShowMessage('!!!');

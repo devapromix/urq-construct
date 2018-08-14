@@ -37,7 +37,7 @@ uses uCommon, uEditText, uUtils;
 function TfSelText.GetText(S: string = ''): string;
 begin
   Result := '';
-  S := Trim(S);
+  S := S.Trim;
   if (S <> '') then
     Self.edText.Text := S;
   if (Utils.ShowForm(Self) = mrCancel) then
@@ -59,7 +59,7 @@ end;
 
 procedure TfSelText.btSelClick(Sender: TObject);
 begin
-  fEditText.RE.Text := Trim(edText.Text);
+  fEditText.RE.Text := edText.Text.Trim;
   Utils.ShowForm(fEditText);
 end;
 

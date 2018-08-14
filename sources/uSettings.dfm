@@ -119,6 +119,10 @@ object fSettings: TfSettings
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = #1048#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 8
         Top = 16
