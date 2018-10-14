@@ -203,11 +203,11 @@ begin
   SL := TStringList.Create;
   try
     Common.GetResource(SL, rtRoom, '');
-    tsRooms.Caption := Format(F, [RoomsName, SL.Count]);
+    tsRooms.Caption := Format(F, [RoomsName, SL.Count - 1]);
     Common.GetResource(SL, rtItem, '');
-    tsItems.Caption := Format(F, [ItemsName, SL.Count]);
+    tsItems.Caption := Format(F, [ItemsName, SL.Count - 1]);
     Common.GetResource(SL, rtVar, '');
-    tsVars.Caption := Format(F, [VarsName, SL.Count]);
+    tsVars.Caption := Format(F, [VarsName, SL.Count - 1]);
   finally
     SL.Free;
   end;
