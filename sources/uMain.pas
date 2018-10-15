@@ -133,6 +133,7 @@ type
     procedure SetModified(const Value: Boolean);
     procedure LoadProject(const FileName: string);
     procedure UpdateProject();
+    procedure UpdateTab(TabName: string; TabResType: TResType; TabComp: TTabSheet);
   public
     { Public declarations }
     QL: TStringList;
@@ -189,9 +190,6 @@ end;
 procedure TfMain.UpdateProject;
 var
   S, Modif: string;
-  SL: TStringList;
-const
-  F = '%s (%d)';
 begin
   // Caption
   S := Common.IfThen((FFileName <> ''), Format(' - %s', [ExtractFileName(FFileName)]), '');
@@ -200,14 +198,21 @@ begin
   // if Modified then Modif := '*' else Modif := '';
   Caption := Format('%s %s'.Trim, [Application.Title, S]) + Modif;
   // Tabs
+  UpdateTab(RoomsName, rtRoom, tsRooms);
+  UpdateTab(ItemsName, rtItem, tsItems);
+  UpdateTab(VarsName, rtVar, tsVars);
+end;
+
+procedure TfMain.UpdateTab(TabName: string; TabResType: TResType; TabComp: TTabSheet);
+var
+  SL: TStringList;
+const
+  F = '%s (%d)';
+begin
   SL := TStringList.Create;
   try
-    Common.GetResource(SL, rtRoom, '');
-    tsRooms.Caption := Format(F, [RoomsName, SL.Count - 1]);
-    Common.GetResource(SL, rtItem, '');
-    tsItems.Caption := Format(F, [ItemsName, SL.Count - 1]);
-    Common.GetResource(SL, rtVar, '');
-    tsVars.Caption := Format(F, [VarsName, SL.Count - 1]);
+    Common.GetResource(SL, TabResType, '');
+    TabComp.Caption := Format(F, [TabName, Math.EnsureRange(SL.Count - 1, 0, High(Word))]);
   finally
     SL.Free;
   end;
