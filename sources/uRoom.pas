@@ -131,7 +131,7 @@ var
   S: string;
   R: TArray<string>;
 begin
-  R := fMain.QL[Index].Split([TkDiv]);
+  R := fMain.QCProjFileList[Index].Split([TkDiv]);
   CLB.Clear;
   for I := 0 to Length(R) - 1 do
   begin
@@ -149,6 +149,7 @@ var
   I: Integer;
   C: Char;
 begin
+  // Записать в строку все операторы и переменные текущей комнаты
   S := '';
   for I := 0 to CLB.Count - 1 do
   begin
@@ -156,7 +157,7 @@ begin
     C := Common.IfThen(CLB.Checked[I], '1', '0');
     S := S + C + CLB.Items.Strings[I].Trim + D;
   end;
-  fMain.QL[Index] := S;
+  fMain.QCProjFileList[Index] := S;
   fMain.Modified := True;
 end;
 

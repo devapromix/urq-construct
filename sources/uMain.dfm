@@ -122,7 +122,7 @@ object fMain: TfMain
     Top = 26
     Width = 200
     Height = 520
-    ActivePage = tsItems
+    ActivePage = tsRooms
     Align = alLeft
     Images = TabsImages
     MultiLine = True

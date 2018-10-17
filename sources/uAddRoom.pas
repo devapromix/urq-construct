@@ -67,7 +67,7 @@ begin
       Exit;
     end;
     Common.AddTVItem(fMain.TVR, FNewRoomName, 3, 4);
-    fMain.QL.Append('');
+    fMain.QCProjFileList.Append('');
     fMain.Modified := True;
     Self.ModalResult := mrOk;
   finally

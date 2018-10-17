@@ -136,7 +136,7 @@ type
     procedure UpdateTab(TabName: string; TabResType: TResType; TabComp: TTabSheet);
   public
     { Public declarations }
-    QL: TStringList;
+    QCProjFileList: TStringList;
     procedure CreateRoom(const AName: string);
     function CheckModified: Boolean;
     property Modified: Boolean read FModified write SetModified;
@@ -234,7 +234,7 @@ var
   I: Integer;
 begin
   SL.Clear;
-  QL.Clear;
+  QCProjFileList.Clear;
   Common.SetTV(TVR, RoomsName, 0);
   Common.SetTV(TVI, ItemsName, 1);
   Common.SetTV(TVV, VarsName, 2);
@@ -255,7 +255,7 @@ var
 begin
   Language := TLanguage.Create(True);
   QCProjFilters := Format(stProjFilters, [Application.Title, QCProjExt]);
-  QL := TStringList.Create;
+  QCProjFileList := TStringList.Create;
   SL := TStringList.Create;
   SL.Duplicates := dupIgnore;
   NewProject;
@@ -282,7 +282,7 @@ end;
 procedure TfMain.FormDestroy(Sender: TObject);
 begin
   SL.Free;
-  QL.Free;
+  QCProjFileList.Free;
   Language.SaveDefault;
   FreeAndNil(Language);
 end;
@@ -326,7 +326,7 @@ begin
       // Комнаты
       Common.GetResource(SL, rtRoom, '');
       for I := 0 to SL.Count - 1 do
-        Ini.WriteString(SL[I], 'value', QL[I]);
+        Ini.WriteString(SL[I], 'value', QCProjFileList[I]);
       // Предметы
       Common.GetResource(SL, rtItem, '');
       Ini.WriteString('items', 'value', string.Join(TkDiv, SL.ToStringArray));
@@ -361,7 +361,7 @@ begin
     // Настройки
 
     // Комнаты
-    QL.Clear;
+    QCProjFileList.Clear;
     SL.Clear;
     Ini.ReadSections(SL);
     for I := 0 to SL.Count - 1 do
@@ -369,7 +369,7 @@ begin
       if Common.IsErName(SL[I]) or Common.IsErChar(SL[I]) then
         Continue;
       Common.AddTVItem(TVR, SL[I], 3, 4);
-      QL.Append(Ini.ReadString(SL[I], 'value', ''));
+      QCProjFileList.Append(Ini.ReadString(SL[I], 'value', ''));
     end;
     // Предметы
     S := Ini.ReadString('items', 'value', '');
@@ -459,7 +459,7 @@ end;
 
 procedure TfMain.acExportToQSTExecute(Sender: TObject);
 var
-  S, Q, D, M, U: string;
+  RoomName, Line, D, M, U: string;
   I, P, V: Integer;
   F, H: Boolean;
 
@@ -480,31 +480,33 @@ begin
     Clear;
     for I := 0 to TVR.Items.Count - 1 do
     begin
-      S := TVR.Items[I].Text.ToLower;
-      if (S <> RoomsName) then
+      RoomName := TVR.Items[I].Text.ToLower;
+      if (I > 0) and (RoomName <> RoomsName) then
       begin
-        Add(':' + S);
+        Add(':' + RoomName);
         //
-        Q := Trim(Self.QL[I - 1]);
         H := False;
         M := '';
-        while (Q <> '') do
+        Line := Trim(Self.QCProjFileList[I - 1]);
+
+        // Разбор строки Line
+        while (Line <> '') do
         begin
-          F := Q[1] = '1';
-          Delete(Q, 1, 1);
-          P := Pos(TkDiv, Q);
+          F := Line[1] = '1';
+          Delete(Line, 1, 1);
+          P := Pos(TkDiv, Line);
           D := '';
           if (P <= 0) then
           begin
             if F then
-              D := Trim(Copy(Q, 1, Length(Q)));
-            Q := '';
+              D := Trim(Copy(Line, 1, Length(Line)));
+            Line := '';
           end
           else
           begin
             if F then
-              D := Trim(Copy(Q, 1, P - 1));
-            Delete(Q, 1, P);
+              D := Trim(Copy(Line, 1, P - 1));
+            Delete(Line, 1, P);
           end;
           if (D = 'finishblock') then
           begin
