@@ -478,6 +478,7 @@ begin
       Exit;
     end;
     Clear;
+    Modified := True;
     for I := 0 to TVR.Items.Count - 1 do
     begin
       RoomName := TVR.Items[I].Text.ToLower;
@@ -622,11 +623,12 @@ begin
     Exit;
   SynEdit1.Lines.SaveToFile(Utils.GetPath('quests') + ChangeFileExt(ExtractFileName(FFileName), '.qst'));
   Common.MsgDlg('Квест сохранен в папке "Quests"!', mtInformation, [mbOk]);
+  SynEdit1.Modified := False;
 end;
 
 procedure TfMain.acSaveQSTUpdate(Sender: TObject);
 begin
-  acSaveQST.Enabled := FFileName <> '';
+  acSaveQST.Enabled := (FFileName <> '') and SynEdit1.Modified;
 end;
 
 procedure TfMain.acRunExecute(Sender: TObject);
