@@ -6,3 +6,5 @@ value=0proc room0|1if gh gh gh|1startblock|1finishblock|0btn room0, ddd|0invkill
 value=
 [variables]
 value=
+[комнаты]
+value=0proc room0|1if gh gh gh|1finishblock|1startblock|0btn room0, ddd|0invkill

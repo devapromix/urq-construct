@@ -134,6 +134,7 @@ type
     procedure LoadProject(const FileName: string);
     procedure UpdateProject();
     procedure UpdateTab(TabName: string; TabResType: TResType; TabComp: TTabSheet);
+    procedure SaveSettLastModifProj;
   public
     { Public declarations }
     QCProjFileList: TStringList;
@@ -294,6 +295,12 @@ begin
     Result := True;
 end;
 
+procedure TfMain.SaveSettLastModifProj;
+begin
+  // Записываем посл. изменение проекта
+  fSettings.SettingsValueListEditor.Cells[1, 1] := DateToStr(Date) + '-' + TimeToStr(Time);
+end;
+
 procedure TfMain.acSaveProjectExecute(Sender: TObject);
 label
   save_label;
@@ -338,6 +345,7 @@ begin
     end;
     Modified := False;
   end;
+  SaveSettLastModifProj;
 end;
 
 procedure TfMain.acNewProjectExecute(Sender: TObject);
@@ -468,6 +476,14 @@ var
     V := SynEdit1.Lines.Add(S);
   end;
 
+  procedure AddCom();
+  begin
+    Add(';Игра создана на конструкторе URQConstruct');
+    Add(';https://github.com/');
+    Add(';' + DateToStr(Date) + '-' + TimeToStr(Time));
+    Add('');
+  end;
+
 begin
   // Экспорт
   with SynEdit1 do
@@ -479,6 +495,7 @@ begin
     end;
     Clear;
     Modified := True;
+    AddCom();
     for I := 0 to TVR.Items.Count - 1 do
     begin
       RoomName := TVR.Items[I].Text.ToLower;
@@ -614,7 +631,7 @@ end;
 
 procedure TfMain.acSettingsExecute(Sender: TObject);
 begin
-  Utils.ShowForm(fSettings)
+  Utils.ShowForm(fSettings);
 end;
 
 procedure TfMain.acSaveQSTExecute(Sender: TObject);

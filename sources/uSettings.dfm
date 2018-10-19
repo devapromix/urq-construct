@@ -115,20 +115,18 @@ object fSettings: TfSettings
     Top = 0
     Width = 425
     Height = 306
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabOrder = 2
     object TabSheet1: TTabSheet
-      Caption = #1048#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      Caption = #1054#1073#1097#1080#1077
+      ExplicitLeft = 8
+      ExplicitTop = 28
       object Label4: TLabel
         Left = 8
         Top = 16
-        Width = 146
+        Width = 257
         Height = 13
-        Caption = #1055#1091#1090#1100' '#1082' '#1080#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088#1091' URQ'
+        Caption = #1055#1091#1090#1100' '#1082' '#1080#1085#1090#1077#1088#1087#1088#1077#1090#1072#1090#1086#1088#1091' URQL ('#1085#1072#1087#1088#1080#1084#1077#1088', FireURQ)'
       end
       object btSelURQ: TSpeedButton
         Left = 375
@@ -139,16 +137,48 @@ object fSettings: TfSettings
         OnClick = btSelURQClick
       end
       object edSelURQ: TEdit
-        Left = 3
+        Left = 8
         Top = 40
-        Width = 366
+        Width = 361
         Height = 21
         TabOrder = 0
       end
     end
+    object TabSheet2: TTabSheet
+      Caption = #1055#1088#1086#1077#1082#1090
+      ImageIndex = 1
+      object Label1: TLabel
+        Left = 8
+        Top = 16
+        Width = 262
+        Height = 13
+        Caption = #1043#1083#1086#1073#1072#1083#1100#1085#1099#1077' '#1080#1075#1088#1086#1074#1099#1077' '#1085#1072#1089#1090#1088#1086#1081#1082#1080' '#1090#1077#1082#1091#1097#1077#1075#1086' '#1087#1088#1086#1077#1082#1090#1072
+      end
+      object SettingsValueListEditor: TValueListEditor
+        Left = 8
+        Top = 40
+        Width = 401
+        Height = 225
+        Strings.Strings = (
+          #1053#1072#1079#1074#1072#1085#1080#1077'='
+          #1054#1087#1080#1089#1072#1085#1080#1077'='
+          #1042#1077#1088#1089#1080#1103'='
+          #1055#1086#1089#1083'. '#1080#1079#1084#1077#1085'.='
+          #1040#1074#1090#1086#1088'='
+          'Email='
+          #1057#1072#1081#1090'=')
+        TabOrder = 0
+        TitleCaptions.Strings = (
+          #1057#1074#1086#1081#1089#1090#1074#1086
+          #1047#1085#1072#1095#1077#1085#1080#1077)
+        ColWidths = (
+          95
+          300)
+      end
+    end
   end
   object OpenDialog: TOpenDialog
-    Left = 252
-    Top = 24
+    Left = 396
+    Top = 65528
   end
 end

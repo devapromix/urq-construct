@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, ComCtrls;
+  Dialogs, StdCtrls, Buttons, ComCtrls, Vcl.Grids, Vcl.ValEdit;
 
 type
   TfSettings = class(TForm)
@@ -16,6 +16,9 @@ type
     btSelURQ: TSpeedButton;
     edSelURQ: TEdit;
     OpenDialog: TOpenDialog;
+    TabSheet2: TTabSheet;
+    SettingsValueListEditor: TValueListEditor;
+    Label1: TLabel;
     procedure btSelURQClick(Sender: TObject);
     procedure btOKClick(Sender: TObject);
     procedure btCancelClick(Sender: TObject);
@@ -61,6 +64,7 @@ end;
 procedure TfSettings.FormCreate(Sender: TObject);
 begin
   LoadConfig;
+  PageControl1.ActivePageIndex := 0;
 end;
 
 procedure TfSettings.LoadConfig;
