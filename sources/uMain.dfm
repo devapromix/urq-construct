@@ -116,6 +116,13 @@ object fMain: TfMain
       Top = 0
       Action = acAbout
     end
+    object ToolButton18: TToolButton
+      Left = 216
+      Top = 0
+      Caption = 'ToolButton18'
+      ImageIndex = 14
+      OnClick = ToolButton18Click
+    end
   end
   object PC: TPageControl
     Left = 0

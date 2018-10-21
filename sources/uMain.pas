@@ -92,6 +92,7 @@ type
     acRun1: TMenuItem;
     SynEdit1: TSynEdit;
     SynURQLSyn1: TSynURQLSyn;
+    ToolButton18: TToolButton;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -123,6 +124,7 @@ type
     procedure acSaveQSTUpdate(Sender: TObject);
     procedure acRunExecute(Sender: TObject);
     procedure acRunUpdate(Sender: TObject);
+    procedure ToolButton18Click(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -219,6 +221,11 @@ begin
   end;
 end;
 
+procedure TfMain.ToolButton18Click(Sender: TObject);
+begin
+  SaveSettLastModifProj;
+end;
+
 procedure TfMain.TVRDblClick(Sender: TObject);
 var
   S: string;
@@ -298,7 +305,7 @@ end;
 procedure TfMain.SaveSettLastModifProj;
 begin
   // Записываем посл. изменение проекта
-  fSettings.SettingsValueListEditor.Cells[1, 1] := DateToStr(Date) + '-' + TimeToStr(Time);
+  fSettings.SettingsValueListEditor.Cells[1, 4] := DateToStr(Date) + ' ' + TimeToStr(Time);
 end;
 
 procedure TfMain.acSaveProjectExecute(Sender: TObject);
