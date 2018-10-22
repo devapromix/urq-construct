@@ -38,7 +38,7 @@ implementation
 
 {$R *.dfm}
 
-uses uUtils, IniFiles, uCommon;
+uses uUtils, IniFiles, uCommon, uMain;
 
 const
   stURQIntFilters: string = 'Интерпретатор URQ|*.exe';
@@ -78,6 +78,8 @@ begin
   finally
     FreeAndNil(IniFile);
   end;
+  // Дефолтная информация об игре
+  fMain.SetDefaultProjectValues;
 end;
 
 procedure TfSettings.SaveConfig;

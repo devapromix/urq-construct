@@ -138,6 +138,7 @@ type
   public
     { Public declarations }
     QCProjFileList: TStringList;
+    procedure SetDefaultProjectValues;
     procedure CreateRoom(const AName: string);
     function CheckModified: Boolean;
     property Modified: Boolean read FModified write SetModified;
@@ -295,13 +296,21 @@ begin
     Result := True;
 end;
 
-procedure TfMain.SetDefaultProjectSettings;
+procedure TfMain.SetDefaultProjectValues;
 begin
+  // Дефолтная информация об игре
   // Информация о версии
   if (fSettings.SettingsValueListEditor.Cells[1, 3] = '') then
-  fSettings.SettingsValueListEditor.Cells[1, 3] := '1.0.0';
+    fSettings.SettingsValueListEditor.Cells[1, 3] := '1.0.0';
+end;
+
+procedure TfMain.SetDefaultProjectSettings;
+begin
   // Записываем посл. изменение проекта
   fSettings.SettingsValueListEditor.Cells[1, 4] := DateToStr(Date) + ' ' + TimeToStr(Time);
+  // Информация о версии
+  SetDefaultProjectValues;
+  fSettings.SaveConfig;
 end;
 
 procedure TfMain.acSaveProjectExecute(Sender: TObject);
