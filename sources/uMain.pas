@@ -92,7 +92,6 @@ type
     acRun1: TMenuItem;
     SynEdit1: TSynEdit;
     SynURQLSyn1: TSynURQLSyn;
-    ToolButton18: TToolButton;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -124,7 +123,6 @@ type
     procedure acSaveQSTUpdate(Sender: TObject);
     procedure acRunExecute(Sender: TObject);
     procedure acRunUpdate(Sender: TObject);
-    procedure ToolButton18Click(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -136,7 +134,7 @@ type
     procedure LoadProject(const FileName: string);
     procedure UpdateProject();
     procedure UpdateTab(TabName: string; TabResType: TResType; TabComp: TTabSheet);
-    procedure SaveSettLastModifProj;
+    procedure SetDefaultProjectSettings;
   public
     { Public declarations }
     QCProjFileList: TStringList;
@@ -221,11 +219,6 @@ begin
   end;
 end;
 
-procedure TfMain.ToolButton18Click(Sender: TObject);
-begin
-  SaveSettLastModifProj;
-end;
-
 procedure TfMain.TVRDblClick(Sender: TObject);
 var
   S: string;
@@ -302,8 +295,11 @@ begin
     Result := True;
 end;
 
-procedure TfMain.SaveSettLastModifProj;
+procedure TfMain.SetDefaultProjectSettings;
 begin
+  // Информация о версии
+  if (fSettings.SettingsValueListEditor.Cells[1, 3] = '') then
+  fSettings.SettingsValueListEditor.Cells[1, 3] := '1.0.0';
   // Записываем посл. изменение проекта
   fSettings.SettingsValueListEditor.Cells[1, 4] := DateToStr(Date) + ' ' + TimeToStr(Time);
 end;
@@ -352,7 +348,7 @@ begin
     end;
     Modified := False;
   end;
-  SaveSettLastModifProj;
+  SetDefaultProjectSettings;
 end;
 
 procedure TfMain.acNewProjectExecute(Sender: TObject);
@@ -361,6 +357,7 @@ begin
   if CheckModified then
     Exit;
   NewProject;
+  SetDefaultProjectSettings;
 end;
 
 procedure TfMain.LoadProject(const FileName: string);
