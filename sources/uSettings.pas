@@ -7,6 +7,9 @@ uses
   Dialogs, StdCtrls, Buttons, ComCtrls, Vcl.Grids, Vcl.ValEdit;
 
 type
+  VLEEnum = (veNone, veName, veDescr, veVersion, veDateTime);
+
+type
   TfSettings = class(TForm)
     btOK: TBitBtn;
     btCancel: TBitBtn;
@@ -80,11 +83,14 @@ begin
   end;
   // Дефолтная информация об игре
   fMain.SetDefaultProjectValues;
+  // Дополнительная информация
 end;
 
 procedure TfSettings.SaveConfig;
 var
   IniFile: TIniFile;
+  I: Integer;
+  S: string;
 begin
   IniFile := TIniFile.Create(Utils.GetPath('') + 'config.ini');
   try

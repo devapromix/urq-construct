@@ -300,14 +300,14 @@ procedure TfMain.SetDefaultProjectValues;
 begin
   // Дефолтная информация об игре
   // Информация о версии
-  if (fSettings.SettingsValueListEditor.Cells[1, 3] = '') then
-    fSettings.SettingsValueListEditor.Cells[1, 3] := '1.0.0';
+  if (fSettings.SettingsValueListEditor.Cells[1, Ord(veVersion)] = '') then
+    fSettings.SettingsValueListEditor.Cells[1, Ord(veVersion)] := '1.0.0';
 end;
 
 procedure TfMain.SetDefaultProjectSettings;
 begin
   // Записываем посл. изменение проекта
-  fSettings.SettingsValueListEditor.Cells[1, 4] := DateToStr(Date) + ' ' + TimeToStr(Time);
+  fSettings.SettingsValueListEditor.Cells[1, Ord(veDateTime)] := DateToStr(Date) + ' ' + TimeToStr(Time);
   // Информация о версии
   SetDefaultProjectValues;
   fSettings.SaveConfig;
@@ -341,7 +341,10 @@ begin
     Ini := TIniFile.Create(SD.FileName);
     try
       // Настройки
-      Ini.WriteString('settings', 'value', '');
+      SL.Clear;
+      for I := 1 to fSettings.SettingsValueListEditor.RowCount - 1 do
+        SL.Append(fSettings.SettingsValueListEditor.Cells[1, I]);
+      Ini.WriteString('settings', 'value', string.Join(TkDiv, SL.ToStringArray));
       // Комнаты
       Common.GetResource(SL, rtRoom, '');
       for I := 0 to SL.Count - 1 do
