@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, Buttons, ComCtrls, Vcl.Grids, Vcl.ValEdit;
 
 type
-  VLEEnum = (veNone, veName, veDescr, veVersion, veDateTime);
+  VLEEnum = (veNone, veName, veDescr, veVersion, veDateTime, veAuthor, veEmail, veSite);
 
 type
   TfSettings = class(TForm)

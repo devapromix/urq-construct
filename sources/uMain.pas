@@ -495,8 +495,7 @@ var
   procedure AddCom();
   begin
     Add(';Игра создана на конструкторе URQConstruct');
-    Add(';https://github.com/');
-    Add(';' + DateToStr(Date) + '-' + TimeToStr(Time));
+    Add(';' + URLGithub);
     Add('');
   end;
 

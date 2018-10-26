@@ -171,7 +171,7 @@ end;
 class procedure Common.GetResource(var SL: TStringList; const RT: TResType; Current: string = '');
 var
   TV: TTreeView;
-  Name, S, TVName: string;
+  Name, S: string;
   I: Integer;
 
   procedure Add(ATV: TTreeView; AName: string);
@@ -184,10 +184,7 @@ begin
   TV := nil;
   case RT of
     rtRoom: // Комната
-      begin
-        TVName := RoomsName;
-        Add(fMain.TVR, TVName);
-      end;
+      Add(fMain.TVR, RoomsName);
     rtItem: // Предмет
       Add(fMain.TVI, ItemsName);
     rtVar: // Переменная
@@ -197,7 +194,7 @@ begin
   for I := 0 to TV.Items.Count - 1 do
   begin
     S := TV.Items[I].Text.ToLower;
-    if (S <> TVName) and (S <> Name) and (S <> Current) then
+    if (S <> Name.ToLower) and (S <> Current.ToLower) then
       SL.Append(S);
   end;
 end;
