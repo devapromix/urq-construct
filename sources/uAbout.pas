@@ -13,7 +13,9 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Image1: TImage;
+    Label4: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure Label3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -22,6 +24,9 @@ type
 
 var
   fAbout: TfAbout;
+
+const
+  URLGithub = 'https://github.com/';
 
 implementation
 
@@ -33,7 +38,13 @@ procedure TfAbout.FormShow(Sender: TObject);
 begin
   Label1.Caption := Application.Title;
   Label2.Caption := 'Конструктор текстовых квестов';
-  Label3.Caption := Format('v. %s (C) 2017-2018 by Apromix', [Version]);
+  Label3.Caption := URLGithub;
+  Label4.Caption := Format('v. %s (C) 2017-2018 by Apromix', [Version]);
+end;
+
+procedure TfAbout.Label3Click(Sender: TObject);
+begin
+  // Открыть страницу проекта на github'е
 end;
 
 end.

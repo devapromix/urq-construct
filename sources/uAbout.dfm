@@ -4,7 +4,7 @@ object fAbout: TfAbout
   BorderStyle = bsDialog
   BorderWidth = 8
   Caption = 'About...'
-  ClientHeight = 181
+  ClientHeight = 225
   ClientWidth = 328
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -56,16 +56,18 @@ object fAbout: TfAbout
     Top = 113
     Width = 328
     Height = 25
+    Cursor = crHandPoint
     Align = alTop
     Alignment = taCenter
     AutoSize = False
     Caption = 'Label3'
     Font.Charset = RUSSIAN_CHARSET
-    Font.Color = clWindowText
+    Font.Color = clHotLight
     Font.Height = -16
     Font.Name = 'Georgia'
-    Font.Style = []
+    Font.Style = [fsUnderline]
     ParentFont = False
+    OnClick = Label3Click
     ExplicitTop = 112
   end
   object Image1: TImage
@@ -216,9 +218,26 @@ object fAbout: TfAbout
     Transparent = True
     ExplicitWidth = 32
   end
+  object Label4: TLabel
+    Left = 0
+    Top = 138
+    Width = 328
+    Height = 25
+    Align = alTop
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Label3'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Georgia'
+    Font.Style = []
+    ParentFont = False
+    ExplicitTop = 144
+  end
   object btOK: TBitBtn
     Left = 110
-    Top = 144
+    Top = 187
     Width = 107
     Height = 30
     Cancel = True
