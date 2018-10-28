@@ -214,7 +214,7 @@ begin
   SL := TStringList.Create;
   try
     Common.GetResource(SL, TabResType, '');
-    TabComp.Caption := Format(F, [TabName, Math.EnsureRange(SL.Count - 1, 0, High(Word))]);
+    TabComp.Caption := Format(F, [TabName, SL.Count]);
   finally
     SL.Free;
   end;

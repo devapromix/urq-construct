@@ -89,8 +89,6 @@ end;
 procedure TfSettings.SaveConfig;
 var
   IniFile: TIniFile;
-  I: Integer;
-  S: string;
 begin
   IniFile := TIniFile.Create(Utils.GetPath('') + 'config.ini');
   try

@@ -56,6 +56,11 @@ begin
       ShowMessage('!!!');
       Exit;
     end;
+    if (FNewRoomName = RoomsName.ToLower) then
+    begin
+      ShowMessage('!!!');
+      Exit;
+    end;
     if Common.IsErName(FNewRoomName) then
     begin
       ShowMessage('!!!');

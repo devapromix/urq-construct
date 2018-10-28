@@ -9,7 +9,7 @@ value=1pln Вы запихиваете бумажку за щеку.|1bumajka = 1|1inv+ Бумажка|1btn ploti
 [instructions]
 value=1pln Вы заворачиваете острый шип в бумажку.|1inv- Бумажка|1bumajka = 0|1sh = 1|1kol = 1|1btn plotik, Назад
 [items]
-value=Бумажка|Шип|Жевачка
+value=бумажка|шип|жевачка
 [contacts]
 value=1if kol = 0|1startblock|1pln Вы запихиваете острый шип за щеку, и он ее с легкостью протыкает. С кровавой раной Вам не до побега!|1proc badfinal|1btn introduction, Сначала|1finishblock|1if kol = 1|1startblock|1pln Вы заталкиваете шип в бумажке за щеку.|1shp = 0|1kol = 2|1inv+ Шип|1btn plotik, Назад|1finishblock
 [variables]
@@ -19,7 +19,7 @@ value=1pln Поздравляю! Вы благополучно миновали все опасности и прошли седьмую с
 [bumajka]
 value=1if not Жевачка|1startblock|1pln Вы отгрызли себе кусочек на память.|1inv+ Жевачка|1finishblock|1btn plotik, Назад
 [kol]
-value=1pln Вы осмотрелись...|1nachalo = 1|1goto beginning
+value=1nachalo = 1|1pln Вы осмотрелись...|1goto beginning
 [koltake]
 value=1pln Вы находитесь на плотике из колючих веток. Бумажки наколоты на острые шипы. В одну бумажку завернута жевачка.|1btn back, Вернуться назад|1if shp=0|1startblock|1btn shp, Отгрызть колючку|1finishblock|1if bumajka=0|1startblock|1btn bumajka, Подобрать бумажку|1finishblock|1if not Жевачка|1startblock|1btn gum, Отгрызть кусочек жевачки|1finishblock|1if shp=1 and bumajka=1 and sh=0|1startblock|1btn kol, Завернуть колючку в бумажку|1finishblock|1if kol=1|1startblock|1btn koltake, Взять шип  в бумажке|1finishblock|1if shp=1 and kol=0|1startblock|1btn koltake, Взять колючку|1finishblock
 [final]
@@ -40,5 +40,3 @@ value=1gametitle = "Похождения отважного хомяка Семена: На плоту"|1pln #%gametit
 value=1pln Вы - хомяк по кличке Семен. Если Вы прошли предыдущие игры из серии, то должны помнить, что Вас коварно заточили в клетку, но Вам удалось вырваться на свободу и покинуть дом и двор, перемахнув через забор. Но и здесь злопамятный кот не оставил Вас в покое. В конце-концов Вам удалось обмануть кота, убежать в рощу и уплыть дальше на импровизированном плоту... Пока все.|1btn beginning, Проснуться|1invkill|1perkill
 [test]
 value=1pln Идея____________Triangle|1pln Программист_____Apromix|1pln Сценарий________Apromix|1pln Наборщик________Apromix|1pln В главной роли__Ныне покойный хомяк Семен|1proc contacts|1btn 10, Назад
-[комнаты]
-value=1pln Тут инструкции не нужны! И так все понятно!|1btn 10, Назад
