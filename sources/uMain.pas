@@ -92,6 +92,7 @@ type
     acRun1: TMenuItem;
     SynEdit1: TSynEdit;
     SynURQLSyn1: TSynURQLSyn;
+    Timer1: TTimer;
     procedure TVRDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -123,6 +124,7 @@ type
     procedure acSaveQSTUpdate(Sender: TObject);
     procedure acRunExecute(Sender: TObject);
     procedure acRunUpdate(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
     SL: TStringList;
@@ -138,7 +140,6 @@ type
   public
     { Public declarations }
     QCProjFileList: TStringList;
-    procedure SetDefaultProjectValues;
     procedure CreateRoom(const AName: string);
     function CheckModified: Boolean;
     property Modified: Boolean read FModified write SetModified;
@@ -220,6 +221,32 @@ begin
   end;
 end;
 
+procedure TfMain.Timer1Timer(Sender: TObject);
+var
+  I, N: Integer;
+  F: string;
+begin
+  Timer1.Enabled := False;
+  F := '';
+  if ParamCount > 0 then
+  begin
+    N := 1;
+    // Debug mode -d
+    if (Trim(ParamStr(1)) = '-d') then
+    begin
+      N := 2;
+      // FIsDebug := True;
+    end;
+    if ParamCount > 0 then
+    begin
+      for I := N to ParamCount do
+        F := Trim(F + ' ' + ParamStr(I));
+      LoadProject(F);
+      Exit;
+    end;
+  end;
+end;
+
 procedure TfMain.TVRDblClick(Sender: TObject);
 var
   S: string;
@@ -251,9 +278,6 @@ begin
 end;
 
 procedure TfMain.FormCreate(Sender: TObject);
-var
-  I, N: Integer;
-  F: string;
 begin
   Language := TLanguage.Create(True);
   QCProjFilters := Format(stProjFilters, [Application.Title, QCProjExt]);
@@ -261,24 +285,6 @@ begin
   SL := TStringList.Create;
   SL.Duplicates := dupIgnore;
   NewProject;
-  F := '';
-  if ParamCount > 0 then
-  begin
-    N := 1;
-    // Debug mode -d
-    if (Trim(ParamStr(1)) = '-d') then
-    begin
-      N := 2;
-      // FIsDebug := True;
-    end;
-    if ParamCount > 0 then
-    begin
-      for I := N to ParamCount do
-        F := Trim(F + ' ' + ParamStr(I));
-      LoadProject(F);
-      Exit;
-    end;
-  end;
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
@@ -296,27 +302,25 @@ begin
     Result := True;
 end;
 
-procedure TfMain.SetDefaultProjectValues;
-begin
-  // Дефолтная информация об игре
-  // Информация о версии
-  if (fSettings.SettingsValueListEditor.Cells[1, Ord(veVersion)] = '') then
-    fSettings.SettingsValueListEditor.Cells[1, Ord(veVersion)] := '1.0.0';
-end;
-
 procedure TfMain.SetDefaultProjectSettings;
+var
+  I: Integer;
 begin
+  // Очищаем все поля
+  for I := 1 to fSettings.SettingsValueListEditor.RowCount - 1 do
+    fSettings.SettingsValueListEditor.Cells[1, I] := '';
   // Записываем посл. изменение проекта
   fSettings.SettingsValueListEditor.Cells[1, Ord(veDateTime)] := DateToStr(Date) + ' ' + TimeToStr(Time);
   // Информация о версии
-  SetDefaultProjectValues;
-  fSettings.SaveConfig;
+  if (fSettings.SettingsValueListEditor.Cells[1, Ord(veVersion)] = '') then
+    fSettings.SettingsValueListEditor.Cells[1, Ord(veVersion)] := '1.0.0';
 end;
 
 procedure TfMain.acSaveProjectExecute(Sender: TObject);
 label
   save_label;
 var
+  S: string;
   I: Integer;
   Ini: TIniFile;
 begin
@@ -342,8 +346,14 @@ begin
     try
       // Настройки
       SL.Clear;
+      // Записываем посл. изменение проекта
+      fSettings.SettingsValueListEditor.Cells[1, Ord(veDateTime)] := DateToStr(Date) + ' ' + TimeToStr(Time);
+      // Зап. все настройки в файл проекта
       for I := 1 to fSettings.SettingsValueListEditor.RowCount - 1 do
-        SL.Append(fSettings.SettingsValueListEditor.Cells[1, I]);
+      begin
+        S := fSettings.SettingsValueListEditor.Cells[1, I];
+        SL.Append(S.Trim.Replace(TkDiv, ''));
+      end;
       Ini.WriteString('settings', 'value', string.Join(TkDiv, SL.ToStringArray));
       // Комнаты
       Common.GetResource(SL, rtRoom, '');
@@ -360,7 +370,6 @@ begin
     end;
     Modified := False;
   end;
-  SetDefaultProjectSettings;
 end;
 
 procedure TfMain.acNewProjectExecute(Sender: TObject);
@@ -382,8 +391,15 @@ begin
   FFileName := Trim(FileName);
   Ini := TIniFile.Create(FFileName);
   try
-    // Настройки
-
+    // Настройки проекта
+    S := Ini.ReadString('settings', 'value', '');
+    V := S.Split([TkDiv]);
+    for I := 0 to High(V) do
+    begin
+      N := V[I].Trim;
+      if (N <> '') then
+        fSettings.SettingsValueListEditor.Cells[1, I + 1] := N;
+    end;
     // Комнаты
     QCProjFileList.Clear;
     SL.Clear;
@@ -483,7 +499,7 @@ end;
 
 procedure TfMain.acExportToQSTExecute(Sender: TObject);
 var
-  RoomName, Line, D, M, U: string;
+  RoomName, Line, D, M, U, S: string;
   I, P, V: Integer;
   F, H: Boolean;
 
@@ -492,11 +508,9 @@ var
     V := SynEdit1.Lines.Add(S);
   end;
 
-  procedure AddCom();
+  procedure AddCom(S: string);
   begin
-    Add(';Игра создана на конструкторе URQConstruct');
-    Add(';' + URLGithub);
-    Add('');
+    Add(StCom + #32 + S);
   end;
 
 begin
@@ -510,7 +524,16 @@ begin
     end;
     Clear;
     Modified := True;
-    AddCom();
+    // Доб. комментарии в начале файла
+    AddCom('Игра создана на конструкторе текстовых квестов URQConstruct');
+    AddCom(URLGithub);
+    Add('');
+    // Добавляем gametitle
+    S := fSettings.SettingsValueListEditor.Cells[1, 1].Trim;
+    if not S.IsEmpty then
+      Add(Format('gametitle="%s"', [S]));
+    Add('');
+    // Комнаты
     for I := 0 to TVR.Items.Count - 1 do
     begin
       RoomName := TVR.Items[I].Text.ToLower;

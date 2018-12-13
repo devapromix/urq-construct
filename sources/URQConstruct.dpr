@@ -2,6 +2,7 @@
 
 uses
   Forms,
+  uSettings in 'uSettings.pas' {fSettings},
   uMain in 'uMain.pas' {fMain},
   uRoom in 'uRoom.pas' {fRoom},
   uAddRoom in 'uAddRoom.pas' {fAddRoom},
@@ -13,7 +14,6 @@ uses
   uAddItem in 'uAddItem.pas' {fAddItem},
   uCommon in 'uCommon.pas',
   uAbout in 'uAbout.pas' {fAbout},
-  uSettings in 'uSettings.pas' {fSettings},
   uEditText in 'uEditText.pas' {fEditText},
   uUtils in 'uUtils.pas',
   uLanguage in 'uLanguage.pas';

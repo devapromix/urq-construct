@@ -33,7 +33,9 @@ var
   QCProjFilters: string = '';
 
 const
-  // Разделитель операторов URQ
+  // Стр. комментарий в URQL
+  StCom = ';';
+  // Разделитель операторов URQL
   OpDiv = '&';
   //
   TkDiv = '|';

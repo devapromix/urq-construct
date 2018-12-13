@@ -141,6 +141,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="uSettings.pas">
+            <Form>fSettings</Form>
+        </DCCReference>
         <DCCReference Include="uMain.pas">
             <Form>fMain</Form>
         </DCCReference>
@@ -171,9 +174,6 @@
         <DCCReference Include="uCommon.pas"/>
         <DCCReference Include="uAbout.pas">
             <Form>fAbout</Form>
-        </DCCReference>
-        <DCCReference Include="uSettings.pas">
-            <Form>fSettings</Form>
         </DCCReference>
         <DCCReference Include="uEditText.pas">
             <Form>fEditText</Form>

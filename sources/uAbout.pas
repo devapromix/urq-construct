@@ -12,8 +12,8 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Image1: TImage;
     Label4: TLabel;
+    Image1: TImage;
     procedure FormShow(Sender: TObject);
     procedure Label3Click(Sender: TObject);
   private
@@ -26,7 +26,7 @@ var
   fAbout: TfAbout;
 
 const
-  URLGithub = 'https://github.com/';
+  URLGithub = 'https://github.com/devapromix-ifiction/urq-construct';
 
 implementation
 
@@ -39,7 +39,7 @@ begin
   Label1.Caption := Application.Title;
   Label2.Caption := 'Конструктор текстовых квестов';
   Label3.Caption := URLGithub;
-  Label4.Caption := Format('v. %s (C) 2017-2018 by Apromix', [Version]);
+  Label4.Caption := Format('v. %s (C) 2017-2018 by Apromix <bees@meta.ua>', [Version]);
 end;
 
 procedure TfAbout.Label3Click(Sender: TObject);

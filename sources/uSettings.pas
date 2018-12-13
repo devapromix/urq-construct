@@ -54,6 +54,7 @@ end;
 procedure TfSettings.btOKClick(Sender: TObject);
 begin
   SaveConfig;
+  fMain.Modified := True;
 end;
 
 procedure TfSettings.btSelURQClick(Sender: TObject);
@@ -81,9 +82,6 @@ begin
   finally
     FreeAndNil(IniFile);
   end;
-  // Дефолтная информация об игре
-  fMain.SetDefaultProjectValues;
-  // Дополнительная информация
 end;
 
 procedure TfSettings.SaveConfig;
